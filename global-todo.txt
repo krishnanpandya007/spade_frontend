@@ -1,0 +1,5 @@
+1. Cache SearchBar results (maybe for 1hr)
+
+
+------------------------
+Try to make AuthContext Around main _app.js Component

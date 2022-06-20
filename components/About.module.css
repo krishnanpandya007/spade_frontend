@@ -1,0 +1,41 @@
+.topic_heading {
+
+    margin-left: 5%;
+    font-size: 24px;
+    font-family: Poppins;
+
+}
+
+.topic_descr {
+    font-size: 16px;
+    font-family: Poppins;
+    font-weight: 400;
+    margin: 2rem 8rem 1rem 10rem;
+}
+
+.topic_subheading {
+
+    margin-left: 10rem;
+    margin-top: 3rem;
+    font-size: 20px;
+    font-family: Poppins;
+}
+
+.faqs{
+    margin: 2rem 8rem 1rem 10rem;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    width: 70%;
+    padding: 1em;
+    
+}
+
+
+.faqs > summary::marker {
+    color: #4D77FF;
+    width: 5%;
+}
+
+.faqs > p {
+    margin-left: 3%;
+}

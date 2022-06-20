@@ -1,0 +1,50 @@
+.spade_loader{
+    /* background-color: red; */
+    display: grid;
+    place-items: center;
+
+}
+
+.spinner > img{
+    width: 2rem;
+    z-index: 1;
+    /* animation-name: spinin; */
+    /* animation-duration: 1s; */
+    animation: myAnim 2s ease 0s normal infinite;
+}
+
+.spinner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 2px;
+    color: #bdbdbd;
+}
+
+@keyframes myAnim {
+    0% {
+      animation-timing-function: ease-out;
+      transform: scale(1);
+      transform-origin: center center;
+    }
+  
+    10% {
+      animation-timing-function: ease-in;
+      transform: scale(0.91);
+    }
+  
+    17% {
+      animation-timing-function: ease-out;
+      transform: scale(0.98);
+    }
+  
+    33% {
+      animation-timing-function: ease-in;
+      transform: scale(0.87);
+    }
+  
+    45% {
+      animation-timing-function: ease-out;
+      transform: scale(1);
+    }
+  }

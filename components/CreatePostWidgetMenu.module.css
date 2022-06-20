@@ -1,0 +1,9 @@
+.tips_list_main > li{
+    font-size: 1.1em;
+    /* color: #8267BE; */
+    line-height: 150%;
+    font-family: Poppins;
+    margin-bottom: 1ch;
+/* list-style-type: decimal; */
+    
+}

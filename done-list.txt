@@ -1,0 +1,31 @@
+1. Tested fetch api example without catch() method
+2. Installed @mui/material, -lab, -icons, cookie, progressbar, prop-types
+
+Note: Etle jya sudhi apde module use na kariye tya sudhi kai vandho nai (Thats a nice way to debug)
+
+ATTENTION: 
+
+	I think there is a problem with setup of mui a=with this nextjs apk.
+
+Nedd to check replace mui > maerail ui login page
+
+Checks:
+	
+	-Add Pages
+
+		:: api :DONE:
+		:: index.js :remaining: 
+		:: Layout [Safe]
+		:: PostModal > MainBody [Safe]
+		:: PostModal > Comment.js [Safe]
+		:: PostModal > ImageBody.js [Safe]
+		:: PostModal [Safe]
+		
+ 		:: FeedContent.js [Safe]
+  		:: Feed.js [Safe]
+		:: index.js --main-- [SAFE]
+
+		:: create/account.js --main-- [SAFE]
+		:: create/post.js --main-- [SAVE]
+
+		:: profile/edit.js --main-- [SAVE]

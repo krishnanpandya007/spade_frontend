@@ -1,0 +1,44 @@
+ready - started server on 0.0.0.0:8080, url: http://localhost:8080
+[spade] [2022-04-01 16:52:43] FetchError: request to http://127.0.0.1:8000/apio/load_posts/ failed, reason: connect ECONNREFUSED 127.0.0.1:8000
+[spade] [2022-04-01 16:52:43]     at ClientRequest.<anonymous> (/workspace/spade_frontend/node_modules/next/dist/compiled/node-fetch/index.js:1:64142)
+[spade] [2022-04-01 16:52:43]     at ClientRequest.emit (events.js:314:20)
+[spade] [2022-04-01 16:52:43]     at Socket.socketErrorListener (_http_client.js:427:9)
+[spade] [2022-04-01 16:52:43]     at Socket.emit (events.js:314:20)
+[spade] [2022-04-01 16:52:43]     at emitErrorNT (internal/streams/destroy.js:92:8)
+[spade] [2022-04-01 16:52:43]     at emitErrorAndCloseNT (internal/streams/destroy.js:60:3)
+[spade] [2022-04-01 16:52:43]     at processTicksAndRejections (internal/process/task_queues.js:84:21) {
+[spade] [2022-04-01 16:52:43]   type: 'system',
+[spade] [2022-04-01 16:52:43]   errno: 'ECONNREFUSED',
+[spade] [2022-04-01 16:52:43]   code: 'ECONNREFUSED'
+[spade] [2022-04-01 16:52:43] }
+[spade] [2022-04-01 16:53:03] FetchError: request to http://127.0.0.1:8000/api/token/ failed, reason: connect ECONNREFUSED 127.0.0.1:8000
+[spade] [2022-04-01 16:53:03]     at ClientRequest.<anonymous> (/workspace/spade_frontend/node_modules/next/dist/compiled/node-fetch/index.js:1:64142)
+[spade] [2022-04-01 16:53:03]     at ClientRequest.emit (events.js:314:20)
+[spade] [2022-04-01 16:53:03]     at Socket.socketErrorListener (_http_client.js:427:9)
+[spade] [2022-04-01 16:53:03]     at Socket.emit (events.js:314:20)
+[spade] [2022-04-01 16:53:03]     at emitErrorNT (internal/streams/destroy.js:92:8)
+[spade] [2022-04-01 16:53:03]     at emitErrorAndCloseNT (internal/streams/destroy.js:60:3)
+[spade] [2022-04-01 16:53:03]     at processTicksAndRejections (internal/process/task_queues.js:84:21) {
+[spade] [2022-04-01 16:53:03]   type: 'system',
+[spade] [2022-04-01 16:53:03]   errno: 'ECONNREFUSED',
+[spade] [2022-04-01 16:53:03]   code: 'ECONNREFUSED'
+[spade] [2022-04-01 16:53:03] }
+[spade] [2022-04-01 16:53:03] TypeError: Cannot read property 'json' of undefined
+[spade] [2022-04-01 16:53:03]     at __WEBPACK_DEFAULT_EXPORT__ (/workspace/spade_frontend/.next/server/pages/api/login.js:64:39)
+[spade] [2022-04-01 16:53:03]     at processTicksAndRejections (internal/process/task_queues.js:97:5)
+[spade] [2022-04-01 16:53:03]     at async Object.apiResolver (/workspace/spade_frontend/node_modules/next/dist/server/api-utils/node.js:184:9)
+[spade] [2022-04-01 16:53:03]     at async NextNodeServer.runApi (/workspace/spade_frontend/node_modules/next/dist/server/next-server.js:396:9)
+[spade] [2022-04-01 16:53:03]     at async Object.fn (/workspace/spade_frontend/node_modules/next/dist/server/base-server.js:473:37)
+[spade] [2022-04-01 16:53:03]     at async Router.execute (/workspace/spade_frontend/node_modules/next/dist/server/router.js:233:32)
+[spade] [2022-04-01 16:53:03]     at async NextNodeServer.run (/workspace/spade_frontend/node_modules/next/dist/server/base-server.js:583:29)
+[spade] [2022-04-01 16:53:03]     at async NextNodeServer.handleRequest (/workspace/spade_frontend/node_modules/next/dist/server/base-server.js:298:20)
+[spade] [2022-04-01 18:07:39] FetchError: request to http://127.0.0.1:8000/apio/load_posts/ failed, reason: connect ECONNREFUSED 127.0.0.1:8000
+[spade] [2022-04-01 18:07:39]     at ClientRequest.<anonymous> (/workspace/spade_frontend/node_modules/next/dist/compiled/node-fetch/index.js:1:64142)
+[spade] [2022-04-01 18:07:39]     at ClientRequest.emit (events.js:314:20)
+[spade] [2022-04-01 18:07:39]     at Socket.socketErrorListener (_http_client.js:427:9)
+[spade] [2022-04-01 18:07:39]     at Socket.emit (events.js:314:20)
+[spade] [2022-04-01 18:07:39]     at emitErrorNT (internal/streams/destroy.js:92:8)
+[spade] [2022-04-01 18:07:39]     at emitErrorAndCloseNT (internal/streams/destroy.js:60:3)
+[spade] [2022-04-01 18:07:39]     at processTicksAndRejections (internal/process/task_queues.js:84:21) {
+[spade] [2022-04-01 18:07:39]   type: 'system',
+[spade] [2022-04-01 18:07:39]   errno: 'ECONNREFUSED',

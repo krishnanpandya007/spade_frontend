@@ -1,0 +1,97 @@
+.header_desks{
+    position: sticky;
+    z-index: 999;
+    display: flex;
+    /* place-items: row; */
+    align-items: center;
+    justify-content: space-evenly;
+    /* padding: 1%; */
+    /* margin-top: 2%; */
+    height: 6vh;
+    max-width: 1200px;
+    /* border: 2px solid red; */
+    min-height: 95px;
+    width: 100%;
+    background-color: red;
+    /* padding-top: 2%; */
+    /* padding-bottom: 2%; */
+    /* box-sizing: border-box; */
+    /* min-height: 600; */
+    /* border-bottom: 1px solid blue; */
+    /* background-color: rgb(255, 255, 255); */
+    /* background-color: red; */
+}
+.header_searchs{
+    /* flex: 0.7; */
+    height: 100%;
+    width: 60%;
+    /* max-width: 70%; */
+    /* flex: 0.7; */
+    display: grid;
+    place-items: center;
+}
+.header_logos{
+    /* flex: 0.1; */
+    /* max-width: 10%; */
+    display: grid;
+    place-items: center;
+    /* max-width: px; */
+}
+
+.header_logos:hover{
+    cursor: pointer;
+}
+
+.header_menus{
+    /* flex: 0.3; */
+    display: flex;
+    max-width: 30%;
+    /* flex-direction: row; */
+    /* place-items: center; */
+    justify-content: space-evenly;
+    /* padding-left: calc(10vh + 15vw); */
+    /* border: 1px solid red; */
+}
+
+.inps {
+    width: 80%;
+    height: 60%;
+    min-height: 50px;
+    border-radius: 10px;
+    outline:none;
+    border:none;
+    /* background-color: rgba(230, 230, 230, 0.4); */
+    background: transparent;
+    padding-left: calc(1vh + 1vw);
+    font-size: 1rem;
+    /* box-shadow: 0 0 0 1px #c4c4c4; */
+    border: 1px solid #c4c4c4;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-right: 2%;
+}
+
+.inps::placeholder{
+    font-size: 1rem;
+    margin-left: 20px;
+}
+
+.header_search_button:hover{
+    cursor: pointer;
+    background-color: white;
+}
+
+.search_item{
+    color: black;
+}
+
+.search_item:hover{
+    cursor: pointer;
+    color: mediumslateblue;
+}
+
+.filter_btn:hover {
+    cursor: pointer;
+    /* box-shadow:0 0 0 1px #c4c4c4; */
+}

@@ -1,0 +1,74 @@
+.user_info_container {
+
+    display: flex;
+    align-items: center;
+
+}
+
+.status_title_container {
+    
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.ticket_title {
+    border-radius: 0px;
+    border-width: 0px 0px 0px 3px;
+    border-style: solid;
+    border-image: initial;
+    border-color: #332FD0;
+    padding-left: 1rem;
+    line-height: 3rem;
+}
+
+.ticket_descr {
+
+    margin-left: calc(40px + 2rem);
+    margin-top: 4rem;
+
+}
+
+.ticket_indication {
+    margin-left: calc(40px + 2rem);
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.submit_answer_button {
+    height: 3.2rem;
+    padding: 0 1.5rem;
+    background-color: #6BCB77;
+    color: #f6f6f6;
+    border-radius: 1000px;
+    font-size: 1.1rem;
+    font-family: Poppins;
+    border: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+    width: 18ch;
+}
+
+.submit_answer_button:hover {
+
+    background-color: white;
+    box-shadow: 0 0 0 2px #6BCB77;
+    color: #6BCB77;
+    cursor: pointer;
+
+}
+.verify_undone{
+    fill: grey;
+}
+.verify_undone:hover {
+
+    /* color: #6BCB77; */
+    fill: #6BCB7780;
+    cursor: pointer;
+
+}
+
+.likeIcon:hover{
+    cursor: pointer;
+}

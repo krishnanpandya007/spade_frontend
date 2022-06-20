@@ -1,0 +1,40 @@
+.footer__main {
+
+    width: 100vw;
+    color: white;
+    /* background-color: #4700D8; */
+    padding-top: 3%;
+    margin-top: min(300px, 25vh);
+    /* background-image: url('http://127.0.0.1:3000/public/facebook_logo.png'); */
+    /* background-size: cover; */
+}
+
+.catagory_section_main {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+
+}
+
+.catagory_section > h2 {
+
+    margin-top: 0;
+    margin-bottom: 0;
+    min-width: 200px;
+
+}
+
+.catagory_section  > ul > li{
+
+    list-style: none;
+    margin: 0.5rem 0;
+
+}
+
+.catagory_section > ul {
+
+    padding-left: 0;
+
+}
