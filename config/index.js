@@ -4,7 +4,7 @@ export const FRONTEND_ROOT_URL = 'https://king-prawn-app-3fykl.ondigitalocean.ap
 
 export const defaultBorderColor = '#bdbdbd'
 
-export const CLIENT_ID = 'y3LasApY3ORH9HbvYXZZnHJylcGBPg47kRg4Lfs4'
+export const CLIENT_ID = 'A2AkRhbxT0wd3c0u3WaZuJ6UNRtJm5a3bcj4ycQx'
 
-export const CLIENT_SECRET = 'us8sq2u4JHofbgaRMMDpHf3FmylCcDcjxo1gshwaUlvvjOaNex28b6OdswEsY6nCqif2tFPXoa9TFctpEGHcAG3Ik7GuIdqumG2MqimhWNdR4en8ppFFwFNIupZCr6eJ'
+export const CLIENT_SECRET = 'OJVQHYRt4IJEKk8RNnhW0qGx9c8zEtwtufHrSM2CPuGHO8IPHX1yq7RoR3VsJ0XzQHxraIka0gO4ZD9cFPsUKFjZQ1rmxLMsiwrDX0za0IIqpkzmFJjqmoSrhNK0tnso'
 
