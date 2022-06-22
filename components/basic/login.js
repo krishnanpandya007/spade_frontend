@@ -1,6 +1,8 @@
+import { FRONTEND_ROOT_URL } from "../../config";
+
 export default async function login (username, password) {
 
-            const apiResponse = await fetch('/api/login/', {
+            const apiResponse = await fetch(`${FRONTEND_ROOT_URL}api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

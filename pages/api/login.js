@@ -38,7 +38,7 @@ export default async function login (req, res) {
     }).catch((err) => {console.log(err)});
     const apiData = await apiResponse.json();
 
-
+    console.log("JIRA::", apiData)
 
     if(apiResponse.status !== 200){
         // Failed
