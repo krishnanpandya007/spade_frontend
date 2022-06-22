@@ -1,6 +1,6 @@
 export const BACKEND_ROOT_URL = 'http://143.244.140.90/'
 
-export const FRONTEND_ROOT_URL = 'http://127.0.0.1:3000/'
+export const FRONTEND_ROOT_URL = 'https://king-prawn-app-3fykl.ondigitalocean.app/'
 
 export const defaultBorderColor = '#bdbdbd'
 
