@@ -230,6 +230,7 @@ export async function get_posts_by_catagory(catagory) {
     });
 
     console.log("*********FETCHED********")
+    console.log("Status::", response.status)
 
     const data = await response.json();
 
