@@ -1,5 +1,5 @@
 import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from "../../../config";
-
+ 
 export default async function login(username, password) {
 
     const login_response = await fetch(`${FRONTEND_ROOT_URL}api/login/`, {
@@ -13,6 +13,10 @@ export default async function login(username, password) {
             password: password
         })
     })
+
+    const mes = await login_response.json();
+
+    console.log("LOGGER:::::::::", mes)
 
     // console.log("Login Response: ", login_response)
 

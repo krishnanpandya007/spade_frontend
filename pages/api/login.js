@@ -42,7 +42,7 @@ export default async function login (req, res) {
 
     if(apiResponse.status !== 200){
         // Failed
-        return res.status(apiResponse.status).json({"error": "Can't authenticate your account | Invalid Credentials"});
+        return res.status(apiResponse.status).json({"error": "Can't authenticate your account | Invalid Credentials", "info": apiData});
 
     }
 
