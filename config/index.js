@@ -6,5 +6,5 @@ export const defaultBorderColor = '#bdbdbd'
 
 export const CLIENT_ID = 'A2AkRhbxT0wd3c0u3WaZuJ6UNRtJm5a3bcj4ycQx'
 
-export const CLIENT_SECRET = 'OJVQHYRt4IJEKk8RNnhW0qGx9c8zEtwtufHrSM2CPuGHO8IPHX1yq7RoR3VsJ0XzQHxraIka0gO4ZD9cFPsUKFjZQ1rmxLMsiwrDX0za0IIqpkzmFJjqmoSrhNK0tnso'
+export const CLIENT_SECRET = 'pbkdf2_sha256$320000$tCqIPz2TDTlqjUE2gjn4cm$CPZ86Z2b7RJT+Kjh1BlYNh1E6kArReYIjCFYnqCyAFg='
 
