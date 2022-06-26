@@ -1,4 +1,4 @@
-import { CircularProgress, Divider, Grid, LinearProgress, Stack, Typography } from '@mui/material'
+import {Backdrop, Divider,Stack, Tooltip, Typography } from '@mui/material'
 import React, { useContext, useEffect } from 'react'
 import { styled as st } from '@mui/material/styles';
 
@@ -6,10 +6,10 @@ import styled from '@emotion/styled'
 import Image from 'next/image';
 import Link from 'next/link';
 import { FRONTEND_ROOT_URL } from '../../config';
-import { LoadingButton } from '@mui/lab';
-import { blue } from '@mui/material/colors';
+// import { LoadingButton } from '@mui/lab';
+// import { blue } from '@mui/material/colors';
 
-import {signIn, getProviders} from 'next-auth/react'
+import {signIn} from 'next-auth/react'
 import LoginDrawerCredentialsSignIn from './LoginDrawerCredentialsSignIn';
 import authContext from './contexts/layout_auth_context';
 
@@ -47,11 +47,22 @@ const StyledInput = styled.input`
   }
 
 `
+const BackdropDiv = styled.div`
+
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: black;
+
+`
 
 
-const SocialLoginButton = styled.div`
+const SocialLoginButton = styled.button`
   display: flex;
   justify-content: flex-start;
+  position: relative;
   align-items: center;
   width: 80%;
   padding: 1rem;
@@ -60,8 +71,9 @@ const SocialLoginButton = styled.div`
   border:1px solid #00000031;
   font-family: Poppins;
   transition: 0.2s ease;
-
-  &:hover {
+  background-color: white;
+  
+  &:hover:enabled {
 
     cursor: pointer;
     box-shadow: 0 0 0 1px #4D77FF;
@@ -69,10 +81,11 @@ const SocialLoginButton = styled.div`
 
   }
 
-  &:disable {
 
-    background-color: #c4c4c4 !important;
-    color: black;
+  &:disabled {
+    cursor: not-allowed;
+    // background-color: #c4c4c4 !important;
+    // color: black;
 
   }
   
@@ -144,16 +157,24 @@ function LoginDrawerContent() {
             justifyContent="space-evenly"
             padding={3}
         >
-
-            <SocialLoginButton onClick={() => {signIn('google')}}>
+          {/* <BackdropDiv > */}
+          {/* <Tooltip title="In Enhancement"> */}
+            <SocialLoginButton onClick={() => {signIn('google')}} disabled >
+            <svg style={{position: 'absolute', top: '0', right: '0px', transform: 'translate(25%, -50%)', background: 'white'}} width="17" height="17" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.49998 0.5C5.49998 0.223858 5.72383 0 5.99998 0H7.49998H8.99998C9.27612 0 9.49998 0.223858 9.49998 0.5C9.49998 0.776142 9.27612 1 8.99998 1H7.99998V2.11922C9.09832 2.20409 10.119 2.56622 10.992 3.13572C11.0116 3.10851 11.0336 3.08252 11.058 3.05806L11.858 2.25806C12.1021 2.01398 12.4978 2.01398 12.7419 2.25806C12.986 2.50214 12.986 2.89786 12.7419 3.14194L11.967 3.91682C13.1595 5.07925 13.9 6.70314 13.9 8.49998C13.9 12.0346 11.0346 14.9 7.49998 14.9C3.96535 14.9 1.09998 12.0346 1.09998 8.49998C1.09998 5.13362 3.69904 2.3743 6.99998 2.11922V1H5.99998C5.72383 1 5.49998 0.776142 5.49998 0.5ZM2.09998 8.49998C2.09998 5.51764 4.51764 3.09998 7.49998 3.09998C10.4823 3.09998 12.9 5.51764 12.9 8.49998C12.9 11.4823 10.4823 13.9 7.49998 13.9C4.51764 13.9 2.09998 11.4823 2.09998 8.49998ZM7.99998 4.5C7.99998 4.22386 7.77612 4 7.49998 4C7.22383 4 6.99998 4.22386 6.99998 4.5V9.5C6.99998 9.77614 7.22383 10 7.49998 10C7.77612 10 7.99998 9.77614 7.99998 9.5V4.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
                 <Image width="35" height="35" src="/google_logo.png" />
                 <p style={{margin :'0', marginLeft: '1rem', width: '100%', textAlign: 'center', letterSpacing: '1px'}}>LOGIN WITH GOOGLE</p>
             </SocialLoginButton>
+          {/* </Tooltip> */}
+          {/* </BackdropDiv> */}
+          {/* <Tooltip title="In Enhancement"> */}
 
-            <SocialLoginButton onClick={() => {signIn('facebook')}}>
+            <SocialLoginButton onClick={() => {signIn('facebook')}} disabled>
+            <svg style={{position: 'absolute', top: '0', right: '0px', transform: 'translate(25%, -50%)', background: 'white'}} width="17" height="17" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.49998 0.5C5.49998 0.223858 5.72383 0 5.99998 0H7.49998H8.99998C9.27612 0 9.49998 0.223858 9.49998 0.5C9.49998 0.776142 9.27612 1 8.99998 1H7.99998V2.11922C9.09832 2.20409 10.119 2.56622 10.992 3.13572C11.0116 3.10851 11.0336 3.08252 11.058 3.05806L11.858 2.25806C12.1021 2.01398 12.4978 2.01398 12.7419 2.25806C12.986 2.50214 12.986 2.89786 12.7419 3.14194L11.967 3.91682C13.1595 5.07925 13.9 6.70314 13.9 8.49998C13.9 12.0346 11.0346 14.9 7.49998 14.9C3.96535 14.9 1.09998 12.0346 1.09998 8.49998C1.09998 5.13362 3.69904 2.3743 6.99998 2.11922V1H5.99998C5.72383 1 5.49998 0.776142 5.49998 0.5ZM2.09998 8.49998C2.09998 5.51764 4.51764 3.09998 7.49998 3.09998C10.4823 3.09998 12.9 5.51764 12.9 8.49998C12.9 11.4823 10.4823 13.9 7.49998 13.9C4.51764 13.9 2.09998 11.4823 2.09998 8.49998ZM7.99998 4.5C7.99998 4.22386 7.77612 4 7.49998 4C7.22383 4 6.99998 4.22386 6.99998 4.5V9.5C6.99998 9.77614 7.22383 10 7.49998 10C7.77612 10 7.99998 9.77614 7.99998 9.5V4.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
+
                 <Image style={{margin: '1rem'}} width="35" height="35" src="/facebook_logo.png" />
                 <p style={{margin :'0', marginLeft: '1rem', width: '100%', textAlign: 'center', letterSpacing: '1px'}}>LOGIN WITH FACEBOOK</p>
             </SocialLoginButton>
+          {/* </Tooltip> */}
 
         </Stack>
 
