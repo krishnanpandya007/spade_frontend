@@ -61,7 +61,7 @@ function About() {
             {/* FAQ(s) */}
             <details className={styles.faqs}>
                 <summary>What if i want to search for author or tags rather than post ?</summary>
-                <p>You have to search in format of <span style={{fontWeight: '300'}}> field_name:query </span> <br /> Ex. <span style={{fontStyle: 'oblique', fontWeight: '700'}}> author: krishnan_pandya </span> or <span style={{fontStyle: 'oblique', fontWeight: '700'}}> tags: valorant </span> and Hit-Enter to search!! <br /> Thanks.</p>
+                <p>You have to search in format of <span style={{fontWeight: '300'}}> field_name:query </span> <br /> Ex. <span style={{fontStyle: 'oblique', fontWeight: '700'}}> profile: krishnan_pandya </span> or <span style={{fontStyle: 'oblique', fontWeight: '700'}}> tag: valorant </span> and Hit-Enter to search!! <br /> Thanks.</p>
             </details>
 
         {/* [END] How Spade Search works */}

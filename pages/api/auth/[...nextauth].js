@@ -4,7 +4,7 @@ import TwitterProvider from "next-auth/providers/twitter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import cookie from 'cookie'
-import { BACKEND_ROOT_URL } from "../../../config/index"
+import { BACKEND_ROOT_URL, SOCIAL_ACCOUNT_ACCESS_KEY } from "../../../config/index"
 import { validate_user } from "../../../components/authenticate_user"
 
 // The session is automatically loaded when the
@@ -74,7 +74,7 @@ export default async function auth(req, res){
         console.log("Access: ", token)
         console.log("Full Account: ", account)
         // token.accessToken = account.access_token 
-        const response = await fetch(`${BACKEND_ROOT_URL}auth/convert-token/`, {
+        const response = await fetch(`${BACKEND_ROOT_URL}apio/create/social_account/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -82,12 +82,13 @@ export default async function auth(req, res){
           },
           body: JSON.stringify({
 
-            token: account.access_token,
-            backend: account.provider === 'google' ? 'google-oauth2' : account.provider,
-            grant_type: 'convert_token',
-            client_id: 'hk2vfzk2o8knXSpVx3434ru79YbScYeMHgvc5z6M',
-            client_secret: 'OeyrUmeEL7dKHqGXaq0QNfJfYdkvu5JwR6qYBt5ZNxBMPJZslR9vD7ajX4o4YGU25yA0LlcxFGK3AXuEP3vxmF2NvPo7BuihRinQdYfZDEAkxt1QkCPxFvHpXapmoR6T',
-
+            // token: account.access_token,
+            provider:account.provider,
+            social_account_access_key: SOCIAL_ACCOUNT_ACCESS_KEY,
+            name: token.name,
+            email: token.email,
+            profile: token.profile 
+            
           })
         })
     
@@ -100,7 +101,7 @@ export default async function auth(req, res){
         res.setHeader('Set-Cookie', [cookie.serialize(
           'access', access_token, {
               httpOnly: true,
-              secure: false, // If in-production => true; else false // *****HARDCODED******
+              secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
               maxAge: expires_in, // In Seconds
               sameSite: 'strict',
               path: '/'
@@ -109,7 +110,7 @@ export default async function auth(req, res){
           cookie.serialize(
             'refresh', refresh_token, {
                 httpOnly: true,
-                secure: false, // If in-production => true; else false // *****HARDCODED******
+                secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
                 maxAge: expires_in, // In Seconds
                 sameSite: 'strict',
                 path: '/'

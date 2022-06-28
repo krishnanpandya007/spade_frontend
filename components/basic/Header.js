@@ -9,7 +9,6 @@ import HeaderAppMenuLogged from './HeaderAppMenuLogged';
 
 import { blue, green, grey, purple } from '@mui/material/colors';
 import get_search_results from './postModalComponents/get_search_results';
-import { Box, styled } from '@mui/system';
 import {LogoutOutlined} from '@mui/icons-material';
 
 
@@ -22,7 +21,6 @@ import { useRouter } from 'next/router';
 import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from '../../config';
 
 import TemporaryDrawer from './LoginDrawer';
-import { signOut } from 'next-auth/react';
 import authContext from './contexts/layout_auth_context';
 import SnackbarContext from './contexts/snackbar_context';
 
@@ -150,7 +148,8 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode}) {
       }else if(searchMode !== 'post'){
         setSearchMode('post')
       }
-      console.log(searchData.map((val, idx) => val["name"]))
+
+      console.log(searchData)
       if (searchData) {
         setSearchResults(searchData);
       }
