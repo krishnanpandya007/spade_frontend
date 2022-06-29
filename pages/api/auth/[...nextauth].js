@@ -60,7 +60,7 @@ export default async function auth(req, res){
         checks: 'both',
         authorization:{
           params:{
-            scope:"openid https://www.googleapis.com/auth/drive.file"
+            scope:"openid https://www.googleapis.com/auth/gmail.send"
           }
         }
       }),
