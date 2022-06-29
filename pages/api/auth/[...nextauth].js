@@ -4,7 +4,7 @@ import TwitterProvider from "next-auth/providers/twitter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import cookie from 'cookie'
-import { BACKEND_ROOT_URL, SOCIAL_ACCOUNT_ACCESS_KEY, NEXT_PUBLIC_SECRET } from "../../../config/index"
+import { BACKEND_ROOT_URL, SOCIAL_ACCOUNT_ACCESS_KEY } from "../../../config/index"
 import { validate_user } from "../../../components/authenticate_user"
 
 // The session is automatically loaded when the
@@ -223,7 +223,7 @@ export default async function auth(req, res){
 
     },
 
-    secret: NEXT_PUBLIC_SECRET
+    secret: process.env.NEXT_PUBLIC_SECRET
     
   
   })
