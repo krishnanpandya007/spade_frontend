@@ -57,7 +57,12 @@ export default async function auth(req, res){
       GoogleProvider({
         clientId: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
-        checks: 'both'
+        checks: 'both',
+        authorization:{
+          params:{
+            scope:"openid https://www.googleapis.com/auth/drive.file"
+          }
+        }
       }),
       // ...add more providers here
       
