@@ -47,7 +47,7 @@ function Home({data, is_authenticated, user_info}) {
 
 
 
-    <Layout mode={"home"} title="Home | Spade" content="home page of spade" includesFilters includesPostModal isAuthenticated={is_authenticated} changeFilterBy={changeFilterBy} userInfo={user_info}>
+    <Layout mode={"home"} title="Spade" content="home page of spade" includesFilters includesPostModal isAuthenticated={is_authenticated} changeFilterBy={changeFilterBy} userInfo={user_info}>
              <Grid container spacing={3}>
             <Grid item xs={8} justifyContent="center" alignItems="center">
                 <motion.div  animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
