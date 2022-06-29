@@ -57,12 +57,12 @@ export default async function auth(req, res){
       GoogleProvider({
         clientId: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
-        checks: 'both',
-        authorization:{
-          params:{
-            scope:"openid https://www.googleapis.com/auth/gmail.send"
-          }
-        }
+        checks: 'both'
+        // authorization:{
+        //   params:{
+        //     scope:"openid https://www.googleapis.com/auth/gmail.send"
+        //   }
+        // }
       }),
       // ...add more providers here
       
