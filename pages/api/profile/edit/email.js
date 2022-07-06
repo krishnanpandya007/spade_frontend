@@ -49,7 +49,9 @@ export default async (req, res) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${access}`
+
                 },
                 body: body
             }).catch((err) => {console.log(err)})

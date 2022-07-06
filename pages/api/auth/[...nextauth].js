@@ -57,7 +57,24 @@ export default async function auth(req, res){
       GoogleProvider({
         clientId: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
-        checks: 'both'
+        checks: 'both',
+        async authorize(credentials, req) {
+  
+          // Make Call to backend for access_token and refresh_token
+        
+          const user = {id: 1, name: 'John Doe'}
+  
+          if (user) {
+  
+            return user;
+  
+          }else {
+  
+            return null
+  
+          }
+  
+        }
         // authorization:{
         //   params:{
         //     scope:"openid https://www.googleapis.com/auth/gmail.send"
@@ -226,6 +243,12 @@ export default async function auth(req, res){
         // }
       },
 
+      async signIn({ user, account, profile, email, credentials }) {
+        console.log("THAAY CHHE")
+        console.log(user, account, profile, email, credentials)
+
+        return true
+      },
     },
 
     secret: process.env.NEXT_PUBLIC_SECRET

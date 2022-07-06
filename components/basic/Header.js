@@ -11,7 +11,6 @@ import { blue, green, grey, purple } from '@mui/material/colors';
 import get_search_results from './postModalComponents/get_search_results';
 import {LogoutOutlined} from '@mui/icons-material';
 
-
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -87,8 +86,6 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode}) {
   const [loading, setLoading] = React.useState(false)
 
   const [openSearchResults, setOpenSearchResults] = React.useState(false);
-
-
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElSettings, setAnchorElSettings] = React.useState(null);
@@ -277,7 +274,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode}) {
     </React.Fragment>
     {/* otherHeaderComponents END */}
 
-        <div className={styles.header_main}>
+        <div className={styles.header_main}>  
             <div className={styles.header_left}>
                 <Link href="/">
                     <a href="/" style={{margin: '0', padding: '0'}}>

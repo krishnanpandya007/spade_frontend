@@ -3,7 +3,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import createEmotionCache from '../lib/createEmotionCache';
-import { SessionProvider } from "next-auth/react"
 import NextNProgress from "nextjs-progressbar";
 import { motion } from 'framer-motion';
 import "../styles/globals.css";

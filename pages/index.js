@@ -82,9 +82,11 @@ export async function getServerSideProps(context) {
     
     context.res.setHeader('Cache-Control', 'private, maxage=130000, stale-while-revalidate, must-revalidate')
     
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    delay(10)
     // Cache to client side as well
 
-    // console.log(backend_data)
+    console.log("Context: ",context)
 
 
     return {

@@ -32,37 +32,37 @@ export default async (req, res) => {
         access = data.access;
 
         const {
-            email
+            edit_url
         } = req.body;
 
         // console.log("Post Id: ", post_id)
 
         const body = JSON.stringify({
-            new_email: email   
+            edit_url     
         })
 
+        try{
 
-        const apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/send_verification_code/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${access}`
+            const apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/profile_pic_url/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${access}`
 
-            },
-            body: body
-        }).catch((err) => {console.log(err)})
+                },
+                body: body
+            }).catch((err) => {console.log(err)})
 
-        const dataj = await apiResponse.json()
+            const data = await apiResponse.json()
 
-        if (apiResponse.status === 200){
-            // Account Created Successfully
-            return res.status(200).json({success: 'Verification Code sent!'})
-        }else{
-            return res.status(apiResponse.status).json({error: 'Can\'t send Verification Code'})
+                return res.status(apiResponse.status).json(data)
+
+        } catch(e) {
+
+            return res.status(500).json({error: 'Something went wrong'})
+
         }
-
-
 
 
     }else{

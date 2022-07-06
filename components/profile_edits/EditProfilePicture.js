@@ -5,26 +5,13 @@ import {FRONTEND_ROOT_URL } from '../../config'
 import styles from './rules.module.css'
 // import { Input } from '@material-ui/core'
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
 export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, removeProfilePic,ParentSnackbarSeverity, parentOpenSnackBar}) {
 
     const [profilePicContent, setProfilePicContent] = React.useState(null);
     const [profilePicName, setProfilePicName] = React.useState(null);
+
+    const [url, setUrl] = React.useState(null);
 
     const handleRaiseMessageOnSnackbar = (severity, message) => {
 
@@ -58,6 +45,30 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
 
     const SubmitEditProfilePic = async () => {
 
+        if(url){
+            const response = await fetch(`${FRONTEND_ROOT_URL}api/profile/edit/profile_pic_url/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    edit_url: url
+                })
+            })
+
+            // const dataj = await response.json();
+
+            if(response.status !== 204){
+                // Cant update profile pic url
+                handleRaiseMessageOnSnackbar('error', "Can't able to update profile pic. (URL)")
+
+            }
+            handleRaiseMessageOnSnackbar('success', "Successfully updated your profile pic (URL)")
+
+            return
+        }
+
         const form_data = new FormData();
 
         // console.log(csrf_cookie)
@@ -66,7 +77,7 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
         
         // axios.post('/api/profile/edit/profile_pic/', form_data)
         //                         .then((res)=> console.log(res))
-
+        try{
             const response = await fetch(`${FRONTEND_ROOT_URL}api/profile/edit/profile_pic/`, {
                 method: 'POST',
                 headers: {
@@ -82,6 +93,12 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
             }else{
                 handleRaiseMessageOnSnackbar('error', "Can't able to update profile pic.")
             }
+
+        } catch (e) {
+
+            console.log("Attac:", e)
+
+        }
 
     }
 
@@ -112,9 +129,15 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
         </IconButton>
     </Tooltip>
     </div>
+    <br />
+    <br />
+
+    <Divider>or</Divider>
+    <h4>Provide URL:</h4>
+    <TextField placeholder="URL for profile pic." variant="outlined" fullWidth type="url" value={url} onChange={(e) => {setUrl(e.target.value)}}/>
     <h4 style={{marginTop: '10%'}}>Note:</h4>
     <ul className={styles.UL}>
-        <li>{profile_pic}</li>
+        {/* <li>{profile_pic}</li> */}
         <li>Anyone can see your profile pic. as its public</li>
         <li>If your profile picture is not attached, we show your name initials as profile pic (when required).</li>
 

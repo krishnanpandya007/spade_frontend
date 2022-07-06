@@ -5,7 +5,7 @@ import styles from './rules.module.css'
 
 
 
-const status_indicator_colors = {
+export const status_indicator_colors = {
 
   "do not disturb": '#FF1700',
   available: '#65C18C',
@@ -14,6 +14,7 @@ const status_indicator_colors = {
   busy: '#4C3F91'
 
 }
+
 
 export default function EditStatusIndicator({username, current_status_indicator, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 

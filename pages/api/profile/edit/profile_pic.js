@@ -4,18 +4,18 @@ import cookie from 'cookie';
 import fs from "fs";
 import { formidable } from "formidable";
 //set bodyparser
-// export const config = {
-//     api: {
-//       bodyParser: false
-//     }
-// }
+export const config = {
+    api: {
+      bodyParser: false
+    }
+}
 
 
 export default async (req, res) => {
 
     if(req.method.toLowerCase() === "post"){
         // Register new account
-
+        console.log("Hit")
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
        
