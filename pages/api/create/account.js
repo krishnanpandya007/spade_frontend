@@ -1,5 +1,5 @@
 import { BACKEND_ROOT_URL } from "../../../config";
-
+import cookie from 'cookie'
 export default async (req, res) => {
 
     if(req.method.toLowerCase() === "post"){
@@ -35,13 +35,37 @@ export default async (req, res) => {
 
         const data = await apiResponse.json()
 
-        if (apiResponse.status === 201){
-            console.log("HORRAAAAYYYYY")
-            // Account Created Successfully
-            return res.status(201).json({success: apiResponse.success})
-        }else{
-            return res.status(apiResponse.status).json({error: data.error})
-        }
+        const { access_token, refresh_token, expires_in } = data;
+
+        res.setHeader('Set-Cookie', [cookie.serialize(
+          'access', access_token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
+              maxAge: expires_in, // In Seconds
+              sameSite: 'strict',
+              path: '/'
+              }
+          ),
+          cookie.serialize(
+            'refresh', refresh_token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
+                maxAge: expires_in, // In Seconds
+                sameSite: 'strict',
+                path: '/'
+                }
+            )
+      ]
+  );
+
+
+        // if (apiResponse.status === 201){
+        //     console.log("HORRAAAAYYYYY")
+        //     // Account Created Successfully
+        //     return res.status(201).json({success: apiResponse.success})
+        // }else{
+            return res.status(apiResponse.status).json(data)
+        // }
 
  
 
