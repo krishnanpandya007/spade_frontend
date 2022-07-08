@@ -61,7 +61,7 @@ export default function MyApp(props) {
           },
         }}>
           <SnackbarContext.Provider value={{...snackbarData, open: open, close: close, undo_action: undo_action}}>
-            <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} message={snackbarData.severity === "simple" ? snackbarData.message : null} open={snackbarData.open} onClose={close} action={snackbarData.includes_callback ? undo_action(snackbarData.callback_fn) : null} >
+            <Snackbar autoHideDuration={5000} anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} message={snackbarData.severity === "simple" ? snackbarData.message : null} open={snackbarData.open} onClose={close} action={snackbarData.includes_callback ? undo_action(snackbarData.callback_fn) : null} >
               {snackbarData.severity !== 'simple' &&
                 <Alert onClose={close} severity={snackbarData.severity}>
                   {snackbarData.message}

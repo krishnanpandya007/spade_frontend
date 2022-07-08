@@ -171,7 +171,7 @@ function Edit() {
                     {/* <TextField label="Status Indicator" variant="standard" style={{margin: '0.5rem 8ch', width: '30ch'}} value={userInfo.status_indicator} onChange={(e) => {setUserInfo({...userInfo,status_indicator:e.target.value})}} type="text"/> */}
                     {/* <br /> */}
 
-                    <TextField label="Password (again)" variant="standard" style={{margin: '1rem 8ch', width: '30ch'}} value={userInfo.re_password} onChange={(e) => {setUserInfo({...userInfo,re_password:e.target.value})}} type="text"/>
+                    <TextField label="Password (again)" variant="standard" style={{margin: '1rem 8ch', width: '30ch'}} value={userInfo.re_password} onChange={(e) => {setUserInfo({...userInfo,re_password:e.target.value})}} type="password"/>
 
                     <br />
                     <br />
