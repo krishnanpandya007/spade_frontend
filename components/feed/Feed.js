@@ -67,7 +67,6 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
             {(isProfileView ? data.created_posts : data).map((post, idx) => {
                 return (
-
                     // <Grid key={idx} container spacing={0} sx={{position: 'relative',width: '60vw', height: '40vh', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '3px', marginBottom: '5vh'}} alignItems='center' justifyContent='center'>
                     <div key={idx} style={{width: 'clamp(1000px, 60vw, 1200px)', height: 'clamp(300px, 40vh,400px)', border: '1px solid ' + defaultBorderColor, borderRadius: '5px', marginBottom: '5vh', display: 'flex'}}>
                         <div style={{height: '100%', width: '25%', borderRight: '1px solid '+ defaultBorderColor, position: 'relative'}}>
@@ -84,7 +83,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                         
                         {/* <Grid item xs={8.9} sx={{ height: '100%'}}> */}
                             {/* Add isLiked and isDisliked */}
-                            <FeedContent comments={post.comments} is_liked={postModalContext.post_id === post.id?postModalContext.is_liked:post.likes?.includes(username)} is_disliked={postModalContext.post_id === post.id?postModalContext.is_disliked:post.dislikes?.includes(username)} username={username} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
+                            <FeedContent profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={postModalContext.post_id === post.id?postModalContext.is_liked:post.likes?.includes(username)} is_disliked={postModalContext.post_id === post.id?postModalContext.is_disliked:post.dislikes?.includes(username)} username={post.author_name} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
                         </div>
                     </div>
                 )

@@ -53,7 +53,7 @@ export default async (req, res) => {
             
             console.log("BUMBUM:::", data)
             if(data.error){
-                return res.status(401).json({error: data.error})
+                return res.status(response.status).json(data)
             }
             return data
         }
@@ -69,13 +69,13 @@ export default async (req, res) => {
                     resolve({ err, fields, files })
                 }) 
             })
-            return res.status(200).json({})
+            return res.status(200).json({error: false, message: "Published Successfully!"})
 
         } catch(e) {
 
             console.log("reason::", e)
 
-            return res.status(500).json({error: 'Can\'t able to create account!'})
+            return res.status(500).json({error: true, message: 'Can\'t able to create account!'})
 
         }
 

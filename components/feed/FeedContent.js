@@ -1,6 +1,6 @@
 // import { Alert, Avatar, Button, Chip, Divider, Fade, FormControl, Grid, IconButton, OutlinedInput, Slide, Snackbar,  Tooltip, Typography } from '@material-ui/core'
 
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, {useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 // import InsertPhotoRoundedIcon from '@material-ui/icons/InsertPhotoRounded';
 
@@ -13,17 +13,16 @@ import PropTypes from 'prop-types'
 // import ModalUnstyled from '@mui/base/ModalUnstyled';
 // import { Box, styled } from '@material-ui/system';
 import { styled, Box } from '@mui/system';
-import {Alert, Avatar, Button, Chip, Divider, Fade, FormControl, Grid, IconButton, Modal, OutlinedInput, Slide, Snackbar, Stack, Tooltip, Typography} from '@mui/material';
+import {Chip, Fade, IconButton, Modal, Slide, Snackbar, Tooltip} from '@mui/material';
 // import { ModalUnstyled } from '@material-ui/unstyled';
 // import avatar_pic from './avatar_1.jpg'
-import ModalUnstyled from '@mui/base/ModalUnstyled';
 // import { Fade, Snackbar, Tooltip } from '@material-ui/core';
 
 
 import { defaultBorderColor, FRONTEND_ROOT_URL } from '../../config';
 import PostModal from '../basic/PostModal';
 import { handle_action_create_comment, handle_action_post } from '../basic/handle_action';
-import { BookmarkBorderRounded, ContentCopyOutlined, InsertPhotoRounded, Send, ShareOutlined, Star, StarOutline, StarOutlined, ThumbDownAltOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
+import { ContentCopyOutlined, InsertPhotoRounded, Send, ShareOutlined,ThumbDownAltOutlined, ThumbUpAltOutlined } from '@mui/icons-material';
 import SnackbarContext from '../basic/contexts/snackbar_context';
 
 import emotion_styled from '@emotion/styled'
@@ -88,7 +87,7 @@ function SlideTransition(props) {
   }
 
 var initial=0;
-function FeedContent({title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments}) {
+function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments}) {
 
     const [likesCount, setLikesCount] = React.useState(likes_count ?? 0);
     const postModalContext = useContext(PostModalContext)
@@ -97,7 +96,6 @@ function FeedContent({title, descr, likes_count, is_bookmarked, is_liked, dislik
     const [isLiked, setIsLiked] = React.useState(is_liked)
     const [isDisliked, setIsDisliked] = React.useState(is_disliked)
 
-    const [open, setOpen] = React.useState(false);
     
     const[doBookmark, setDoBookmark] = React.useState(false)
 
@@ -141,7 +139,7 @@ function FeedContent({title, descr, likes_count, is_bookmarked, is_liked, dislik
             post_id: post_id,
             title: title,
             author: username,
-            profile_pic: null, // CHANGED
+            profile_pic: profile_pic, // CHANGED
             descr:descr,
             images: images,
             comments: comments,
@@ -150,7 +148,7 @@ function FeedContent({title, descr, likes_count, is_bookmarked, is_liked, dislik
             is_liked: is_liked,
             is_disliked: is_disliked,
             is_bookmarked: is_bookmarked,
-            len_tags: 4, // CHANGED
+            len_tags: len_tags, // CHANGED
             create_mode: false,
 
         })
@@ -302,7 +300,6 @@ function FeedContent({title, descr, likes_count, is_bookmarked, is_liked, dislik
 
 
     const sharePost = () => {
-        alert("called")
         setShareOpen(true)
 
     }
@@ -513,14 +510,14 @@ function FeedContent({title, descr, likes_count, is_bookmarked, is_liked, dislik
                         </IconButton>
                         <p style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
                     </div>
-                    <IconButton>
+                    <IconButton onClick={sharePost}>
 
                         <ShareOutlined />
                     </IconButton>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
-                    <StyledCommentInput placeholder="Quick Comment..." />
-                    <IconButton style={{height: '100%', aspectRatio: '1', borderRadius: '5px'}}>
+                    <StyledCommentInput placeholder="Quick Comment..." onChange={handleCommentInputChange} />
+                    <IconButton style={{height: '100%', aspectRatio: '1', borderRadius: '5px'}} onClick={handleCommentSubmit}>
                         <Send />
                     </IconButton>
                 </div>

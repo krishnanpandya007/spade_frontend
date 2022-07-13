@@ -3,6 +3,7 @@ import { CheckCircleOutlineRounded } from "@mui/icons-material";
 import PropTypes from "prop-types"
 // import useState from 'react'
 import { useEffect } from "react";
+import { BACKEND_ROOT_URL } from "../../../config";
 
 function ImageBody({images, createMode}) {
 
@@ -10,20 +11,22 @@ function ImageBody({images, createMode}) {
     const imagesWidth = 400;
 
     useEffect(() => {
-    console.log('http://localhost:8000'+images[0])        
+    console.log(BACKEND_ROOT_URL.slice(0,-1)+images[0])        
     }, [])
 
     return (
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                {createMode && <div >
+                        <h2 style={{color: 'grey'}}>Attached Images will be Shown here.</h2>
+                    </div>}
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}>
-
 
                 {   !createMode ?
 
                     ( images[0] && 
                         <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                    src={'http://localhost:8000'+images[0]}
+                    src={BACKEND_ROOT_URL.slice(0,-1)+images[0]}
                     
                     width={!images[0] && imagesWidth}
                     height={imagesHeight}
@@ -33,21 +36,8 @@ function ImageBody({images, createMode}) {
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
-                    <div style={{display: 'grid', placeItems: 'center', width: `${imagesWidth}px`, height: `${imagesHeight}px`, border: '1px solid grey', borderRadius: '6px'}}>
-                        <h3 style={{color: 'grey'}}>{imagesWidth} x {imagesHeight}</h3>
-                    </div>
-                    }
-                    {/* <Badge badgeContent={<CheckCircleOutlineRounded />} style={{border: '1px solid red', width: '10%'}}> */}
-                    <div style={{display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                        <h4 style={{borderColor: 'grey', border: '1px solid', padding: '0.5% 1.3%', borderRadius: '5px'}}>Image-A</h4>
-                        {   createMode && images[0]?
-
-                        <CheckCircleOutlineRounded color="primary" style={{marginLeft: '2%'}} />:null
-
-                        }
-                    </div>
-
-                    {/* </Badge> */}
+                    null
+            }
                 </div>
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}> 
 
@@ -57,7 +47,7 @@ function ImageBody({images, createMode}) {
                     ( images[1] && 
                         <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                    src={createMode ? images[1] : 'http://localhost:8000'+images[1]}
+                    src={createMode ? images[1] : BACKEND_ROOT_URL.slice(0,-1)+images[1]}
                     alt="Picture of the author"
                     height={imagesHeight}
                     width={!images[1] ? imagesWidth : 'auto'}
@@ -66,21 +56,9 @@ function ImageBody({images, createMode}) {
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
-                    <>
-                    <div style={{display: 'grid', placeItems: 'center', width: `${imagesWidth}px`, height: `${imagesHeight}px`, border: '1px solid grey', borderRadius: '6px'}}>
-                        <h3 style={{color: 'grey'}}>{imagesWidth} x {imagesHeight}</h3>
-                    </div>
-                    </>
+                    null
                     }
-                    {/* <Badge badgeContent={<CheckCircleOutlineRounded />} style={{border: '1px solid red', width: '10%'}}> */}
-                    <div style={{display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                        <h4 style={{borderColor: 'grey', border: '1px solid', padding: '0.5% 1.3%', borderRadius: '5px'}}>Image-B</h4>
-                        {   createMode && images[1]?
-
-                        <CheckCircleOutlineRounded color="primary" style={{marginLeft: '2%'}} />:null
-
-                        }
-                    </div>
+                    
 
                 </div>
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}>
@@ -92,7 +70,7 @@ function ImageBody({images, createMode}) {
                     ( images[2] && 
                         <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                    src={createMode ? images[2] : 'http://localhost:8000'+images[2]}
+                    src={createMode ? images[2] : BACKEND_ROOT_URL.slice(0,-1)+images[2]}
                     alt="Picture of the author"
                     height={imagesHeight}
                     // height={imagesHeight}
@@ -102,19 +80,10 @@ function ImageBody({images, createMode}) {
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
-                    <div style={{display: 'grid', placeItems: 'center', width: `${imagesWidth}px`, height: `${imagesHeight}px`, border: '1px solid grey', borderRadius: '6px'}}>
-                        <h3 style={{color: 'grey'}}>{imagesWidth} x {imagesHeight}</h3>
-                    </div>
+                    null
                     }
                     {/* <Badge badgeContent={<CheckCircleOutlineRounded />} style={{border: '1px solid red', width: '10%'}}> */}
-                    <div style={{display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                        <h4 style={{borderColor: 'grey', border: '1px solid', padding: '0.5% 1.3%', borderRadius: '5px'}}>Image-X</h4>
-                        {   createMode && images[2]?
-
-                        <CheckCircleOutlineRounded color="primary" style={{marginLeft: '2%'}} />:null
-
-                        }
-                    </div>
+                    
 
                 </div>
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}> 
@@ -124,7 +93,7 @@ function ImageBody({images, createMode}) {
                     ( images[3] && 
                         <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                    src={'http://localhost:8000'+images[3]}
+                    src={BACKEND_ROOT_URL.slice(0,-1)+images[3]}
                     alt="Picture of the author"
                     height={imagesHeight}
                     width={!images[3]  ? imagesWidth : 'auto'}
@@ -134,19 +103,8 @@ function ImageBody({images, createMode}) {
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
-                    <div style={{display: 'grid', placeItems: 'center', width: `${imagesWidth}px`, height: `${imagesHeight}px`, border: '1px solid grey', borderRadius: '6px'}}>
-                        <h3 style={{color: 'grey'}}>{imagesWidth} x {imagesHeight}</h3>
-                    </div>
-                    }
-                    {/* <Badge badgeContent={<CheckCircleOutlineRounded />} style={{border: '1px solid red', width: '10%'}}> */}
-                    <div style={{display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                        <h4 style={{borderColor: 'grey', border: '1px solid', padding: '0.5% 1.3%', borderRadius: '5px'}}>Image-Y</h4>
-                        {   createMode && images[3]?
-
-                        <CheckCircleOutlineRounded color="primary" style={{marginLeft: '2%'}} />:null
-
-                        }
-                    </div>
+                    null
+                }
 
                 </div>
         </div>

@@ -54,7 +54,7 @@ function PostModal() {
     const auth = useContext(authContext)
     const snackbarContext = useContext(SnackbarContext)
     const postModalContext = useContext(PostModalContext)
-
+    console.log(postModalContext)
     // Friend To PostModalContext Commit
     const [currentMode, setCurrentMode] = useState('main') // Any of ['main', 'images', 'comments']
     const [modal_title, setModalTitle] = useState({main: postModalContext.title, image: "Attached Images", comment: "Comments"})
@@ -62,12 +62,6 @@ function PostModal() {
     // Friend To PostModalContext Commit
 
     // postmodal args. changed and postModalContext.open needs to be changed
-
-    console.log("Rendered")
-
-    useEffect(() => {
-        console.log("POST_MODAL",postModalContext)
-    }, [])
 
     const unBookmark =  () => {
         const success = unbookmark_post(postModalContext.post_id);
@@ -130,7 +124,7 @@ function PostModal() {
             open={postModalContext.open}
             onClose={() => {postModalContext.set_open(false)}}
             // BackdropComponent={Backdrop}/
-            style={{border: 'none', display: 'grid', placeItems: 'center'}}
+            style={{border: 'none', display: 'grid', placeItems: 'center', height: 'clamp(400px, 80vh, 900px)'}}
         >
             {/* <ShareModal }/> */}
             {/* <Modal></Modal> */}
@@ -142,9 +136,9 @@ function PostModal() {
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
                         <div style={{width: '60%', display: 'flex', textAlign: 'center'}}>
-                            <Avatar alt={"DP"} style={{marginRight: '1.2%'}} src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" />
-                            <Link href="/" >
-                                <a style={{fontWeight: '400', fontFamily: 'Roboto', display: 'grid', placeItems: 'center'}}>{postModalContext.username}</a>
+                            <Avatar alt={"DP"} style={{marginRight: '1.2%'}} src={postModalContext.profile_pic} />
+                            <Link href={`/view_profile/${postModalContext.author}`} >
+                                <a style={{fontWeight: '400', fontFamily: 'Roboto', display: 'grid', placeItems: 'center'}}>{postModalContext.author}</a>
                             </Link>
                         </div>
                         {
@@ -172,7 +166,7 @@ function PostModal() {
                                 currentMode === "main" ? 
                                 <MainBody descr={postModalContext.descr} />:
                                 (currentMode === "image"?
-                                    <ImageBody createMode={false} images={postModalContext.images} />:
+                                    <ImageBody createMode={postModalContext.create_mode} images={postModalContext.images} />:
                                     <CommentBody comments={postModalContext.comments} username={auth.user_data.username} />
 
                                 )
@@ -219,7 +213,8 @@ function PostModal() {
 
                                     </>
                                     :
-                                    <Button variant="contained" color="primary" onClick={onFormSubmit}>Publish</Button>
+                                    null
+                                    // <Button variant="contained" color="primary">Close</Button>
                                 }
                             </div>
                             

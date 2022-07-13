@@ -55,7 +55,7 @@ export default function MyApp(props) {
             opacity: 0,
             scale: 1.05
           },
-          pageAnimate: {
+         pageAnimate: {
             opacity: 1,
             scale: 1
           },

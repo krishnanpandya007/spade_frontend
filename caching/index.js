@@ -198,9 +198,17 @@ export async function get_relevant_posts_by_postid(id) {
 
 }
 
-export async function get_posts_by_catagory(catagory) {
+export async function get_posts_by_catagory(catagory, access=false) {
 
-    
+    let headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    if(access){
+        headers['Authorization'] = `Bearer ${access}`
+    }
+
     const url = 'cache_posts/catagory/';
     
     const cachedResponse = cache.get(url + catagory + '/');
@@ -219,10 +227,7 @@ export async function get_posts_by_catagory(catagory) {
 
     const response = await fetch(`${BACKEND_ROOT_URL}apio/load_posts/`,{
         method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-        },
+        headers: headers,
         body: JSON.stringify({
         quantity: 5,
         catagory: catagory

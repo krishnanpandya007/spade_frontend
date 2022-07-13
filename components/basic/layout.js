@@ -15,7 +15,7 @@ import { handle_action_post } from './handle_action';
 
 // import getUserInfo from './get_user_info';
 
-function Layout({ title, children,includesFilters,changeFilterBy, isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
+function Layout({ title, children,includesFilters,changeFilterBy, currentFilterBy,isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
 
   const [width, setWidth] = React.useState(1300);
 
@@ -29,6 +29,7 @@ function Layout({ title, children,includesFilters,changeFilterBy, isAuthenticate
 
     const [postModalData, setPostModalData] = React.useState({
 
+      open: false,
       post_id: null,
       title: null,
       author: "Loading ...",
@@ -44,7 +45,6 @@ function Layout({ title, children,includesFilters,changeFilterBy, isAuthenticate
       len_tags: 0,
       create_mode: false,
       // controller: {
-          open: false,
 
       // },
       
@@ -163,7 +163,6 @@ function Layout({ title, children,includesFilters,changeFilterBy, isAuthenticate
 
   const authenticate = () => {
 
-    console.log("Done")
     setDrawer({ open_drawer: false })
     setUser({is_authenticated: true});
   }
@@ -176,8 +175,6 @@ function Layout({ title, children,includesFilters,changeFilterBy, isAuthenticate
   }
 
   const set_open_drawer = (value, title=null) => {
-
-    console.log("Openedn Drawer")
 
     if (value) {
 
@@ -238,7 +235,7 @@ function Layout({ title, children,includesFilters,changeFilterBy, isAuthenticate
 
     <authContext.Provider value={{is_authenticated: user.is_authenticated, drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}>
 
-    <Header user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>
+    <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>
     {/* <Divider /> */}
       {includesPostModal ? 
           <PostModalContext.Provider value={{...postModalData,set_open: set_open, like: like, dislike: dislike, set_likes: set_likes, set_dislikes: set_dislikes, set_comments: set_comments, set_data: set_data}}>

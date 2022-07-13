@@ -156,7 +156,7 @@ export default function ProfileView({data, userData}) {
 
 
   return (
-    <Layout title="Profile | Spade" content="profile view for an account on spade" >
+    <Layout title="Profile | Spade" content="profile view for an account on spade" userInfo={userData.user_info} isAuthenticated={userData.is_authenticated} >
       <div className={styles.user_info_main}>
         <div className={styles.user_personal_info}>
           <div className={styles.user_profile}>

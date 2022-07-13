@@ -207,6 +207,8 @@ function CreatePostWidgetMenu({ chip_data, top_tags, ChangeChipData }) {
         <li>Make your content to the point as much possible</li>
         <li>Add tags (which helps to identify your content and make reachable to relevant users)</li>
         <li>(optional) For better understanding add images, if needed!</li>
+        <li>(Recommended) Always prefer to review your content before publishing it!</li>
+
       </ul>
     </div>
     </div>

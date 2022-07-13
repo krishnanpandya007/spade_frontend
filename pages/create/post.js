@@ -15,10 +15,11 @@ import CreatePostForm from '../../components/CreatePostForm';
 import CreatePostWidgetMenu from '../../components/CreatePostWidgetMenu';
 import Layout from '../../components/basic/layout';
 import { Grid } from '@mui/material';
+import { validate_user } from '../../components/authenticate_user';
 
 // Stack
 // styled
-function Post() {
+function Post({is_authenticated, user_info}) {
 
     const [chipData, setChipData] = React.useState([])
 //    const [formChipData, setFormChipData] = React.useState([]);
@@ -43,7 +44,7 @@ function Post() {
     }, typeof window !== "undefined" ? window.innerWidth : 0);
 
     return (
-        <Layout title={"Add Post | Spade"} content="create post spade" userMustAuthenticated={true}>
+        <Layout title={"Add Post | Spade"} content="create post spade" userMustAuthenticated={true} includesPostModal isAuthenticated={is_authenticated} userInfo={user_info}>
           {/* <h2 style={{marginLeft: '10%'}}>Create Post</h2> */}
           {/* <br /> */}
         <hr />
@@ -66,6 +67,22 @@ function Post() {
         
         </Layout>
     )
+}
+
+export async function getServerSideProps(context) {
+
+    
+    
+  const response = await validate_user(context);
+  
+
+
+
+  return {
+      props: {is_authenticated: response.is_authenticated ,user_info: response.is_authenticated ? response.user_info : null}
+  }
+
+
 }
 
 export default Post

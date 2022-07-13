@@ -2,12 +2,15 @@ import {Avatar, Box, Button, Chip, CircularProgress, Container, Divider, FormCon
 
 import { Add, AddPhotoAlternateOutlined, AttachFile, AttachFileOutlined, CloudUploadOutlined, Delete, DeleteOutlined, FileCopyOutlined, FolderSpecialOutlined, RemoveCircleOutline, RemoveCircleOutlined, RemoveOutlined } from '@mui/icons-material';
 
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PostModal from './basic/PostModal';
 
 import { Alert } from '@mui/material';
 import { styled } from '@mui/system';
 import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from '../config';
+import PostModalContext from './basic/contexts/post_modal_context';
+import authContext from './basic/contexts/layout_auth_context';
+import SnackbarContext from './basic/contexts/snackbar_context';
 // import { LoadingButton } from '@mui/lab';
 // import LoadingButton from '@material-ui/core/Loa'
 // LoadingButton
@@ -26,20 +29,6 @@ function GetFileExtention (file){
     }
 }
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
 function CreatePostForm({ChangeChipData, chip_data}) {
 
@@ -66,15 +55,41 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
     const [dummy, setDummy] = React.useState('');
 
+    const postModal = useContext(PostModalContext);
+    const auth = useContext(authContext);
+    const snackbar = useContext(SnackbarContext);
 
     const handleImageModalOpen = () => setImageModalOpen(true);
 
     const handleImageModalClose = () => setImageModalOpen(false);
 
     
-    const handlePostModalOpen = () => setPostModalOpen(true);
+    const handlePostModalOpen = () => {
 
-    const handlePostModalClose = () => setPostModalOpen(false);
+        postModal.set_data({
+            post_id: -1,
+            title: postTitle,
+            descr: editorData,
+            author: auth.user_data.username ?? "username",
+            profile_pic: auth.user_data.profile_pic,
+            create_mode: true,
+            open: true,
+            likes_count: 0,
+            dislikes_count: 0,
+            images: [],
+            is_liked:false,
+            is_disliked: false,
+            is_bookmarked: false,
+            len_tags: chip_data.length,
+
+
+        })
+
+    };
+
+    const handlePostModalClose = () => {
+        postModal.set_open(false);
+    };
 
     
 
@@ -252,7 +267,6 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
     const handleFormSubmit = async () => {
 
-        async function handleSubmit(){
 
             let form_data = new FormData();
  
@@ -307,51 +321,6 @@ function CreatePostForm({ChangeChipData, chip_data}) {
                 
             }
 
-            // form_data.append('image_1',attachedFiles.image_b.content.content);
-            // form_data.append('image_1',attachedFiles.image_x.content.content);
-            // form_data.append('image_1',attachedFiles.image_y.content.content);
-
-            
-            
-
-            // var xhttp = new XMLHttpRequest()
-            // xhttp.open("POST","http://127.0.0.1:8000/apio/create/post/", true)
-            // xhttp.setRequestHeader('x-csrftoken', csrftoken)
-            // xhttp.setRequestHeader('Content-Type', 'multipart/form-data; boundary=98feb59a8abe4bfb95a7321f536ed800')    
-            // xhttp.setRequestHeader('Accept', 'application/json, text/plain, */*')
-            // xhttp.send(form_data)
-
-
-            
-
-
-
-            //////////SHould be prob. in api > get_user_info  sub-authentication (refreshing token)
-
-
-
-            //Move submitting form data to server as it can access 'access token' to set Authorization header
-
-
-
-            // const response = await axios.post('login/', form_data,{
-            // headers: {
-                    
-            //         'accept': 'application/json',
-            //         'x-csrftoken': csrftoken,
-            //     // 'Access-Control-Allow-Origin': 'http://127.0.0.1:8000'
-            //     }
-            // }).then((res) => console.log(res))
-
-            // const response_login = await fetch('http://127.0.0.1:8000/apio/login/', {
-            //     method: 'PUT',
-            //     headers: {'Content-Type': 'image/png'},
-            //     body:attachedFiles.image_a.content
-            // }).then(res => res.json())      
-
-            
-
-
                 const response = await fetch(`${FRONTEND_ROOT_URL}api/create/post/`, {
                     method: 'POST',
                     headers: {
@@ -360,17 +329,13 @@ function CreatePostForm({ChangeChipData, chip_data}) {
                         // 'X-CSRFToken': csrftoken
                     },
                     body: form_data
-                }).then(async(res )=> console.log(await res.json())).catch((err) => {console.log(err)})
+                })
+
+                const data = await response.json();
+
+                snackbar.open(data.error ? "error" : "success", data.message)                
 
 
-            // console.log(response)
-
-        }
-
-
-            await handleSubmit();
-
-        console.log("Submitted")
 
     }
 
@@ -394,23 +359,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
     return (
         <div>
         {/* <div> */}
-        <PostModal 
-            isOpen={postModalOpen} 
-            _onClose={handlePostModalClose} 
-            // images={Object.keys(attachedFiles).map((val, idx) => {
-            //         return val.content
-            //     })} 
-            images={[imageA ? imageA.name : '', imageB ? imageB.name : '', imageX ? imageX.name : '', imageY ? imageY.name : '']}
-            CreateMode 
-            onFormSubmit={handleFormSubmit}
-            username="krishnan_pandya" 
-            title={postTitle} 
-            descr={editorData}
-            likes={120} 
-            dislikes={10} 
-            is_bookmarked={false}   
-            tags={chip_data} 
-        />
+        <PostModal/>
         <Modal
             aria-labelledby="unstyled-modal-title"
             aria-describedby="unstyled-modal-description"
@@ -585,7 +534,9 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             {/* <br /> */}
             {/* <div className="submit-btn" style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}> */}
 
-                <Button variant="contained" disabled={false} onClick={handlePostModalOpen} style={{textTransform: 'capitalize', color: '#f5f5f5', backgroundColor: '#892CDC', padding: '1% 1.5%'}}>Review And Publish</Button>
+                <Button variant="contained" disabled={false} onClick={handlePostModalOpen} style={{textTransform: 'capitalize', color: '#f5f5f5', backgroundColor: '#892CDC', padding: '1% 1.5%', marginRight: '5%'}}>Review </Button>
+                <Button variant="contained" disabled={false} onClick={handleFormSubmit} style={{textTransform: 'capitalize', color: '#f5f5f5', backgroundColor: '#892CDC', padding: '1% 1.5%'}}>&nbsp;Publish</Button>
+
             {/* </div> */}
         </div>
     )

@@ -71,7 +71,6 @@ function Account() {
             });
             const data = await res.json();
 
-        alert(res.status)
         if (res.status === 200) {
 
           setProfileCreated(true)

@@ -10,6 +10,7 @@ import Layout from "../components/basic/layout";
 import TemporaryDrawer from "../components/basic/LoginDrawer";
 import Feed from "../components/feed/Feed";
 import HomeInfo from "../components/HomeInfo";
+import { FRONTEND_ROOT_URL } from "../config";
 
 function Home({data, is_authenticated, user_info}) {
 
@@ -24,7 +25,19 @@ function Home({data, is_authenticated, user_info}) {
 
         setFilterBy(filter);
 
-        const dataj = await get_posts_by_catagory(filter);
+        const res = await fetch(`${FRONTEND_ROOT_URL}api/get_posts_by_catagory`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filter
+            })
+        })
+
+        const dataj = await res.json();
+
 
         console.log(dataj)
 
@@ -47,7 +60,7 @@ function Home({data, is_authenticated, user_info}) {
 
 
 
-    <Layout mode={"home"} title="Spade" content="home page of spade" includesFilters includesPostModal isAuthenticated={is_authenticated} changeFilterBy={changeFilterBy} userInfo={user_info}>
+    <Layout currentFilterBy={filterBy} mode={"home"} title="Spade" content="home page of spade" includesFilters includesPostModal isAuthenticated={is_authenticated} changeFilterBy={changeFilterBy} userInfo={user_info}>
              <Grid container spacing={3}>
             <Grid item xs={8} justifyContent="center" alignItems="center">
                 <motion.div  animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
@@ -81,12 +94,9 @@ export async function getServerSideProps(context) {
     const backend_data = await get_posts_by_catagory('trending');
     
     context.res.setHeader('Cache-Control', 'private, maxage=130000, stale-while-revalidate, must-revalidate')
-    
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    delay(10)
+ 
     // Cache to client side as well
 
-    console.log("Context: ",context)
 
 
     return {
