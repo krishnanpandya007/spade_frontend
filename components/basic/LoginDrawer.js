@@ -34,7 +34,7 @@ export default function TemporaryDrawer() {
           >
 
           <Box
-                sx={{ width: 500, height: '100%'}}
+                sx={{ width: 'max(30vw, 400px)', height: '100%'}}
                 style={{position: 'relative'}}
                 // onClick={onClose}
                 // onKeyDown={onClose}

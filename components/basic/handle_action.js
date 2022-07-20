@@ -13,12 +13,11 @@ export async function handle_action_post(username, post_id, choice, action){
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                username,
                 post_id,
                 choice,
                 action
             })
-        }).catch((err) => {"***************************************88",console.log(err)})
+        })
 
         const data = await response.json();
 

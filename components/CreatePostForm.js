@@ -354,6 +354,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
 
 
+// write a function to fetch today weather data
 
 
     return (

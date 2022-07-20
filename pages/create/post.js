@@ -54,7 +54,7 @@ function Post({is_authenticated, user_info}) {
             White Space
           </Grid> */}
           {/* <PostModal /> */}
-          <Grid item xs={6.5} style={{height: '90vh', overflowY: 'hidden', overflowX: 'hidden', marginTop: '2%'}} className="Create-post-form-section">
+          <Grid item xs={6.5} style={{ overflowY: 'hidden', overflowX: 'hidden', marginTop: '2%'}} className="Create-post-form-section">
             <CreatePostForm ChangeChipData={(e) => {onChangeChipData(e)} } chip_data={chipData} />
           </Grid>
 

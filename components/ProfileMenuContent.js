@@ -55,7 +55,7 @@ function ProfileMenuContent() {
       <>
         <div style={{display: 'flex', justifyContent: 'flex-start', padding: '5%', alignItems: 'center', width: '15vw'}}>
             
-            <Avatar src={auth.user_data.profile_pic} color="primary">{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name[0].toUpperCase() + auth.user_data.last_name[0].toUpperCase() : auth.user_data.username.slice(0, 2).toUpperCase()}</Avatar>
+            <Avatar src={auth.user_data?.profile_pic} color="primary">{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name[0].toUpperCase() + auth.user_data.last_name[0].toUpperCase() : auth.user_data.username?.slice(0, 2).toUpperCase()}</Avatar>
             <Typography style={{marginLeft: '10%'}} >{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name + ' ' + auth.user_data.last_name : auth.user_data.username}</Typography>
         </div>
         {/* <br /> */}
@@ -104,7 +104,7 @@ function ProfileMenuOption ({ title, icon, activation_url, current_url }) {
 
 
     return (
-        <ListItemButton onFocus={(e) => {e.target.style.backgroundColor = "#00000030"}} onBlur = {(e) => {e.target.style.backgroundColor = ""}} style={{backgroundColor: isActive ?  blue[400] : '', color: isActive ? 'white' : '', padding: '5%', margin: '0 3%', borderRadius: '10px'}} >
+        <ListItemButton onFocus={(e) => {e.target.style.backgroundColor = "#00000030"}} onBlur = {(e) => {e.target.style.backgroundColor = ""}} style={{backgroundColor: isActive ?  blue[400] : '', color: isActive ? 'white' : '', padding: '5%', margin: '1% 3%', borderRadius: '10px'}} >
           <ListItemIcon style={{ color: isActive ? 'white' : '' }}>
             {icon}
           </ListItemIcon>

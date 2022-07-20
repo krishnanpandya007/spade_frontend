@@ -54,6 +54,8 @@ export default async (req, res) => {
 
             const dataj = await apiResponse.json()
 
+            console.log("THIDDDD:", dataj)
+
             if (apiResponse.status === 200){
                 // Account Created Successfully
                 return res.status(200).json({success: 'Action Updated'})

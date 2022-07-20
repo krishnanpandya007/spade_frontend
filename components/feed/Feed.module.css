@@ -5,3 +5,10 @@
     height: 10px;
     background: #9B191D;
 }
+
+.feed_mid_section_2 > p{
+
+    padding-left: 0;
+    margin-left: 0;
+
+}

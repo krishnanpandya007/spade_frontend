@@ -11,29 +11,18 @@ export default async (req, res) => {
 
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
-        req.method = 'get'; // For authentication
 
-
-        const data = await authenticate(req, res, true); // Called by it-self (server)
-
-
-        if (data.error){
-            return res.status(401).json({error: 're-login needed'})
-
-        }
-
-        access = data.access;
         const {
-            username,
             post_id,
             choice,
             action
         } = req.body;
 
+
+
         // console.log("Post Id: ", post_id)
 
         const body = JSON.stringify({
-            username,
             post_id,
             choice,
             action

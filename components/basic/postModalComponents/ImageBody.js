@@ -2,29 +2,35 @@
 import { CheckCircleOutlineRounded } from "@mui/icons-material";
 import PropTypes from "prop-types"
 // import useState from 'react'
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { BACKEND_ROOT_URL } from "../../../config";
+import authContext from "../contexts/layout_auth_context";
 
 function ImageBody({images, createMode}) {
 
-    const imagesHeight = 400;
-    const imagesWidth = 400;
+    const auth = useContext(authContext)
+
+
+    const imagesHeight = auth.is_on_mobile ? 'auto' : 400;
+    const imagesWidth = auth.is_on_mobile ? window.innerWidth * 0.6 : 400;
 
     useEffect(() => {
     console.log(BACKEND_ROOT_URL.slice(0,-1)+images[0])        
     }, [])
 
     return (
-        <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '2rem'}}>
                 {createMode && <div >
                         <h2 style={{color: 'grey'}}>Attached Images will be Shown here.</h2>
                     </div>}
+                <strong style={{marginTop: '0.9rem'}}>Image - A</strong>
+
             <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}>
 
                 {   !createMode ?
 
                     ( images[0] && 
-                        <img
+                       <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
                     src={BACKEND_ROOT_URL.slice(0,-1)+images[0]}
                     
@@ -39,6 +45,7 @@ function ImageBody({images, createMode}) {
                     null
             }
                 </div>
+                <strong style={{marginTop: '0.9rem'}}>Image - B</strong>
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}> 
 
 
@@ -61,6 +68,8 @@ function ImageBody({images, createMode}) {
                     
 
                 </div>
+                <strong style={{marginTop: '0.9rem'}}>Image - X</strong>
+
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}>
 
 
@@ -86,6 +95,8 @@ function ImageBody({images, createMode}) {
                     
 
                 </div>
+                <strong style={{marginTop: '0.9rem'}}>Image - Y</strong>
+
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}> 
 
                 {   !createMode ?
@@ -107,6 +118,7 @@ function ImageBody({images, createMode}) {
                 }
 
                 </div>
+
         </div>
     )
 }

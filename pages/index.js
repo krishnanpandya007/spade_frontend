@@ -4,8 +4,10 @@ import { LoadingButton } from "@mui/lab";
 import { Button, Grid } from "@mui/material";
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect } from "react"
+import { useContext } from "react";
 import { get_posts_by_catagory } from "../caching";
 import { validate_user } from "../components/authenticate_user";
+import authContext from "../components/basic/contexts/layout_auth_context";
 import Layout from "../components/basic/layout";
 import TemporaryDrawer from "../components/basic/LoginDrawer";
 import Feed from "../components/feed/Feed";
@@ -15,6 +17,8 @@ import { FRONTEND_ROOT_URL } from "../config";
 function Home({data, is_authenticated, user_info}) {
 
     const animation_controller = useAnimation();
+
+    const auth = useContext(authContext);
 
     const [filterBy, setFilterBy] = React.useState('trending');
     const [currentData, setCurrentData] = React.useState(data);
@@ -61,20 +65,21 @@ function Home({data, is_authenticated, user_info}) {
 
 
     <Layout currentFilterBy={filterBy} mode={"home"} title="Spade" content="home page of spade" includesFilters includesPostModal isAuthenticated={is_authenticated} changeFilterBy={changeFilterBy} userInfo={user_info}>
-             <Grid container spacing={3}>
-            <Grid item xs={8} justifyContent="center" alignItems="center">
-                <motion.div  animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
+             {/* <Grid container spacing={3}> */}
+            
+            <div style={{width: '100vw'}}>
+                <motion.div style={{width: '100vw'}} animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
                     <Feed data={currentData} filter_by={filterBy} setData={setCurrentData} is_authenticated={is_authenticated} userInfo={user_info} />
 
                 </motion.div>
 
                 {/* <center><LoadingButton loading={isLoading} onClick={() => {setIsLoading(currState => !currState)}} variant="outlined" size="small">Load More</LoadingButton></center>   */}
-             </Grid>
-             <Grid item xs={4} justifyContent="center" alignItems="center">
+             </div>
+             {/* <Grid item xs={4} justifyContent="center" alignItems="center">
                     
                     <HomeInfo />
             </Grid>
-             </Grid>
+             </Grid> */}
       </Layout>
 
 

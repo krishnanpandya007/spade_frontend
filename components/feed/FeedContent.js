@@ -207,7 +207,8 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
     // 2. solution is wait untill the first action api-call gets terminated or gets finished
         // finished in the sense, we got a valid response from the server , then we do further actions
 
-    // Using 1. solution
+
+        // Using 1. solution
     // url: apio/handle_action/post/ 'POST'
 
     
@@ -229,7 +230,6 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
         async function doUpdate(){
 
         if(initialDisliked ^ isDisliked || isLiked ^ initialLiked){
-            console.log("Clicked something")
             initial = setTimeout(async () => {
 
                 let actions = []; // add / remove
@@ -478,7 +478,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
                 </Modal>
 
             <h2 style={{margin: '0', fontFamily: 'Roboto', fontWeight: 'bold', color: blue[500]}}>{title}</h2>
-            <div style={{ fontWeight: '400', color: grey[800], lineHeight: '1.4rem', fontFamily: 'Roboto'}} dangerouslySetInnerHTML={{__html: (descr.length > 800 ? descr.substring(0,800): descr)}}/>
+            <div style={{ fontWeight: '400', color: grey[800], lineHeight: '1.4rem', fontFamily: 'Roboto', fontSize: '0.9rem'}} dangerouslySetInnerHTML={{__html: (descr.length > 800 ? descr.substring(0,800): descr)}}/>
             <Chip
             
                 icon={<InsertPhotoRounded />}
