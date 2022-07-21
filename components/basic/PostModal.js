@@ -115,7 +115,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                     </Button>
                 </div>
                 {/* OH YEAH HEIGHT OF 69 BABY  XD*/}
-                <div style={{height: '69%', overflow: 'auto'}}> 
+                <div style={{height: '75%', overflow: 'auto'}}> 
                     {current_mode === 'main' ? <><h2 style={{padding: '1rem 0.5rem', fontFamily: 'Poppins', color: '#516BEB', marginBottom: '2px', fontWeight: '600'}}>{postContextInstance.title}</h2>
 
                     <div style={{height: '100%', overflowY: 'auto'}}>
@@ -124,7 +124,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                     </div></>: current_mode === 'comments' ? <CommentBody comments={postContextInstance.comments} username={'krishnan'} /> : <ImageBody createMode={postContextInstance.create_mode} images={[postContextInstance.image_1, postContextInstance.image_2, postContextInstance.image_3, postContextInstance.image_4]} />}
 
                 </div>
-                <div style={{ display: 'flex', margin: '0 0.5rem', alignItems: 'center', gap: '1rem'}}>
+                <div style={{ display: 'flex', margin: '0rem 0.5rem', alignItems: 'center', gap: '1rem'}}>
                     <strong style={{width: '5ch'}}>Tags:</strong>
                     <div style={{display: 'flex',justifyContent: 'flex-start', alignItems: 'center', gap: '0.8rem', overflowX: 'auto', width: '300px', flexWrap: 'nowrap', flexDirection: 'row'}}>
                         {
@@ -140,7 +140,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                     </div>
                 </div>
 
-                <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '9vh', height: '7vh', backgroundColor: 'white', padding: '0 1rem'}}>
+                <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '3vh', height: '7vh', backgroundColor: 'white', padding: '0 1rem'}}>
                     <input onChange={(e) => {setCommentText(e.target.value)}} placeholder="Quick Comment..." style={{ width: '80%', height: "80%", outline: 'none', border: '1px solid #A4A4A4', borderRadius: '10px', paddingLeft: '0.9rem', fontFamily: 'Poppins', fontSize: '1rem' }}/>
                     <IconButton onClick={handleCommentSubmit}>
                         <Send style={{color: '#516BEB'}} fontSize='large' />
