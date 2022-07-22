@@ -1,11 +1,12 @@
 
-export const BACKEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:8000/' : 'http://143.244.140.90/'
+export const BACKEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:8000/' : 'http://206.189.133.104/'
 export const FRONTEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:3000/' : 'https://www.spadebeta.in/'
 
 export const defaultBorderColor = '#bdbdbd'
 
-export const CLIENT_ID = 'tsUfAAwdhpUpLONUQmeBxBLZPPJ2jbp9sJmlkmKO'
+// Spade Core-Id/Secret
+export const CLIENT_ID = 'cCTTnSfqe0p3HtVJlgF1LSEEszZkJX4uNmRIYIRe'
 
-export const CLIENT_SECRET = '9v3p1E5sGNLxgDlXRokDRW0UuNtsKBlJYQANf06jn1gKKlRQ8ndw7LS6bKp6QiNDmW4agmG917nn6MEGivedp6rdpfuWsLaydNJruhIa1NgCG8KYh0v13XWYNeKqb7tD'
+export const CLIENT_SECRET = 'ousK9Ltw9QRV27ITeBsLjMd1vRWIqnpiDabjZuzSTILJKbrwwnqk2cAkhzv2gw1TYSxcIUsvLuJ52M8WGozG9QRfPXiRXkucZ9p4u0qxjRS3rLbh7XiR4bDLNs7GdGnA'
 
 export const SOCIAL_ACCOUNT_ACCESS_KEY = "ThisRandomKey69IsSomethingBig";
