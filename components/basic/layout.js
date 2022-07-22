@@ -12,14 +12,15 @@ import authContext from './contexts/layout_auth_context';
 import PostModal from './PostModal';
 import PostModalContext from './contexts/post_modal_context';
 import { handle_action_post } from './handle_action';
+import MHeader from '../../mobile_components/Header';
 
 // import getUserInfo from './get_user_info';
 
 function Layout({ title, children,includesFilters,changeFilterBy, currentFilterBy,isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
 
-  const [width, setWidth] = React.useState(1300);
+  const [user, setUser] = React.useState({is_authenticated: true});
 
-  const [user, setUser] = React.useState({is_authenticated: isAuthenticated});
+  const [isOnMobile, setIsOnMobile] = React.useState(false);
 
   const [drawer, setDrawer] = React.useState({ open_drawer: false, drawer_title: "Let&apos;s Connect !" })
 
@@ -195,15 +196,30 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
     // setUser({ is_authenticated: user.is_authenticated, user_data: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }});
     setUserData({ username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ });
   }
+  // if(typeof window !== 'undefined'){
+    // const isOnMobile2 = React.useMemo(() => {
+    //   return window.innerWidth < 1200
+    // }, [window ? window.innerWidth : null])
 
+  // }
+
+  // if(window ? window.innerWidth < 1200 : false){
+  //   setIsOnMobile(true);
+  // }
 
     useEffect(() => {
 
       if(typeof window !== 'undefined'){
 
         function handleResize() {
-          setWidth(window.innerWidth);
+          if(window.innerWidth < 1200){
+
+            setIsOnMobile(true);
+
+          }
         }
+
+        handleResize();
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -212,18 +228,6 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
 
     }, [])
 
-    if(width < 1200) {
-
-      return (
-    
-        <div style={{ display: 'grid', placeItems: 'center', width :'100vw', height: '100vh'}}>
-          <h2>Currently, Only Desktop version is supported<br></br>version Compatable with this device will be available soon.</h2>
-        </div>
-
-      )
-
-
-    }
 
   return (
     
@@ -233,9 +237,9 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
         
     </Head>
 
-    <authContext.Provider value={{is_authenticated: user.is_authenticated, drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}>
-
-    <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>
+    <authContext.Provider value={{is_authenticated: user.is_authenticated, is_on_mobile: isOnMobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}>
+    {!isOnMobile?<MHeader />:<Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>}
+    {/* <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
     {/* <Divider /> */}
       {includesPostModal ? 
           <PostModalContext.Provider value={{...postModalData,set_open: set_open, like: like, dislike: dislike, set_likes: set_likes, set_dislikes: set_dislikes, set_comments: set_comments, set_data: set_data}}>

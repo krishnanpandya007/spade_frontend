@@ -1,4 +1,4 @@
-import * as React from 'react';
+  import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../lib/createEmotionCache';
@@ -9,6 +9,8 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="shortcut icon" href="/spade_icon.ico" />
+          <meta charset="UTF-8" />
+          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

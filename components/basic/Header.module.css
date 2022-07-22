@@ -1,26 +1,31 @@
 .header_main{
     height: 4rem;
-    width: clamp(350px, 70%, 1900px);
+    margin: 1rem;
+    width: min(800px, 100vw);
+    /* width: clamp(250px, 70%, 1900px); */
     background-color: #FAFAFA;
-    border-radius: 10px;;
+    border-radius: 10px;
+    align-items: center;
     display: flex;
     justify-content: space-between;
+    padding: 0.5rem;
 
 }
 .header_itself{
-    padding: 0.5rem;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    /* display: grid;
+    place-items: center; */
 }
 .header_left{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
     position: relative;
 }
 .search_input{
-    width: 35ch;
+    width: max(15ch, 100%);
     margin: 0 1rem;
     height: 2.5rem;
     border: 1px solid #98ACF8;
@@ -34,7 +39,6 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    margin-right: 1rem;
 }
 
 .svg_icon{

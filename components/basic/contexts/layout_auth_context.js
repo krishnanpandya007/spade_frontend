@@ -3,6 +3,7 @@ import { createContext } from 'react'
 const authContext = createContext({
 
     is_authenticated: false,
+    is_on_mobile: false,
     drawer_title: "Let&apos;s Connect !",
     open_drawer :false, // Only triggered by external sources (href) & (Protectted Buttons) 
     user_data: {

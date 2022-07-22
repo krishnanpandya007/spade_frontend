@@ -13,12 +13,13 @@ import authContext from "./contexts/layout_auth_context";
 import PostModalContext from "./contexts/post_modal_context";
 
 import React from "react";
-import { Avatar, Badge, Button, Divider, IconButton, Modal, Popover, Tooltip, Typography } from "@mui/material";
+import { Avatar, Badge, Button, Divider, IconButton, Modal, Popover, SwipeableDrawer, Tooltip, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
-import { ArrowBackIosOutlined, BookmarkBorderOutlined, CancelOutlined, CommentOutlined, FacebookOutlined, LocalOfferOutlined, PhotoOutlined, ShareOutlined, ThumbDownAltOutlined, ThumbUpAltOutlined } from "@mui/icons-material";
+import { ArrowBackIosOutlined, BookmarkBorderOutlined, CancelOutlined, Close, CommentOutlined, FacebookOutlined, KeyboardArrowDown, LocalOfferOutlined, PhotoOutlined, Send, ShareOutlined, ThumbDownAltOutlined, ThumbUpAltOutlined } from "@mui/icons-material";
 import { FRONTEND_ROOT_URL } from "../../config";
 import { bookmark_post, unbookmark_post } from "./apis/bookmar_post";
 import SnackbarContext from "./contexts/snackbar_context";
+import { handle_action_comment, handle_action_create_comment } from "./handle_action";
 
 // import { styled } from '@mui/material/styles';
 
@@ -49,6 +50,110 @@ function ShareModal({share_url, open, _onClose}){
     )
 
 }
+
+function MobileModal({ postContextInstance, current_mode, changeCurrentMode, username }) {
+
+    const [commentText, setCommentText] = React.useState('');
+
+
+    const handleCommentSubmit = async () => {
+
+        // Comment
+        if(commentText.replaceAll(' ', '') === ""){
+            return;
+        }
+
+            const success = await handle_action_create_comment(commentText, username, postContextInstance.post_id);
+
+        if (success){
+            // console.log('Comment Added SuccessFully')
+            postContextInstance.set_data({
+
+                ...postContextInstance,
+                comments: [...postContextInstance.comments, {likes: [], author_username: username, descr: commentText, time_since: 'Just Now'}]
+
+            })
+            // comments.push({likes: [], author_username: username, descr: commentText, time_since: 'Just Now'})
+            setCommentText('');
+
+        }
+        else{
+            console.log("Oh no")
+            // console.log("Comment isn't added")
+        }
+
+        
+
+    }
+
+    return (
+
+        <SwipeableDrawer
+            PaperProps={{ square: false , style: {height: '90vh', width: '100vw', padding: '0.8rem'}}}
+            
+            // style={{ width: '100vw', height: '90vh'}}
+            // sx={{borderRadius: '20px 20px 0 0'}}
+            anchor={"bottom"}
+            open={postContextInstance.open}
+            onClose={() => {postContextInstance.set_open(false)}}
+            onOpen={() => {postContextInstance.set_open(true)}}
+        >
+            
+            {/* <div style={{width: '100vw'}}> */}
+                
+                <IconButton onClick={() => {postContextInstance.set_open(false)}} style={{position: 'absolute', top: '0', right: '0'}}>
+                    <KeyboardArrowDown />
+                </IconButton>
+                <br />
+                <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '1rem'}}>
+
+                    <Button onClick={() => { current_mode!=='comments'?changeCurrentMode('comments'):changeCurrentMode('main') }} variant="contained" disableElevation style={{backgroundColor: current_mode === 'comments' ? '#516BEB' : '#D9D9D9', color: current_mode === 'comments' ? '#ffffff' : '#000000', fontWeight: current_mode === 'comments' ? '500' : '400',fontFamily: 'Poppins', fontWeight: '500', borderRadius: '12px'}}>
+                        Comments
+                    </Button>
+                    <Button onClick={() => { current_mode!=='images'?changeCurrentMode('images'):changeCurrentMode('main') }} variant="contained" disableElevation style={{backgroundColor: current_mode === 'images' ? '#516BEB' : '#D9D9D9', color: current_mode === 'images' ? '#ffffff' : '#000000', fontFamily: 'Poppins', fontWeight: '500', borderRadius: '12px'}}>
+                        Images
+                    </Button>
+                </div>
+                {/* OH YEAH HEIGHT OF 69 BABY  XD*/}
+                <div style={{height: '75%', overflow: 'auto'}}> 
+                    {current_mode === 'main' ? <><h2 style={{padding: '1rem 0.5rem', fontFamily: 'Poppins', color: '#516BEB', marginBottom: '2px', fontWeight: '600'}}>{postContextInstance.title}</h2>
+
+                    <div style={{height: '100%', overflowY: 'auto'}}>
+                        <div dangerouslySetInnerHTML={{__html: postContextInstance.descr}} style={{padding: '0.5rem', color: '#2C3333', lineHeight:'2.5ch',margin: '0', fontSize:'14px', fontWeight: '400', fontFamily: 'Poppins'}}></div>
+
+                    </div></>: current_mode === 'comments' ? <CommentBody comments={postContextInstance.comments} username={'krishnan'} /> : <ImageBody createMode={postContextInstance.create_mode} images={[postContextInstance.image_1, postContextInstance.image_2, postContextInstance.image_3, postContextInstance.image_4]} />}
+
+                </div>
+                <div style={{ display: 'flex', margin: '0rem 0.5rem', alignItems: 'center', gap: '1rem'}}>
+                    <strong style={{width: '5ch'}}>Tags:</strong>
+                    <div style={{display: 'flex',justifyContent: 'flex-start', alignItems: 'center', gap: '0.8rem', overflowX: 'auto', width: '300px', flexWrap: 'nowrap', flexDirection: 'row'}}>
+                        {
+                            postContextInstance.tags?.length ? 
+                                postContextInstance.tags.map((val, idx) => (
+                                    <Link key={idx} href={`/explore/tag/${val}`}><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0', backgroundColor: '#516BEB',letterSpacing: '2px', fontFamily: 'Poppins', textTransform: 'uppercase'}}>Pubg</a></Link>
+                                ))
+                            :<div style={{padding: '0.3rem 1rem', color: 'black', border: '1px solid #c4c4c4',fontWeight: '200', borderRadius: '10px', flexShrink: '0', fontFamily: 'Roboto', fontSize: '0.88rem'}}>No Tags Included</div>
+                        }
+                        {/* <Link href="/"><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0', backgroundColor: '#516BEB', minWidth: 'auto',letterSpacing: '2px', fontFamily: 'Poppins', textTransform: 'uppercase'}}>Call of Duty</a></Link>
+                        <Link href="/"><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0',backgroundColor: '#516BEB', letterSpacing: '2px', fontFamily: 'Poppins', textTransform: 'uppercase'}}>Call of Duty</a></Link> */}
+
+                    </div>
+                </div>
+
+                <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '3vh', height: '7vh', backgroundColor: 'white', padding: '0 1rem'}}>
+                    <input onChange={(e) => {setCommentText(e.target.value)}} placeholder="Quick Comment..." style={{ width: '80%', height: "80%", outline: 'none', border: '1px solid #A4A4A4', borderRadius: '10px', paddingLeft: '0.9rem', fontFamily: 'Poppins', fontSize: '1rem' }}/>
+                    <IconButton onClick={handleCommentSubmit}>
+                        <Send style={{color: '#516BEB'}} fontSize='large' />
+                    </IconButton>
+                </div>
+
+            {/* </div> */}
+      </SwipeableDrawer> 
+
+    )
+
+}
+
 function PostModal() {
 // {username, title, descr, likes, dislikes, is_bookmarked, is_liked, is_disliked, tags, images, post_id,onFormSubmit, CreateMode, isOpen, _onClose, comments, handleParentLiked, handleParentDisliked}
     const auth = useContext(authContext)
@@ -118,6 +223,7 @@ function PostModal() {
 
 
     return (
+        auth.is_on_mobile ? <MobileModal current_mode={currentMode} changeCurrentMode={setCurrentMode} postContextInstance={postModalContext} username={auth.user_data.username} />:
         <Modal
         aria-labelledby="unstyled-modal-title"
             aria-describedby="unstyled-modal-description"
@@ -131,7 +237,7 @@ function PostModal() {
             {/* <Popover open={shareOpen} onClose={() => {setShareOpen(false)}}>
                 <FacebookOutlined />
             </Popover> */}
-            <Box sx={{backgroundColor: '#f5f5f5', padding: '0.8% 1%', borderRadius: '8px', outline: 'none', width: '1300px', height: '900px'}}>
+            <Box sx={{backgroundColor: '#f5f5f5', padding: '0.8% 1%', borderRadius: '8px', outline: 'none', width: 'clamp(500px,65vw,1300px)', height: 'clamp(400px, 80vh, 900px)', marginTop: '10vh'}}>
             
                 <div style={{flex: '1', display: 'flex', flexDirection: 'column', height: '100%', width: '100%'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
