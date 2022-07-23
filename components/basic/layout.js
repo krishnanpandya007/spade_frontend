@@ -207,6 +207,8 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
   //   setIsOnMobile(true);
   // }
 
+    
+
     useEffect(() => {
 
       if(typeof window !== 'undefined'){

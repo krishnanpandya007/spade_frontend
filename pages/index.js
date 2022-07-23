@@ -18,12 +18,18 @@ function Home({data, is_authenticated, user_info}) {
 
     const animation_controller = useAnimation();
 
-    const auth = useContext(authContext);
-
     const [filterBy, setFilterBy] = React.useState('trending');
     const [currentData, setCurrentData] = React.useState(data);
 
     // const [isLoading, setIsLoading] = React.useState(false);
+
+    // useEffect(() => {
+    //     window.onload = () => {
+
+
+
+    //     }
+    // })
 
     const changeFilterBy = async (filter) => {
 
@@ -66,33 +72,7 @@ function Home({data, is_authenticated, user_info}) {
 
     <Layout currentFilterBy={filterBy} mode={"home"} title="Spade" content="home page of spade" includesFilters includesPostModal isAuthenticated={is_authenticated} changeFilterBy={changeFilterBy} userInfo={user_info}>
              {/* <Grid container spacing={3}> */}
-            {
-                !(typeof window === 'undefined') && window.innerWidth < 1200 ?
-                    <div style={{width: '100vw'}}>
-                        <motion.div style={{width: '100vw'}} animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
-                            <Feed data={currentData} filter_by={filterBy} setData={setCurrentData} is_authenticated={is_authenticated} userInfo={user_info} />
-
-                        </motion.div>
-
-                        {/* <center><LoadingButton loading={isLoading} onClick={() => {setIsLoading(currState => !currState)}} variant="outlined" size="small">Load More</LoadingButton></center>   */}
-                    </div>:
-                    <Grid container spacing={0}>
-
-
-                        <div style={{width: '65vw'}}>
-                            <motion.div style={{width: '65vw'}} animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
-                                <Feed data={currentData} filter_by={filterBy} setData={setCurrentData} is_authenticated={is_authenticated} userInfo={user_info} />
-
-                            </motion.div>
-                        {/* <center><LoadingButton loading={isLoading} onClick={() => {setIsLoading(currState => !currState)}} variant="outlined" size="small">Load More</LoadingButton></center>   */}
-                        </div>
-                        <Grid item xs={4} justifyContent="center" alignItems="center">
-                    
-                            <HomeInfo />
-                        </Grid>
-                    </Grid>
-
-            }
+            <ThinWrapper animation_controller={animation_controller} currentData={currentData} filterBy={filterBy} setCurrentData={setCurrentData} is_authenticated={is_authenticated} user_info={user_info} />
              {/* <Grid item xs={4} justifyContent="center" alignItems="center">
                     
                     <HomeInfo />
@@ -101,6 +81,45 @@ function Home({data, is_authenticated, user_info}) {
       </Layout>
 
 
+
+    )
+
+}
+
+function ThinWrapper({animation_controller, currentData, filterBy, setCurrentData, is_authenticated, user_info}) {
+
+    const auth = useContext(authContext);
+
+    return (
+
+        
+            auth.is_on_mobile ?
+                <div style={{width: '100vw'}}>
+                    <motion.div style={{width: '100vw'}} animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
+                        <Feed data={currentData} filter_by={filterBy} setData={setCurrentData} is_authenticated={is_authenticated} userInfo={user_info} />
+
+                    </motion.div>
+                {/* <center><LoadingButton loading={isLoading} onClick={() => {setIsLoading(currState => !currState)}} variant="outlined" size="small">Load More</LoadingButton></center>   */}
+                </div>
+            :
+                <Grid container spacing={0}>
+
+
+                    <div style={{width: '65vw'}}>
+                        <motion.div style={{width: '65vw'}} animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>
+                            <Feed data={currentData} filter_by={filterBy} setData={setCurrentData} is_authenticated={is_authenticated} userInfo={user_info} />
+
+                        </motion.div>
+                    {/* <center><LoadingButton loading={isLoading} onClick={() => {setIsLoading(currState => !currState)}} variant="outlined" size="small">Load More</LoadingButton></center>   */}
+                    </div>
+                    <Grid item xs={4} justifyContent="center" alignItems="center">
+                
+                        <HomeInfo />
+                    </Grid>
+                </Grid>
+                
+
+        
 
     )
 
