@@ -1,6 +1,6 @@
 
 export const BACKEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:8000/' : 'http://206.189.133.104/'
-export const FRONTEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:3000/' : 'https://www.spadebeta.in/'
+export const FRONTEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:3000/' : 'https://orca-app-stmao.ondigitalocean.app/'
 
 export const defaultBorderColor = '#bdbdbd'
 
