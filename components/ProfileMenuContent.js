@@ -53,7 +53,7 @@ function ProfileMenuContent() {
 
   return (
       <>
-        <div style={{display: 'flex', justifyContent: 'flex-start', padding: '5%', alignItems: 'center', width: '15vw'}}>
+        <div style={{display: 'flex', justifyContent: 'flex-start', padding: '5%', alignItems: 'center', width: auth.is_on_mobile ? '30vh' : '15vw'}}>
             
             <Avatar src={auth.user_data?.profile_pic} color="primary">{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name[0].toUpperCase() + auth.user_data.last_name[0].toUpperCase() : auth.user_data.username?.slice(0, 2).toUpperCase()}</Avatar>
             <Typography style={{marginLeft: '10%'}} >{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name + ' ' + auth.user_data.last_name : auth.user_data.username}</Typography>

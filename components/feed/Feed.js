@@ -130,7 +130,7 @@ function MFeed({ idx, post, username, openPostModal }){
 
      console.log(post)
     return (
-        <div key={idx} style={{width: '100%', marginBottom: '4rem'}}>
+        <div key={idx} style={{width: '100%', marginBottom: '6rem'}}>
             <div className="feed_upper_section" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem'}}>
                     

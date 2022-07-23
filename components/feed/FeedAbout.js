@@ -29,7 +29,7 @@ function FeedAbout({username, tags, created_on, profile_pic, first_name, last_na
                 style={{margin: `0.5rem`}}
             />
 
-            <Divider variant="middle" light />
+            <Divider variant="middle" light style={{marginBottom: '0.5rem'}} />
             {/* <Chip label="No tags included" color="default" variant='outlined' sx={{transform: 'scale(0.8)', borderRadius: '8px', margin: defaultMargin, marginLeft: '0'}} /> */}
             {(tags.length > 0?
                         <>
