@@ -18,7 +18,7 @@ import MHeader from '../../mobile_components/Header';
 
 function Layout({ title, children,includesFilters,changeFilterBy, currentFilterBy,isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
 
-  const [user, setUser] = React.useState({is_authenticated: true});
+  const [user, setUser] = React.useState({is_authenticated: isAuthenticated});
 
   const [isOnMobile, setIsOnMobile] = React.useState(false);
 
@@ -216,6 +216,8 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
 
             setIsOnMobile(true);
 
+          }else{
+            setIsOnMobile(false)
           }
         }
 
@@ -238,7 +240,7 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
     </Head>
 
     <authContext.Provider value={{is_authenticated: user.is_authenticated, is_on_mobile: isOnMobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}>
-    {!isOnMobile?<MHeader />:<Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>}
+    <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>
     {/* <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
     {/* <Divider /> */}
       {includesPostModal ? 
