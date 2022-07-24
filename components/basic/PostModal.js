@@ -140,7 +140,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                     </div>
                 </div>
 
-                <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '3vh', height: '4.5rem', backgroundColor: 'white', padding: '0 1rem'}}>
+                <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '1vh', height: '3.8rem', backgroundColor: 'white', padding: '0 1rem'}}>
                     <input value={commentText} onChange={(e) => {setCommentText(e.target.value)}} placeholder="Quick Comment..." style={{ width: '80%', height: "80%", outline: 'none', border: '1px solid #A4A4A4', borderRadius: '10px', paddingLeft: '0.9rem', fontFamily: 'Poppins', fontSize: '1rem' }}/>
                     <IconButton onClick={handleCommentSubmit}>
                         <Send style={{color: '#516BEB'}} fontSize='large' />

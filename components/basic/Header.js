@@ -38,7 +38,7 @@ function AppMenuAnonymous({userInstance, isMobile}) {
             </Link>:null
           }
             <Button onClick={() => {userInstance.set_open_drawer(true, null)}} variant="contained" disableElevation style={{backgroundColor: '#516BEB', borderRadius: '10px', fontFamily: 'Poppins', marginLeft: '3ch'}}>
-                JOIN NOW
+                {isMobile ? 'JOIN': 'JOIN NOW'}
             </Button>
         </React.Fragment>
     )
@@ -298,7 +298,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
                         <Image src="/spade_icon.svg" width="25" height="25" />
                     </a>
                 </Link>
-                <input aria-autocomplete={false} style={isMobile ? {width: '20ch'} : {width: 'auto'}} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
+                <input aria-autocomplete={false} style={isMobile ? {width: 'max(10ch,40vw)'} : {width: 'auto'}} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
                 {includesFilters && !isMobile ?
                     <Tooltip title="Filter">
                         <IconButton onClick={handleClick} style={{borderRadius: '2px'}}>

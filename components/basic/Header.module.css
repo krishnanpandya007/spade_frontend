@@ -32,7 +32,7 @@
     border-radius: 5px;
     outline: none;
     font-family: Poppins;
-    padding: 1.5ch;
+    padding: 1.5ch 0.5ch 1.5ch 1.5ch;
 }
 
 .header_right{

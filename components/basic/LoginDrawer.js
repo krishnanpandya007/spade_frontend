@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 // import LoginDrawerContent from './LoginDrawerContent';
 import dynamic from 'next/dynamic';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, SwipeableDrawer } from '@mui/material';
 import styled from '@emotion/styled'
 import { Login } from '@mui/icons-material';
 import authContext from './contexts/layout_auth_context';
@@ -27,14 +27,14 @@ export default function TemporaryDrawer() {
   return ((!auth.is_authenticated) && 
     <div>
         <React.Fragment >
-          <Drawer
+          <SwipeableDrawer
             anchor={'right'}
             open={auth.open_drawer}
             onClose={() => {auth.set_open_drawer(false)}}
           >
 
           <Box
-                sx={{ width: 'max(30vw, 400px)', height: '100%'}}
+                sx={{ width: auth.is_on_mobile ? '100vw' :'max(30vw, 400px)', height: '100%'}}
                 style={{position: 'relative'}}
                 // onClick={onClose}
                 // onKeyDown={onClose}
@@ -43,7 +43,7 @@ export default function TemporaryDrawer() {
             <LoginDrawerContent handleClose={() => {auth.set_open_drawer(false)}} />
 
           </Box>
-          </Drawer>
+          </SwipeableDrawer>
         </React.Fragment>
     </div>
   );
