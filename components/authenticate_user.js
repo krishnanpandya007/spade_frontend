@@ -8,16 +8,27 @@ async function get_user_info(access_token) {
 
     console.log("InFunc. access: ", access_token)
 
-    const user_info_response = await fetch(`${BACKEND_ROOT_URL}account/user/`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${access_token}`
-        }
-    })
+    try{
 
-    const user_info_data = await user_info_response.json();
+        const user_info_response = await fetch(`${BACKEND_ROOT_URL}account/user/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        })
+    
+        const user_info_data = await user_info_response.json();
+
+        console.log("Status::", user_info_data.status, "Data::", user_info_data)
+
+    } catch (e) {
+
+        console.log("Error::::", e, "Status:")
+
+    }
+
 
     if(user_info_response.status === 401){
         return { is_authenticated: false, message: 'Successfully Recieved User Information', user_info: user_info_data }
