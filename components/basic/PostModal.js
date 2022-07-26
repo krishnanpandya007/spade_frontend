@@ -107,7 +107,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                 <br />
                 <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '1rem'}}>
 
-                    <Button onClick={() => { current_mode!=='comments'?changeCurrentMode('comments'):changeCurrentMode('main') }} variant="contained" disableElevation style={{backgroundColor: current_mode === 'comments' ? '#516BEB' : '#D9D9D9', color: current_mode === 'comments' ? '#ffffff' : '#000000', fontWeight: current_mode === 'comments' ? '500' : '400',fontFamily: 'Poppins', fontWeight: '500', borderRadius: '12px'}}>
+                    <Button disabled={postContextInstance.create_mode} onClick={() => { current_mode!=='comments'?changeCurrentMode('comments'):changeCurrentMode('main') }} variant="contained" disableElevation style={{backgroundColor: current_mode === 'comments' ? '#516BEB' : '#D9D9D9', color: current_mode === 'comments' ? '#ffffff' : '#000000', fontWeight: current_mode === 'comments' ? '500' : '400',fontFamily: 'Poppins', fontWeight: '500', borderRadius: '12px'}}>
                         Comments
                     </Button>
                     <Button onClick={() => { current_mode!=='images'?changeCurrentMode('images'):changeCurrentMode('main') }} variant="contained" disableElevation style={{backgroundColor: current_mode === 'images' ? '#516BEB' : '#D9D9D9', color: current_mode === 'images' ? '#ffffff' : '#000000', fontFamily: 'Poppins', fontWeight: '500', borderRadius: '12px'}}>
@@ -142,7 +142,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
 
                 <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '1vh', height: '3.8rem', backgroundColor: 'white', padding: '0 1rem'}}>
                     <input value={commentText} onChange={(e) => {setCommentText(e.target.value)}} placeholder="Quick Comment..." style={{ width: '80%', height: "80%", outline: 'none', border: '1px solid #A4A4A4', borderRadius: '10px', paddingLeft: '0.9rem', fontFamily: 'Poppins', fontSize: '1rem' }}/>
-                    <IconButton onClick={handleCommentSubmit}>
+                    <IconButton disabled={postContextInstance.create_mode} onClick={handleCommentSubmit}>
                         <Send style={{color: '#516BEB'}} fontSize='large' />
                     </IconButton>
                 </div>

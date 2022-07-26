@@ -121,7 +121,7 @@ function CreatePostWidgetMenu({ chip_data, top_tags, ChangeChipData }) {
   };
 
   return (
-    <div>
+    <div style={{margin: '5%'}}>
     <Grid item container style={{ width: "100%"}}>
       <React.Fragment >
         <ButtonGroup

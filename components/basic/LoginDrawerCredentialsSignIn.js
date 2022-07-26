@@ -45,20 +45,20 @@ function LoginDrawerCredentialsSignIn() {
     const [successfullLogin, setSuccessfullLogin] = React.useState(false)
 
     
-    const handleUsernameChange = React.useCallback((e) => {
+    const handleUsernameChange = (e) => {
         setUsername(e.target.value)
-    }, [username])
+    }
     
-    const handlePasswordChange = React.useCallback((e) => {
+    const handlePasswordChange = (e) => {
         setPassword(e.target.value)
-    }, [password])
+    }
     
     const handleLogin = async () => {
 
       setLoading(true);
 
+        console.log("Done", username, password)
         const success = await login(username, password);
-        console.log("Done")
 
 
         if (success) {
@@ -96,7 +96,7 @@ function LoginDrawerCredentialsSignIn() {
 
     <React.Fragment>
           {/* {status === "authenticated" && <h5>User Authenticated: {JSON.stringify(session)}</h5>} */}
-            <StyledInput type="text" onChange={handleUsernameChange} placeholder="Username"  />
+            <StyledInput value={username} type="text" onChange={handleUsernameChange} placeholder="Username"  />
             <StyledInput value={password} onChange={handlePasswordChange} type={!showPassword ? "password" : "text"} placeholder="Password"  /><IconButton size="small" style={{position: 'absolute', right: '0', transform: 'translate(-100%, 40%)'}} onClick={() => {setShowPassword(prevState => !prevState)}}>{showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}</IconButton>
             <Stack
                 direction="row"

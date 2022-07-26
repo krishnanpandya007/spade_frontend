@@ -87,22 +87,10 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
     };
 
-    const handlePostModalClose = () => {
-        postModal.set_open(false);
-    };
 
-    
-
-    const handleSnackbarClose = () => {
-        setInvalidTagStatus({is_invalid: false, message: ''})
-    }
 
     const handlePostTitleChange = (InputEvent) => {
         setPostTitle(InputEvent.target.value)
-    }
-
-    const handlePublish = () => {
-        setPublishing(!publishing)
     }
 
     const IncreaseHeightOfEditor = () => {
@@ -267,6 +255,24 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
     const handleFormSubmit = async () => {
 
+            if(!postTitle) {
+
+                snackbar.open('error', "Please provide valid title")
+                return;
+            }
+
+            if(postTitle.length < 5) {
+
+                snackbar.open('error', "Title length too short...")
+                return;
+            }
+
+            if(!editorData) {
+
+                snackbar.open('error', "Please provide valid Descr.")
+                return;
+            }
+
 
             let form_data = new FormData();
  
@@ -358,9 +364,9 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
 
     return (
-        <div>
+        <div style={{margin: '5%', width: auth.is_on_mobile ? '90%': '40vw'}}>
         {/* <div> */}
-        <PostModal/>
+        {/* <PostModal/> */}
         <Modal
             aria-labelledby="unstyled-modal-title"
             aria-describedby="unstyled-modal-description"
@@ -370,9 +376,9 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             style={{border: 'none', display: 'grid', placeItems: 'center'}}
            
         >
-            <Box sx={{backgroundColor: '#f5f5f5', padding: '0.8% 1%', borderRadius: '8px', width: '20vw'}}>
+            <Box sx={{backgroundColor: '#f5f5f5', padding: '0.8% 1%', borderRadius: '8px', width: auth.is_on_mobile?'80vw':'20vw'}}>
 
-            <Typography variant="h6" >
+            <Typography variant="h6" padding="10px 0px 0 20px" >
                 Attach Images
             </Typography>
             <br />
@@ -421,7 +427,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             <label htmlFor="createpostform_title" style={{marginBottom: '5%'}}><strong>Title</strong></label>
             <br />
             <br />
-            <TextField variant="standard" onChange={(e) => {handlePostTitleChange(e)}} placeholder="Ex.. Top 10 ways to kill campers" id="createpostform_title" style={{width: '50%', marginBottom: '5%', backgroundColor: 'rgba(0, 0, 0, 0)', fontFamily: 'sans-serif'}} />
+            <TextField variant="standard" onChange={(e) => {handlePostTitleChange(e)}} placeholder="Ex.. Top 10 ways to kill campers" id="createpostform_title" style={{width: auth.is_on_mobile ?  '100%': '50%', marginBottom: '6%', backgroundColor: 'rgba(0, 0, 0, 0)', fontFamily: 'sans-serif'}} />
             <br />
             <label htmlFor="createpostform_descr"  onClick={FocusCkEditor}><strong>Description</strong></label>
             <br />
@@ -457,8 +463,8 @@ function CreatePostForm({ChangeChipData, chip_data}) {
                     padding: 0.5,
                     margin: 0,
                     border: '1px solid rgba(0, 0, 0, 0.2)',
-                    height: '20vh',
-                    width: '30vw',
+                    height: 'max(10rem, 15vh)',
+                    width: auth.is_on_mobile ?'100%' :'30vw',
                     overflow: 'auto auto',
                     
                    
@@ -539,6 +545,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
                 <Button variant="contained" disabled={false} onClick={handleFormSubmit} style={{textTransform: 'capitalize', color: '#f5f5f5', backgroundColor: '#892CDC', padding: '1% 1.5%'}}>&nbsp;Publish</Button>
 
             {/* </div> */}
+            {auth.is_on_mobile ? <Divider light style={{margin: '4rem 0 2rem 0', color: '#c4c4c4'}}>IMPROVEMENT</Divider>:null}
         </div>
     )
 }

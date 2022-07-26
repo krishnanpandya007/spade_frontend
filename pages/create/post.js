@@ -47,27 +47,28 @@ function Post({is_authenticated, user_info}) {
         <Layout title={"Add Post | Spade"} content="create post spade" userMustAuthenticated={true} includesPostModal isAuthenticated={is_authenticated} userInfo={user_info}>
           {/* <h2 style={{marginLeft: '10%'}}>Create Post</h2> */}
           {/* <br /> */}
-        <hr />
-        <Grid container alignItems="center" justifyContent="center" padding="1.5%" minHeight="80vh" spacing={10}>
+          <center style={{backgroundColor: '#c4c4c490'}}><h3 style={{fontFamily: 'Poppins', fontWeight: '400'}}>Hmm, another cool hack?</h3></center>        
+          {/* <Grid container alignItems="center" justifyContent="center" padding="1.5%" minHeight="80vh" spacing={10}> */}
+            <div style={{display: 'flex', flexWrap: 'wrap'}}>
+              <CreatePostForm ChangeChipData={(e) => {onChangeChipData(e)} } chip_data={chipData} />
+            {/* </Grid> */}
 
-          {/* <Grid item xs={1} height="80vh">
-            White Space
-          </Grid> */}
-          {/* <PostModal /> */}
-          <Grid item xs={6.5} style={{ overflowY: 'hidden', overflowX: 'hidden', marginTop: '2%'}} className="Create-post-form-section">
-            <CreatePostForm ChangeChipData={(e) => {onChangeChipData(e)} } chip_data={chipData} />
-          </Grid>
+              <CreatePostWidgetMenu style={{height: '100%'}} ChangeChipData={(e) => {onChangeChipData(e)}} chip_data={chipData} top_tags={['call-of-duty', 'free-fire', 'valorant', 'kill-campers']} />
 
-          <Grid item xs={3}  style={{height: '80vh'}}>
-            {/* I Am Widget Menu */}
-            <CreatePostWidgetMenu style={{height: '100%'}} ChangeChipData={(e) => {onChangeChipData(e)}} chip_data={chipData} top_tags={['call-of-duty', 'free-fire', 'valorant', 'kill-campers']} />
-          </Grid>
+            </div>
+            {/* <Grid item xs={1} height="80vh">
+              White Space
+            </Grid> */}
+            {/* <PostModal /> */}
+            {/* <Grid item xs={6.5} style={{ overflowY: 'hidden', overflowX: 'hidden', marginTop: '2%'}} className="Create-post-form-section"> */}
 
-        </Grid>
-        
-        </Layout>
-    )
+{/* </Grid> */}
+
+</Layout>
+)
 }
+// <Grid item xs={3}  style={{height: '80vh'}}>
+// </Grid>
 
 export async function getServerSideProps(context) {
 

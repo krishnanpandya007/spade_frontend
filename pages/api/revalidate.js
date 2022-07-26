@@ -41,7 +41,7 @@ export default async function revalidate(req, res) {
         const hours = 1;  
         let cacheResponse;  
         const cache_postid_to_url = cache.get;
-        console.log(cache_postid_to_url)
+        console.log("FULL_REVALIDATION_LOG", target_post_id, target_field, data)
 
         // Object.entries(cache_postid_to_url).map(item => {
         //     console.log("AndarBahar")
@@ -55,21 +55,28 @@ export default async function revalidate(req, res) {
                         // Update Likes on every url-path
                         cacheResponse = cache.get(url) || [];
                         
-                        if (cacheResponse.length === 0) {
+                        if (cache.get(url).length === 0) {
                             cache.put(url, data, hours * 1000 * 60 * 60);
                             break;
                         }
+                        try{
 
-                        cacheResponse = cacheResponse.map((val, idx) => {
-                            if(val.id === Number(target_post_id)){
+                            cacheResponse = cacheResponse.map((val, idx) => {
+                                if(val.id === Number(target_post_id)){
+                                    console.log("Dta::", data)
+    
+                                    val.likes = data
+                                }
+    
+    
+                                return val;
+                            })
+                            console.log("Here Updated::", cacheResponse)
+                        } catch (e) {
 
-                                val.likes = data
-                            }
+                            console.log("O bhai::", e)
 
-
-                            return val;
-                        })
-
+                        }
                         // const hours = 1;
 
                         cache.put(url, cacheResponse, hours * 1000 * 60 * 60);
@@ -90,6 +97,7 @@ export default async function revalidate(req, res) {
                         
                         cacheResponse = cacheResponse.map((val, idx) => {
                             if(val.id === Number(target_post_id)){
+                                console.log("Dta::", data)
                                 val.dislikes = data
                             }
                             return val;
