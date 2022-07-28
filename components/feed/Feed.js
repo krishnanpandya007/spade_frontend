@@ -117,9 +117,9 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                 )
             })}
 
-            {(isProfileView ? data.created_posts : data).length>0?
+            {!marked ? (isProfileView ? data.created_posts : data).length>0?
                 <center><LoadingButton loading={isLoadMoreLoading} onClick={load_more_posts} endIcon={<ExpandMoreRounded />} variant="outlined" size="small" >Load More</LoadingButton></center>
-                :<h3 style={{color: grey[500]}}>No Posts Found!</h3>
+                :<h3 style={{color: grey[500]}}>No Posts Found!</h3>:null
             }
                 
         </Container>
