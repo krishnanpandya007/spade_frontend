@@ -2,8 +2,9 @@
 import PropTypes from 'prop-types'
 // import { Avatar, Chip, Divider, Grid, Paper } from '@material-ui/core'
 
-import { Avatar, Chip, Divider, Grid, Stack } from '@mui/material';
+import { Avatar, Chip, Divider, Grid, Link, Stack } from '@mui/material';
 import React from 'react';
+import { FRONTEND_ROOT_URL } from '../../config';
 // import avatar_pic from './avatar_1.jpg'
 
 
@@ -12,22 +13,25 @@ const random_colors = []
 
 function FeedAbout({username, tags, created_on, profile_pic, first_name, last_name}) {
 
-    const HandleTagOnClick = () => {
-        return
-    }
+
 
     return (
         <React.Fragment>
 
-            <Chip 
-                // avatar={<Avatar />} 
-                avatar={profile_pic ? <Avatar src={'http://127.0.0.1:8000'+profile_pic} /> : first_name && last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700'}} >{first_name[0]+last_name[0]}</Avatar>: <Avatar />}
+            <Link href={`${FRONTEND_ROOT_URL}view_profile/${username}`} style={{textDecoration: 'none'}}>
+                <a href={`${FRONTEND_ROOT_URL}view_profile/${username}`} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem'}}>
 
-                label={username}
-                variant="outlined"
-                onClick={HandleTagOnClick}
-                style={{margin: `0.5rem`}}
-            />
+                    <Chip 
+                        // avatar={<Avatar />} 
+                        avatar={profile_pic ? <Avatar src={'http://127.0.0.1:8000'+profile_pic} /> : first_name && last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700'}} >{first_name[0]+last_name[0]}</Avatar>: <Avatar />}
+
+                        label={username}
+                        variant="outlined"
+                        style={{margin: `0.5rem`}}
+                    />
+
+                </a>
+            </Link>
 
             <Divider variant="middle" light style={{marginBottom: '0.5rem'}} />
             {/* <Chip label="No tags included" color="default" variant='outlined' sx={{transform: 'scale(0.8)', borderRadius: '8px', margin: defaultMargin, marginLeft: '0'}} /> */}

@@ -478,7 +478,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
                 </Modal>
 
             <h2 style={{margin: '0', fontFamily: 'Roboto', fontWeight: 'bold', color: blue[500]}}>{title}</h2>
-            <div style={{ fontWeight: '400', color: grey[800], lineHeight: '1.4rem', fontFamily: 'Roboto', fontSize: '0.9rem'}} dangerouslySetInnerHTML={{__html: (descr.length > 800 ? descr.substring(0,800): descr)}}/>
+            <div style={{ fontWeight: '400', color: grey[800], lineHeight: '1.4rem', fontFamily: 'Roboto', fontSize: '0.9rem', overflow: 'hidden'}} dangerouslySetInnerHTML={{__html: (descr.length > 800 ? descr.substring(0,800): descr)}}/>
             <Chip
             
                 icon={<InsertPhotoRounded />}

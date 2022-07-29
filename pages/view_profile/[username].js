@@ -3,13 +3,18 @@ import { get_posts_by_author } from '../../caching';
 import { validate_user } from '../../components/authenticate_user';
 import ProfileView from '../../components/ProfileView';
 import { BACKEND_ROOT_URL } from '../../config';
+import Layout from '../../components/basic/layout'
 
-function viewProfile({data, user_data}) {
+function viewProfile({data, user_data, post_data, profile_view_username}) {
 
   return (
       
-        <ProfileView data={data} userData={user_data}  />
+    <Layout title="Profile | Spade" content="profile view for an account on spade" userInfo={user_data.user_info} isAuthenticated={user_data.is_authenticated} >
 
+
+        <ProfileView data={data} userData={user_data} postData={post_data} profileViewUsername={profile_view_username}  />
+
+    </Layout>
   )
 }
 
@@ -21,7 +26,7 @@ export async function getServerSideProps(context) {
     const response = await validate_user(context);
 
 
-    try{
+    // try{
         const res = await fetch(`${BACKEND_ROOT_URL}account/load_profile/`, {
             method: 'POST',
             headers: {
@@ -32,13 +37,13 @@ export async function getServerSideProps(context) {
                 username
             })
         }).catch((err) => {console.log(err)});
-        const data = await res.json();
+        const profile_data = await res.json();
         // console.log("Data: ", data)
         // return { props: { data } };
-    } catch (err) {
-        console.log(err)
-        // return {props: {}}
-    }
+    // } catch (err) {
+    //     console.log(err)
+    //     // return {props: {}}
+    // }
 
 
 
@@ -48,7 +53,7 @@ export async function getServerSideProps(context) {
 
     return {
 
-        props: {data: response_data, user_data: response}
+        props: {data: profile_data,  profile_view_username: username,post_data:response_data, user_data: response}
 
     }
   

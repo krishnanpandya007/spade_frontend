@@ -8,24 +8,20 @@ export default async (req, res) => {
     if(req.method.toLowerCase() === "post"){
         // Register new account
 
-        const cookies = cookie.parse(req.headers.cookie ?? '');
-        let access = cookies.access ?? false;
+        // const cookies = cookie.parse(req.headers.cookie ?? '');
+        // let access = cookies.access ?? false;
 
-        const {
+        const { fetch_mode, target_user } = req.body;
 
-            mode
-
-        } = req.body;
-
-        // console.log("Post Id: ", post_id)
+        console.log("KOLTING", fetch_mode)
 
 
-            const apiResponse = await fetch(`${BACKEND_ROOT_URL}account/load_posts/${mode}/`, {
+            const apiResponse = await fetch(`${BACKEND_ROOT_URL}account/load_posts/${target_user}/${fetch_mode}/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'Authorization': `Bearer ${access}`
+                    // 'Authorization': `Bearer ${access}`
                 }
             }).catch((err) => {console.log(err)})
 

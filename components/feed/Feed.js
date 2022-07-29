@@ -6,7 +6,7 @@ import getUserInfo from '../basic/get_user_info'
 
 import FeedAbout from './FeedAbout'
 import FeedContent from './FeedContent'
-
+import Link from 'next/link'
 import styles from './Feed.module.css'
 import { blue, green, grey, purple } from '@mui/material/colors'
 import PostModalContext from '../basic/contexts/post_modal_context'
@@ -24,7 +24,6 @@ import { bookmark_post, unbookmark_post } from '../basic/apis/bookmar_post'
 
 function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false, marked=false, is_authenticated, userInfo}) {
 
-    const [username, setUsername] = React.useState('');
     const postModalContext = useContext(PostModalContext)
     const auth = useContext(authContext)
     const snackbar = useContext(SnackbarContext)
@@ -133,11 +132,12 @@ function MFeed({ idx, post, username, openPostModal, snackbar_instance }){
     return (
         <div key={idx} style={{width: '100%', marginBottom: '6rem'}}>
             <div className="feed_upper_section" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem'}}>
-                    
-                    {post.profile_pic ? <Avatar style={{width: '30px', height: '30px', fontWeight: '600', fontSize: '13px'}} src={BACKEND_ROOT_URL.slice(0, BACKEND_ROOT_URL.length - 1)+post.profile_pic} /> : post.first_name && post.last_name ? <Avatar  style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '30px', height: '30px', fontWeight: '600', fontSize: '13px'}} >{post.first_name[0]+post.last_name[0]}</Avatar>: <Avatar />}
-                    <p style={{fontFamily: 'Poppins', fontWeight: '400', fontSize: '0.9rem'}}>{post.author_name}</p>
-                </div>
+                <Link href={`${FRONTEND_ROOT_URL}view_profile/${post.author_name}`}>
+                    <a href={`${FRONTEND_ROOT_URL}view_profile/${post.author_name}`} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem'}}>
+                        {post.profile_pic ? <Avatar style={{width: '30px', height: '30px', fontWeight: '600', fontSize: '13px'}} src={BACKEND_ROOT_URL.slice(0, BACKEND_ROOT_URL.length - 1)+post.profile_pic} /> : post.first_name && post.last_name ? <Avatar  style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '30px', height: '30px', fontWeight: '600', fontSize: '13px'}} >{post.first_name[0]+post.last_name[0]}</Avatar>: <Avatar />}
+                        <p style={{fontFamily: 'Poppins', fontWeight: '400', fontSize: '0.9rem'}}>{post.author_name}</p>
+                    </a>
+                </Link>
                 <p style={{color: '#A7A7A7', fontSize: '12px', fontWeight: '200'}}>{post.time_since.replace(' ago', '')}</p>
             </div>
             <div className="feed_mid_section_1" style={{borderRadius: '10px 10px 0 0', backgroundColor: '#F7F7F7', padding: '0 0rem', position: 'relative'}}>

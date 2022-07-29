@@ -1,8 +1,10 @@
 import { FRONTEND_ROOT_URL } from "../../../config";
 
-export async function fetch_profile_posts(mode) {
+export async function fetch_profile_posts_frontend(mode) {
 
-    const response = await fetch(`${FRONTEND_ROOT_URL}api/fetch_profile_posts/`, {
+    console.log("MODEEE:", mode)
+
+    const response = await fetch(`${FRONTEND_ROOT_URL}api/get_profile_posts_by_mode/`, {
 
         method: 'POST',
         headers: {
@@ -10,10 +12,10 @@ export async function fetch_profile_posts(mode) {
             'Accept': 'application/json'
         },
         data: JSON.stringify({
-            mode
+            fetch_mode: mode
         })
 
-    }).catch((err) => {console.error("Error: ", err)})
+    })
 
     const data = await response.json();
 

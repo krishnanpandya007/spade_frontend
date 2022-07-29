@@ -36,7 +36,7 @@ function parse_date(date){
     let ymd = dt[0].split('-').map((val) => Number(val))
     let hms = dt[1].slice(0, dt[1].length-1).split(':').map((val) => Number(val));
 
-    console.log("Dis is", [dt, ymd, hms])
+    console.log("Dis is", [date,dt, ymd, hms])
 
     return [...ymd, ...hms]
 
