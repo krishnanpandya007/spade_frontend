@@ -293,7 +293,7 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
         </div>
       </div>
 
-      <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', margin: '0 5%'}}>
+      <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', margin: '0'}}>
         <div>
           <h1 style={{fontSize: '2.5rem', padding: '0', textAlign: 'center', marginBlock: '0rem'}}>{data?.created_posts?.length}</h1>
           <p style={{fontWeight: '700', fontSize: '1.2rem', color: '#C4C4C4', marginBlock: '0'}}>Posts</p>
@@ -303,6 +303,7 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
           <p style={{fontWeight: '700', fontSize: '1.2rem', color: '#C4C4C4', marginBlock: '0'}}>Community</p>
         </div>
       </div>
+
       <Divider variant="middle" light/>
       <div style={{margin: '2rem 5% 3rem 5%'}}>
         {data?.bio || <p style={{color: '#c4c4c4', fontSize: '0.9rem', fontWeight: '600'}}>No Profile Overview found!</p>}
