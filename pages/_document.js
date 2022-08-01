@@ -8,6 +8,11 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="bugs_bg.png"></link>
+          <meta name="theme-color" content="#fff" />
+
           <link rel="shortcut icon" href="/spade_icon.ico" />
           <meta charset="UTF-8" />
           <meta http-equiv="X-UA-Compatible" content="ie=edge" />

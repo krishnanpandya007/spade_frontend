@@ -1,6 +1,6 @@
 // import { Container, Divider, Grid, Paper } from '@material-ui/core'
 
-import { Avatar, Container, Divider, Grid, IconButton, Tooltip } from '@mui/material'
+import { Avatar, Container, Divider, Grid, IconButton, Modal, Tooltip } from '@mui/material'
 import React, { useContext, useEffect } from 'react'
 import getUserInfo from '../basic/get_user_info'
 
@@ -11,7 +11,7 @@ import styles from './Feed.module.css'
 import { blue, green, grey, purple } from '@mui/material/colors'
 import PostModalContext from '../basic/contexts/post_modal_context'
 import { LoadingButton } from '@mui/lab'
-import { ExpandMoreRounded } from '@mui/icons-material'
+import { ContentCopyOutlined, ExpandMoreRounded } from '@mui/icons-material'
 import { BACKEND_ROOT_URL, defaultBorderColor, FRONTEND_ROOT_URL } from '../../config'
 import SnackbarContext from '../basic/contexts/snackbar_context'
 import _load_more_posts from '../basic/apis/load_more_posts'
@@ -20,13 +20,25 @@ import Image from 'next/image'
 import styled from '@emotion/styled'
 import { handle_action_post } from '../basic/handle_action'
 import { bookmark_post, unbookmark_post } from '../basic/apis/bookmar_post'
+import useLongPress from '../../hooks/use-long-press'
+import { Box } from '@mui/system'
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share'
 
+const StyledIconButton = styled(IconButton)`
+
+&:after{
+    color: blue;
+}
+
+`
 
 function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false, marked=false, is_authenticated, userInfo}) {
 
     const postModalContext = useContext(PostModalContext)
     const auth = useContext(authContext)
     const snackbar = useContext(SnackbarContext)
+
+    const [shareData, setShareData] = React.useState({open: false, post_id: null})
 
     const [loadMoreCounter, setLoadMoreCounter] = React.useState(1);
 
@@ -63,6 +75,9 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
     // }
 
+
+
+
     const handlePostModalOpen = (post) => {
 
         postModalContext.set_data({
@@ -87,15 +102,77 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
     }
 
-    
+    const handleShareOpen = (post_id) => {
+
+
+        setShareData({open: true, post_id: post_id});
+
+    }
 
     return (
         <Container style={!isProfileView ? (!isExploreView ? {display: 'grid', placeItems: 'center', paddingTop: '5vh'} : {paddingLeft: '5%', paddingTop: '2%', width: '100vw',  marginLeft: '0%'}): {padding: '5%', width: '100vw', marginLeft: '0'}}>
 
+
+
+                <Modal
+                    open={shareData.open}
+                    onClose={() => {setShareData({open: false, post_id: null})}}
+                >
+                    
+                    <Box style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 'max(350px, 30vw)',
+                        backgroundColor: '#f4f4f4',
+                        borderRadius: '5px',
+                        boxShadow: 24,
+                        padding: '0px 5px 1rem 5px',
+                    }}>
+                        <center><h2>Share With</h2></center>
+                        <div style={{width: '100%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                            <Tooltip title="Copy URL">
+                                <StyledIconButton onClick={() => {navigator.clipboard.writeText(`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`);snackbar.open('simple', "Copied to clipboard!")}}>
+                                    <ContentCopyOutlined />
+                                    
+                                </StyledIconButton>
+                                
+                            </Tooltip>
+                            <FacebookShareButton
+                                url={`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`} >
+                                <FacebookIcon size={32} round />
+                            </FacebookShareButton>
+                            <PinterestShareButton
+                                url={`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`} >
+                                <PinterestIcon size={32} round />
+                            </PinterestShareButton>
+                            <RedditShareButton
+                                url={`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`} >
+                                <RedditIcon size={32} round />
+                            </RedditShareButton>
+                            <WhatsappShareButton
+                                url={`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`} >
+                                <WhatsappIcon size={32} round />
+                            </WhatsappShareButton>
+                            <LinkedinShareButton
+                                url={`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`} >
+                                <LinkedinIcon size={32} round />
+                            </LinkedinShareButton>
+                            <TwitterShareButton
+                                url={`${FRONTEND_ROOT_URL}explore/post/${shareData.post_id}`} >
+                                <TwitterIcon size={32} round />
+                            </TwitterShareButton>
+                        </div>
+                    </Box>
+                </Modal>
+
+
+
             {(isProfileView ? data.created_posts : data).map((post, idx) => {
                 return (
                     // <Grid key={idx} container spacing={0} sx={{position: 'relative',width: '60vw', height: '40vh', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '3px', marginBottom: '5vh'}} alignItems='center' justifyContent='center'>
-                    auth.is_on_mobile ? <MFeed snackbar_instance={snackbar} openPostModal={() => {handlePostModalOpen(post)}} idx={idx} post={post} username={auth.user_data?.username} />:<div key={idx} style={{width: 'clamp(1000px, 60vw, 1200px)', height: 'clamp(300px, 40vh,400px)', border: '1px solid ' + defaultBorderColor, borderRadius: '5px', marginBottom: '5vh', display: 'flex'}}>
+                    auth.is_on_mobile ? <MFeed snackbar_instance={snackbar} openShare = {handleShareOpen} openPostModal={() => {handlePostModalOpen(post)}} idx={idx} post={post} username={auth.user_data?.username} />:<div key={idx} style={{width: 'clamp(1000px, 60vw, 1200px)', height: 'clamp(300px, 40vh,400px)', border: '1px solid ' + defaultBorderColor, borderRadius: '5px', marginBottom: '5vh', display: 'flex'}}>
                         <div style={{height: '100%', width: '25%', borderRight: '1px solid '+ defaultBorderColor, position: 'relative'}}>
                         
                         {/* <Grid item xs={3} sx={{ height: '100%'}} > */}
@@ -125,10 +202,21 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
     )
 }
 
-function MFeed({ idx, post, username, openPostModal, snackbar_instance }){
+function MFeed({ idx, post, username, openPostModal, openShare, snackbar_instance }){
 
+    const {action, handlers} = useLongPress();
 
-     console.log(post)
+    useEffect(() => {
+
+        if(action === 'click'){
+            openPostModal();
+        }else if(action === 'longpress') {
+            openShare(post.id); 
+
+        }
+        handlers.onMouseUp();handlers.onTouchEnd();
+    }, [action])
+
     return (
         <div key={idx} style={{width: '100%', marginBottom: '6rem'}}>
             <div className="feed_upper_section" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -144,7 +232,7 @@ function MFeed({ idx, post, username, openPostModal, snackbar_instance }){
                 <h3 style={{padding: '1rem 1rem', fontFamily: 'Poppins', color: '#516BEB', marginBottom: '2px', fontWeight: '600'}}>{post.title.length < 34 ?post.title : post.title.slice(0, 30) + '...'}</h3>
                 <Tooltip title="Expand">
 
-                    <IconButton onClick={openPostModal} style={{position: 'absolute',  right: '0.5rem', top: '0', bottom: '0'}}>
+                    <IconButton {...handlers} onClick={openPostModal} style={{position: 'absolute',  right: '0.5rem', top: '0', bottom: '0'}}>
                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 2.5C2 2.22386 2.22386 2 2.5 2H5.5C5.77614 2 6 2.22386 6 2.5C6 2.77614 5.77614 3 5.5 3H3V5.5C3 5.77614 2.77614 6 2.5 6C2.22386 6 2 5.77614 2 5.5V2.5ZM9 2.5C9 2.22386 9.22386 2 9.5 2H12.5C12.7761 2 13 2.22386 13 2.5V5.5C13 5.77614 12.7761 6 12.5 6C12.2239 6 12 5.77614 12 5.5V3H9.5C9.22386 3 9 2.77614 9 2.5ZM2.5 9C2.77614 9 3 9.22386 3 9.5V12H5.5C5.77614 12 6 12.2239 6 12.5C6 12.7761 5.77614 13 5.5 13H2.5C2.22386 13 2 12.7761 2 12.5V9.5C2 9.22386 2.22386 9 2.5 9ZM12.5 9C12.7761 9 13 9.22386 13 9.5V12.5C13 12.7761 12.7761 13 12.5 13H9.5C9.22386 13 9 12.7761 9 12.5C9 12.2239 9.22386 12 9.5 12H12V9.5C12 9.22386 12.2239 9 12.5 9Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
                     </IconButton>
                 </Tooltip>
@@ -153,17 +241,18 @@ function MFeed({ idx, post, username, openPostModal, snackbar_instance }){
                 <div dangerouslySetInnerHTML={{__html: post.descr.length > 300 ? post.descr.substring(0,300) +'<b style="color: #00000040"> ...</b>' : post.descr}} style={{padding: '0.5rem', color: '#3C3C3C', margin: '0', fontSize:'12px'}}></div>
             </div>
 
-            <PostActionBar snackbar_instance={snackbar_instance} post_id={post.id} is_liked={ username ? post.likes.includes(username) : false} is_disliked={username ? post.dislikes.includes(username) : false} n_likes={post.likes?.length} n_dislikes={post.dislikes?.length}  />
+            <PostActionBar openShare={openShare} snackbar_instance={snackbar_instance} post_id={post.id} is_liked={ username ? post.likes.includes(username) : false} is_disliked={username ? post.dislikes.includes(username) : false} n_likes={post.likes?.length} n_dislikes={post.dislikes?.length}  />
 
         </div>
     )
 
 }
 
-function PostActionBar({ is_liked, is_disliked, n_likes, n_dislikes, post_id, snackbar_instance }){
+function PostActionBar({ is_liked, is_disliked, n_likes,openShare ,n_dislikes, post_id, snackbar_instance }){
 
     const [isLiked, setIsLiked] = React.useState(is_liked);
     const [isDisliked, setDisliked] = React.useState(is_disliked);
+    
 
     const unBookmark =  () => {
         const success = unbookmark_post(post_id);
@@ -282,13 +371,36 @@ function PostActionBar({ is_liked, is_disliked, n_likes, n_dislikes, post_id, sn
 
     }, [is_disliked])
 
+    const sharePost = () => {
+        if (typeof navigator !== 'undefined'){
+            
+            if(navigator.canShare){
+                navigator.share({
+                    url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
+                    title: 'Spade',
+                    text: 'Share hacks, gain hacks!'
+                })
+            }else{
+
+                openShare(post_id);
+
+            }
+
+        }else{
+
+            openShare(post_id);
+        }
+
+    }
+
     return (
 
         <div className="feed_bottom_section" style={{borderRadius: '10px', backgroundColor: '#F7F7F7', marginTop: '0.8rem', padding: '0.3rem 0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <IconButton onClick={handleAddBookmark}>
-                <svg width="22" height="22" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.5C3 2.22386 3.22386 2 3.5 2H11.5C11.7761 2 12 2.22386 12 2.5V13.5C12 13.6818 11.9014 13.8492 11.7424 13.9373C11.5834 14.0254 11.3891 14.0203 11.235 13.924L7.5 11.5896L3.765 13.924C3.61087 14.0203 3.41659 14.0254 3.25762 13.9373C3.09864 13.8492 3 13.6818 3 13.5V2.5ZM4 3V12.5979L6.97 10.7416C7.29427 10.539 7.70573 10.539 8.03 10.7416L11 12.5979V3H4Z" fill="#516BEB" fillRule="evenodd" clipRule="evenodd"></path></svg>
-                {/* <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 2C3.22386 2 3 2.22386 3 2.5V13.5C3 13.6818 3.09864 13.8492 3.25762 13.9373C3.41659 14.0254 3.61087 14.0203 3.765 13.924L7.5 11.5896L11.235 13.924C11.3891 14.0203 11.5834 14.0254 11.7424 13.9373C11.9014 13.8492 12 13.6818 12 13.5V2.5C12 2.22386 11.7761 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg> */}
-            </IconButton>
+                <IconButton onClick={() => {alert("Single Click")}} >
+                    <svg width="22" height="22" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.5C3 2.22386 3.22386 2 3.5 2H11.5C11.7761 2 12 2.22386 12 2.5V13.5C12 13.6818 11.9014 13.8492 11.7424 13.9373C11.5834 14.0254 11.3891 14.0203 11.235 13.924L7.5 11.5896L3.765 13.924C3.61087 14.0203 3.41659 14.0254 3.25762 13.9373C3.09864 13.8492 3 13.6818 3 13.5V2.5ZM4 3V12.5979L6.97 10.7416C7.29427 10.539 7.70573 10.539 8.03 10.7416L11 12.5979V3H4Z" fill="#516BEB" fillRule="evenodd" clipRule="evenodd"></path></svg>
+                    {/* <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 2C3.22386 2 3 2.22386 3 2.5V13.5C3 13.6818 3.09864 13.8492 3.25762 13.9373C3.41659 14.0254 3.61087 14.0203 3.765 13.924L7.5 11.5896L11.235 13.924C11.3891 14.0203 11.5834 14.0254 11.7424 13.9373C11.9014 13.8492 12 13.6818 12 13.5V2.5C12 2.22386 11.7761 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg> */}
+                </IconButton>
+
             <div>
                 {/* Like/Dislike */}
                 <IconButton style={{position: 'relative'}} onClick={like}>

@@ -88,6 +88,12 @@ function Home({data, is_authenticated, user_info}) {
 
 function ThinWrapper({animation_controller, currentData, filterBy, setCurrentData, is_authenticated, user_info}) {
 
+    // useEffect(() => {
+
+
+
+    // }, [action])
+
     const auth = useContext(authContext);
 
     return (
@@ -102,8 +108,7 @@ function ThinWrapper({animation_controller, currentData, filterBy, setCurrentDat
                 {/* <center><LoadingButton loading={isLoading} onClick={() => {setIsLoading(currState => !currState)}} variant="outlined" size="small">Load More</LoadingButton></center>   */}
                 </div>
             :
-                <Grid container spacing={0}>
-
+                <Grid container spacing={0}>                    
 
                     <div style={{width: '65vw'}}>
                         <motion.div style={{width: '65vw'}} animate={animation_controller} transition={{duration: 1, x: { type: "spring", stiffness: 100 }}}>

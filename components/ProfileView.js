@@ -276,9 +276,9 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
 
       <center style={{backgroundColor: '#548CFF', color: 'white', fontFamily: 'Poppins', fontSize: '1.1rem'}}><p style={{padding: '0.2rem 0'}}>{data.username}</p></center>
 
-      <div style={{display: 'flex', alignItems: 'center', padding: '5%', gap: '2.5rem'}}>
+      <div style={{display: 'flex', alignItems: 'center', padding: '5%'}}>
         {data.profile_pic ? <Avatar style={{height: '100px', width: '100px'}} src={`${BACKEND_ROOT_URL.slice(0,BACKEND_ROOT_URL.length-1)}${data.profile_pic}`} /> : data?.first_name && data?.last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '100px', height: '100px'}} >{data?.first_name[0]+data?.last_name[0]}</Avatar>: <Avatar style={{height: '100px', width: '100px'}} />}
-        <div>
+        <div style={{width: '100%', padding: '0 1.5rem 0 2rem'}}>
           <h2 style={{fontWeight:'400', fontFamily: 'Poppins', color: '#c4c4c4'}}>{data?.first_name} {data?.last_name}</h2>
           {/* <Chip label={data?.status} variant="outlined" icon={<div style={{width: '15px', height: '15px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px', margin: '0 0 0 10px'}} />} style={{borderRadius: '5px'}} /> */}
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem', justifyItems: 'stretch', width: '100%'}}>

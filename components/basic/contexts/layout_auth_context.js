@@ -12,6 +12,7 @@ const authContext = createContext({
         first_name: null,   
         last_name: null
     },
+    action_button_title: null,
     authenticate: ()=> {},
     de_authenticate: () => {},
     set_user_data: (username, profile_pic, first_name, last_name)=>{},

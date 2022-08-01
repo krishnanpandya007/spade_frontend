@@ -254,7 +254,6 @@ function CreatePostForm({ChangeChipData, chip_data}) {
     }
 
     const handleFormSubmit = async () => {
-
             if(!postTitle) {
 
                 snackbar.open('error', "Please provide valid title")
@@ -339,11 +338,15 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
                 const data = await response.json();
 
-                snackbar.open(data.error ? "error" : "success", data.message)                
+
+
+                snackbar.open(data.error ? "error" : "simple", data.message, true, () => {window.location.href=`${FRONTEND_ROOT_URL}/explore/post/${data.created_post_id}`},"View post")                
 
 
 
     }
+
+    
 
     useEffect( () => {
         editorRef.current = {

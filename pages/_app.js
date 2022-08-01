@@ -18,7 +18,7 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } } = props;
 
-  const [snackbarData, setSnackbarData] = useState({open:false, severity:'', message:'',includes_callback: false, callback_fn: () => {}})
+  const [snackbarData, setSnackbarData] = useState({open:false, severity:'', message:'',includes_callback: false, callback_fn: () => {}, action_button_title:null})
 
   const close = () => {
 
@@ -26,17 +26,17 @@ export default function MyApp(props) {
 
   }
 
-  const open = (severity, message, includes_callback = false, callback_fn) => {
+  const open = (severity, message, includes_callback = false, callback_fn, action_button_title='UNDO') => {
 
-    setSnackbarData({open: true, severity: severity, message: message, includes_callback: includes_callback, callback_fn: callback_fn})
+    setSnackbarData({open: true, severity: severity, message: message, includes_callback: includes_callback, callback_fn: callback_fn, action_button_title: action_button_title})
 
   }
 
-  const undo_action = (callback_fn) => {
+  const undo_action = (callback_fn, action_button_title = 'UNDO') => {
     // setSnackbarData({...snackbarData, includes_callback: true})    
     return (
       <>
-        <Button onClick={callback_fn}>UNDO</Button>
+        <Button onClick={callback_fn}>{action_button_title}</Button>
       </>
     )
   }
@@ -63,7 +63,7 @@ export default function MyApp(props) {
         }}>
           
           <SnackbarContext.Provider value={{...snackbarData, open: open, close: close, undo_action: undo_action}}>
-            <Snackbar autoHideDuration={5000} anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} message={snackbarData.severity === "simple" ? snackbarData.message : null} open={snackbarData.open} onClose={close} action={snackbarData.includes_callback ? undo_action(snackbarData.callback_fn) : null} >
+            <Snackbar autoHideDuration={5000} anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} message={snackbarData.severity === "simple" ? snackbarData.message : null} open={snackbarData.open} onClose={close} action={snackbarData.includes_callback ? undo_action(snackbarData.callback_fn, snackbarData.action_button_title) : null} >
               {snackbarData.severity !== 'simple' &&
                 <Alert onClose={close} severity={snackbarData.severity}>
                   {snackbarData.message}

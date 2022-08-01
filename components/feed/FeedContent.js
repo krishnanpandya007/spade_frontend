@@ -300,7 +300,24 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
 
 
     const sharePost = () => {
-        setShareOpen(true)
+        if (typeof navigator !== 'undefined'){
+            
+            if(navigator.canShare){
+                navigator.share({
+                    url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
+                    title: 'Spade',
+                    text: 'Share hacks, gain hacks!'
+                })
+            }else{
+
+                setShareOpen(true)
+
+            }
+
+        }else{
+
+            setShareOpen(true)
+        }
 
     }
 

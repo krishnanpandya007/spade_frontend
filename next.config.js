@@ -1,4 +1,6 @@
-module.exports = {
+const withPWA = require('next-pwa')
+
+module.exports = withPWA({
   reactStrictMode: true,
   // swcMinify: true, // ! Trial
   images: {
@@ -11,5 +13,12 @@ module.exports = {
         destination: 'http://127.0.0.1:8000/create/post/' // Proxy to Backend
       }
     ]
+  },
+  pwa: {
+    dest: "public/static",
+    disable: process.env.NODE_ENV === "development",
+    register: true,
+    sw: '/sw.js',
+    skipWaiting: true,
   }
-}
+})
