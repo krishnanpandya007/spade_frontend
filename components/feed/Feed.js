@@ -374,7 +374,7 @@ function PostActionBar({ is_liked, is_disliked, n_likes,openShare ,n_dislikes, p
     const sharePost = () => {
         if (typeof navigator !== 'undefined'){
             
-            if(navigator.canShare){
+            if(navigator.share || navigator.canShare){
                 navigator.share({
                     url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
                     title: 'Spade',
