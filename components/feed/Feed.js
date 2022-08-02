@@ -102,10 +102,49 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
     }
 
+    const sharePost = () => {
+        if (typeof navigator !== 'undefined'){
+            
+            if(navigator.share || navigator.canShare){
+                navigator.share({
+                    url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
+                    title: 'Spade',
+                    text: 'Share hacks, gain hacks!'
+                })
+            }else{
+
+                openShare(post_id);
+
+            }
+
+        }else{
+
+            openShare(post_id);
+        }
+
+    }
+
     const handleShareOpen = (post_id) => {
 
 
-        setShareData({open: true, post_id: post_id});
+        if (typeof navigator !== 'undefined'){
+            
+            if(navigator.share || navigator.canShare){
+                navigator.share({
+                    url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
+                    title: 'Spade',
+                    text: 'Share hacks, gain hacks!'
+                })
+            }else{
+
+                setShareData({open: true, post_id: post_id});
+
+            }
+
+        }else{
+
+            setShareData({open: true, post_id: post_id});
+        }
 
     }
 
@@ -205,6 +244,9 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 function MFeed({ idx, post, username, openPostModal, openShare, snackbar_instance }){
 
     const {action, handlers} = useLongPress();
+
+
+
 
     useEffect(() => {
 
@@ -372,34 +414,24 @@ function PostActionBar({ is_liked, is_disliked, n_likes,openShare ,n_dislikes, p
     }, [is_disliked])
 
     const sharePost = () => {
-        if (typeof navigator !== 'undefined'){
-            
-            if(navigator.share || navigator.canShare){
-                navigator.share({
-                    url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
-                    title: 'Spade',
-                    text: 'Share hacks, gain hacks!'
-                })
-            }else{
-
-                openShare(post_id);
-
-            }
-
-        }else{
-
-            openShare(post_id);
-        }
-
+        openShare(post_id);
     }
 
     return (
 
         <div className="feed_bottom_section" style={{borderRadius: '10px', backgroundColor: '#F7F7F7', marginTop: '0.8rem', padding: '0.3rem 0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                <IconButton onClick={() => {alert("Single Click")}} >
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+
+                <IconButton onClick={handleAddBookmark} >
                     <svg width="22" height="22" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.5C3 2.22386 3.22386 2 3.5 2H11.5C11.7761 2 12 2.22386 12 2.5V13.5C12 13.6818 11.9014 13.8492 11.7424 13.9373C11.5834 14.0254 11.3891 14.0203 11.235 13.924L7.5 11.5896L3.765 13.924C3.61087 14.0203 3.41659 14.0254 3.25762 13.9373C3.09864 13.8492 3 13.6818 3 13.5V2.5ZM4 3V12.5979L6.97 10.7416C7.29427 10.539 7.70573 10.539 8.03 10.7416L11 12.5979V3H4Z" fill="#516BEB" fillRule="evenodd" clipRule="evenodd"></path></svg>
                     {/* <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 2C3.22386 2 3 2.22386 3 2.5V13.5C3 13.6818 3.09864 13.8492 3.25762 13.9373C3.41659 14.0254 3.61087 14.0203 3.765 13.924L7.5 11.5896L11.235 13.924C11.3891 14.0203 11.5834 14.0254 11.7424 13.9373C11.9014 13.8492 12 13.6818 12 13.5V2.5C12 2.22386 11.7761 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg> */}
                 </IconButton>
+            
+                <IconButton onClick={sharePost} >
+
+                    <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 7.50003C5 8.32845 4.32843 9.00003 3.5 9.00003C2.67157 9.00003 2 8.32845 2 7.50003C2 6.6716 2.67157 6.00003 3.5 6.00003C4.32843 6.00003 5 6.6716 5 7.50003ZM5.71313 8.66388C5.29445 9.45838 4.46048 10 3.5 10C2.11929 10 1 8.88074 1 7.50003C1 6.11931 2.11929 5.00003 3.5 5.00003C4.46048 5.00003 5.29445 5.54167 5.71313 6.33616L9.10424 4.21671C9.03643 3.98968 9 3.74911 9 3.50003C9 2.11932 10.1193 1.00003 11.5 1.00003C12.8807 1.00003 14 2.11932 14 3.50003C14 4.88074 12.8807 6.00003 11.5 6.00003C10.6915 6.00003 9.97264 5.61624 9.51566 5.0209L5.9853 7.22738C5.99502 7.31692 6 7.40789 6 7.50003C6 7.59216 5.99502 7.68312 5.9853 7.77267L9.51567 9.97915C9.97265 9.38382 10.6915 9.00003 11.5 9.00003C12.8807 9.00003 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5C9 11.2509 9.03643 11.0104 9.10425 10.7833L5.71313 8.66388ZM11.5 5.00003C12.3284 5.00003 13 4.32846 13 3.50003C13 2.6716 12.3284 2.00003 11.5 2.00003C10.6716 2.00003 10 2.6716 10 3.50003C10 4.32846 10.6716 5.00003 11.5 5.00003ZM13 11.5C13 12.3285 12.3284 13 11.5 13C10.6716 13 10 12.3285 10 11.5C10 10.6716 10.6716 10 11.5 10C12.3284 10 13 10.6716 13 11.5Z" fill="#516BEB" color="#516BEB" fillRule="evenodd" clipRule="evenodd"></path></svg>
+                </IconButton>
+            </div>
 
             <div>
                 {/* Like/Dislike */}
