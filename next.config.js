@@ -1,6 +1,6 @@
-const withPWA = require('next-pwa')
+const { BACKEND_ROOT_URL } = require('./config')
 
-module.exports = withPWA({
+module.exports = {
   reactStrictMode: true,
   // swcMinify: true, // ! Trial
   images: {
@@ -10,15 +10,8 @@ module.exports = withPWA({
     return [
       {
         source: '/api/create/post',
-        destination: 'http://127.0.0.1:8000/create/post/' // Proxy to Backend
+        destination: `${BACKEND_ROOT_URL}create/post/` // Proxy to Backend
       }
     ]
   },
-  pwa: {
-    dest: "public/static",
-    disable: process.env.NODE_ENV === "development",
-    register: true,
-    sw: '/sw.js',
-    skipWaiting: true,
-  }
-})
+}
