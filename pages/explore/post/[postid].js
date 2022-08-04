@@ -1,17 +1,18 @@
 import { useRouter } from 'next/router';
 import React from 'react'
 import { get_relevant_posts_by_postid } from '../../../caching';
+import { validate_user } from '../../../components/authenticate_user';
 import Layout from '../../../components/basic/layout';
 import ExploreByTagName from '../../../components/ExploreByTagName';
 import ExploreExactPostView from '../../../components/ExploreExactPostView';
 import ProfileView from '../../../components/ProfileView';
 import { BACKEND_ROOT_URL } from '../../../config';
 
-function PostByTag({data, target_post_title}) {
+function PostByTag({data, target_post_title, is_authenticated, user_info}) {
 
   return (
 
-    <Layout title={`${target_post_title} | Spade`} content={`${target_post_title} by spade`}>
+    <Layout title={`${target_post_title} | Spade`} includesPostModal content={`${target_post_title} by spade`} isAuthenticated={is_authenticated} userInfo={user_info}>
         <ExploreExactPostView data={data} />
     </Layout>
 
@@ -38,11 +39,14 @@ export async function getServerSideProps(context) {
 
     const { postid } = context.query;
 
+    const response = await validate_user(context);
+
+
     const response_data = await get_relevant_posts_by_postid( postid );
 
     return {
 
-      props: { data: response_data, target_post_title: response_data[0]?.title }
+      props: { data: response_data, target_post_title: response_data[0]?.title, is_authenticated: response.is_authenticated ,user_info: response.is_authenticated ? response.user_info : null }
 
     }
 
