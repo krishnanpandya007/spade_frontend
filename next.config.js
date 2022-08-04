@@ -1,4 +1,3 @@
-const { BACKEND_ROOT_URL } = require('./config')
 
 module.exports = {
   reactStrictMode: true,
@@ -10,7 +9,7 @@ module.exports = {
     return [
       {
         source: '/api/create/post',
-        destination: `${BACKEND_ROOT_URL}create/post/` // Proxy to Backend
+        destination: `https://www.spadebeta.in/create/post/` // Proxy to Backend
       }
     ]
   },
