@@ -41,6 +41,8 @@ export async function getServerSideProps(context) {
 
     const response = await validate_user(context);
 
+    console.log(response);
+
 
     const response_data = await get_relevant_posts_by_postid( postid );
 
