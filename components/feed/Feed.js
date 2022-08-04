@@ -97,6 +97,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
             is_bookmarked: false,
             len_tags: post.tags.length, // CHANGED
             create_mode: false,
+            tags: post.tags
 
         })
 

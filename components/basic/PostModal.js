@@ -55,6 +55,8 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
 
     const [commentText, setCommentText] = React.useState('');
 
+    console.log("HERERERERERER",postContextInstance)
+
 
     const handleCommentSubmit = async () => {
 
@@ -130,7 +132,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                         {
                             postContextInstance.tags?.length ? 
                                 postContextInstance.tags.map((val, idx) => (
-                                    <Link key={idx} href={`/explore/tag/${val}`}><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0', backgroundColor: '#516BEB',letterSpacing: '2px', fontFamily: 'Poppins', textTransform: 'uppercase'}}>Pubg</a></Link>
+                                    <Link key={idx} href={`/explore/tag/${val}`}><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0', backgroundColor: '#516BEB',letterSpacing: '2px', fontFamily: 'Poppins', textTransform: 'uppercase'}}>{val}</a></Link>
                                 ))
                             :<div style={{padding: '0.3rem 1rem', color: 'black', border: '1px solid #c4c4c4',fontWeight: '200', borderRadius: '10px', flexShrink: '0', fontFamily: 'Roboto', fontSize: '0.88rem'}}>No Tags Included</div>
                         }

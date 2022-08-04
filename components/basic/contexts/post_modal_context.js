@@ -8,6 +8,7 @@ const PostModalContext = createContext({
     profile_pic: null,
     descr: "",
     images: [], // [A, B, X, Y]
+    tags: [],
     comments: null,
     likes_count: 0, 
     dislikes_count: 0, 
