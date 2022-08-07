@@ -4,7 +4,7 @@ import TwitterProvider from "next-auth/providers/twitter"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import cookie from 'cookie'
-import { BACKEND_ROOT_URL, SOCIAL_ACCOUNT_ACCESS_KEY } from "../../../config/index"
+import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL, SOCIAL_ACCOUNT_ACCESS_KEY } from "../../../config/index"
 import { validate_user } from "../../../components/authenticate_user"
 
 // The session is automatically loaded when the
@@ -119,7 +119,9 @@ export default async function auth(req, res){
         console.log("Data: ", data);
 
         const { access_token, refresh_token, expires_in } = data;
-
+        if(data.is_signin){
+          res.setHeader('Location', FRONTEND_ROOT_URL);
+        }
         res.setHeader('Set-Cookie', [cookie.serialize(
           'access', access_token, {
               httpOnly: true,
@@ -127,7 +129,7 @@ export default async function auth(req, res){
               maxAge: expires_in, // In Seconds
               sameSite: 'strict',
               path: '/'
-              }
+            }
           ),
           cookie.serialize(
             'refresh', refresh_token, {
@@ -136,7 +138,7 @@ export default async function auth(req, res){
                 maxAge: expires_in, // In Seconds
                 sameSite: 'strict',
                 path: '/'
-                }
+              }
             )
       ]
   );
