@@ -120,7 +120,8 @@ export default async function auth(req, res){
 
         const { access_token, refresh_token, expires_in } = data;
         if(data.is_signin){
-          res.setHeader('Location', FRONTEND_ROOT_URL);
+          res.redirect(307, FRONTEND_ROOT_URL)
+
         }
         res.setHeader('Set-Cookie', [cookie.serialize(
           'access', access_token, {
