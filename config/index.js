@@ -1,6 +1,7 @@
 
 export const BACKEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:8000/' : 'http://159.65.152.43/'
 export const FRONTEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:3000/' : 'https://www.spadebeta.in/'
+export const DOCS_ROOT_URL = 'https://docs.spadebeta.in/'
 
 export const defaultBorderColor = '#bdbdbd'
 

@@ -5,6 +5,7 @@ import authContext from "./contexts/layout_auth_context"
 import { Dialog, DialogTitle, Drawer, List, ListItem } from '@mui/material';
 import React from 'react'
 import styled from '@emotion/styled'
+import { DOCS_ROOT_URL } from '../../config';
 
 const EmailListItem = styled.li`
 
@@ -31,10 +32,12 @@ function Footer({username}) {
                         <br/>
                         <ul>
                             <li> <Link href="/"><a>Home</a></Link></li>
-                            <li> <Link href="/about/"><a>About</a></Link></li>
+                            <li> <Link href={`${DOCS_ROOT_URL}/about`}><a>About</a></Link></li>
                             {auth.is_authenticated && <li> <Link href={`/view_profile/${username}/`}><a>My Profile</a></Link></li>}
                             <li> <Link href="/feedback"><a>Feedback</a></Link></li>
-                            <li> <Link href="/about#what-is-spade"><a>What is Spade?</a></Link></li>
+                            <li> <Link href={`${DOCS_ROOT_URL}about#what-is-spade`}><a>What is Spade?</a></Link></li>
+                            <li> <Link href={DOCS_ROOT_URL}><a>Docs</a></Link></li>
+
                             {/* <li> <Link href="/report"><a>Report</a></Link></li> */}
 
                         </ul>
