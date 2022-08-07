@@ -119,30 +119,30 @@ export default async function auth(req, res){
         console.log("Data: ", data);
 
         const { access_token, refresh_token, expires_in } = data;
-        if(data.is_signin){
-          res.redirect(307, FRONTEND_ROOT_URL)
-
-        }
         res.setHeader('Set-Cookie', [cookie.serialize(
           'access', access_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
+            maxAge: expires_in, // In Seconds
+            sameSite: 'strict',
+            path: '/'
+          }
+          ),
+          cookie.serialize(
+            'refresh', refresh_token, {
               httpOnly: true,
               secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
               maxAge: expires_in, // In Seconds
               sameSite: 'strict',
               path: '/'
             }
-          ),
-          cookie.serialize(
-            'refresh', refresh_token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production", // If in-production => true; else false // *****HARDCODED******
-                maxAge: expires_in, // In Seconds
-                sameSite: 'strict',
-                path: '/'
-              }
             )
-      ]
-  );
+          ]
+          );
+          if(data.is_signin){
+            res.redirect(307, FRONTEND_ROOT_URL)
+  
+          }
   
 /*
         
