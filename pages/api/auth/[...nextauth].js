@@ -140,7 +140,7 @@ export default async function auth(req, res){
           ]
           );
           if(data.is_signin){
-            res.redirect(307, FRONTEND_ROOT_URL)
+            res.redirect(307, `${FRONTEND_ROOT_URL}redirect_home`)
   
           }
   
