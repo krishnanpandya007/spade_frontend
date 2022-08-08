@@ -50,7 +50,7 @@ function Edit() {
 
         const dataj = await response.json();
 
-        if(!dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
+        if(typeof window !== "undefined" && !dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
           setLoadingText('Welcome Back, Redirecting you...')
           router.push('/')
           return;
