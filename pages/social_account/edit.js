@@ -52,7 +52,7 @@ function Edit() {
 
         if(typeof window !== "undefined" && !dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
           setLoadingText('Welcome Back, Redirecting you...')
-          router.push('/')
+          window.location.href = FRONTEND_ROOT_URL
           return;
         }
 
