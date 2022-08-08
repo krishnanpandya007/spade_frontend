@@ -2,10 +2,12 @@
 import { useRouter } from 'next/router';
 import React from 'react'
 function LoginHome() {
+    if(typeof window !== "undefined"){
 
-    const router = useRouter();
-
-    router.push('/')
+      const router = useRouter();
+  
+      router.push('/')
+    }
 
   return (
     <center>
