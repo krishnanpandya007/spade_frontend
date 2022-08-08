@@ -4,6 +4,7 @@ export const FRONTEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http:
 export const DOCS_ROOT_URL = 'https://docs.spadebeta.in/'
 
 export const defaultBorderColor = '#bdbdbd'
+export const NEW_UNCOMPLETED_PROFILE_PREFFIX = 'NEW_'
 
 // Spade Core-Id/Secret 
 export const CLIENT_ID = 'cCTTnSfqe0p3HtVJlgF1LSEEszZkJX4uNmRIYIRe'

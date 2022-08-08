@@ -139,111 +139,12 @@ export default async function auth(req, res){
             )
           ]
           );
-          if(data.is_signin){
-            res.redirect(307, `${FRONTEND_ROOT_URL}redirect_home`)
   
-          }
-  
-/*
-        
-        if (account.provider === 'google') {
-          
-          const { access_token } = token;
-          
-          if (access_token) {
-            console.log("Inside")
-            
 
-              console.log("Success Full Updations")
-
-          } 
-
-        } else if (account.provider === 'facebook') {
-
-          const { accessToken } = token;
-          
-          if (accessToken) {
-            
-                const response = await fetch(`${BACKEND_ROOT_URL}auth/convert-token/`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                  },
-                  body: JSON.stringify({
-        
-                    token: accessToken,
-                    backend: 'google-oauth2',
-                    grant_type: 'convert_token',
-                    client_id: 'hk2vfzk2o8knXSpVx3434ru79YbScYeMHgvc5z6M',
-                    client_secret: 'OeyrUmeEL7dKHqGXaq0QNfJfYdkvu5JwR6qYBt5ZNxBMPJZslR9vD7ajX4o4YGU25yA0LlcxFGK3AXuEP3vxmF2NvPo7BuihRinQdYfZDEAkxt1QkCPxFvHpXapmoR6T',
-        
-                  })
-                })
-            
-
-            const { access_token, refresh_token, expires_in } = await response.json();
-
-                res.setHeader('Set-Cookie', [cookie.serialize(
-                  'access', access_token, {
-                      httpOnly: true,
-                      secure: false, // If in-production => true; else false // *****HARDCODED******
-                      maxAge: expires_in, // In Seconds
-                      sameSite: 'strict',
-                      path: '/'
-                      }
-                  ),
-                  cookie.serialize(
-                    'refresh', refresh_token, {
-                        httpOnly: true,
-                        secure: false, // If in-production => true; else false // *****HARDCODED******
-                        maxAge: expires_in, // In Seconds
-                        sameSite: 'strict',
-                        path: '/'
-                        }
-                    )
-              ]
-          );
-
-
-          }
-
-        }
-        */
-
-        // const access_token = token.accessToken ?? token.access_token ?? false;
-        // // Provider: Google => access_token
-        // // Provider: Facebook => accessToken
-
-        // if(access_token){
-
-        //   if (account) {
-        //     })
-          // const 
           token.accessToken = account.access_token;
         
         return token;
   
-          // const body = await response.json();
-  
-          // console.log("Response: ", body)
-  
-          // const another_response = await fetch(`${BACKEND_ROOT_URL}account/user/`, {
-          //   method: "GET",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     "Accept": "application/json",
-          //     "Authorization": `Bearer ${body.access_token}`
-          //   }
-          // })
-  
-          // const another_body = await another_response.json();
-  
-          // console.log("Another Response: ", another_body);
-  
-        // } else {
-        //   return null;
-        // }
       },
 
       async signIn({ user, account, profile, email, credentials }) {

@@ -34,6 +34,8 @@ function Edit() {
 
     const [submitting, setSubmitting] = useState(false);
 
+    const [loadingText, setLoadingText] = useState('Retrieving Information...')
+
     const [userInfo, setUserInfo] = React.useState({username: null, password: '', re_password: '', email: '', status: '', status_indicator: ''})
   
     const router = useRouter();
@@ -47,6 +49,12 @@ function Edit() {
         const response = await fetch(`${FRONTEND_ROOT_URL}/api/social_account/get_initial_info`);
 
         const dataj = await response.json();
+
+        if(!dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
+          setLoadingText('Welcome Back, Redirecting you...')
+          router.push('/')
+          return;
+        }
 
         setUserInfo({...userInfo, username: dataj.username ?? '', email: dataj.email ?? '',status: dataj.status ?? '', status_indicator: dataj.status_indicator ?? ''});
 
@@ -118,7 +126,7 @@ function Edit() {
         {/* <CircularProgress /> */}
         {
             userInfo.username === null ? 
-            <><LinearProgress /><center><h2 style={{marginTop: '30vh', color: 'grey'}}>Retrieving Information...</h2></center></>
+            <><LinearProgress /><center><h2 style={{marginTop: '30vh', color: 'grey'}}>{loadingText}</h2></center></>
             :
 
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', flexWrap :'wrap', marginTop: '10vh'}}>
