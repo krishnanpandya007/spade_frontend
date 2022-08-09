@@ -6,7 +6,7 @@ import StaticHeader from '../../components/basic/StaticHeader'
 // import { LottiePlayer } from 'lottie-web'; //IMPORT_DYNAMICALLY
 import { blue, purple } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
-import { FRONTEND_ROOT_URL } from '../../config';
+import { FRONTEND_ROOT_URL, NEW_UNCOMPLETED_PROFILE_PREFFIX } from '../../config';
 import { useRouter } from 'next/router';
 import { status_indicator_colors } from '../../components/profile_edits/EditStatusIndicator';
 import SnackbarContext from '../../components/basic/contexts/snackbar_context';
