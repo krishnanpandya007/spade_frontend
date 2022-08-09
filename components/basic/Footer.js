@@ -32,11 +32,11 @@ function Footer({username}) {
                         <br/>
                         <ul>
                             <li> <Link href="/"><a>Home</a></Link></li>
-                            <li> <Link href={`${DOCS_ROOT_URL}/about`}><a>About</a></Link></li>
+                            <li> <a href={`${DOCS_ROOT_URL}about`}>About</a></li>
                             {auth.is_authenticated && <li> <Link href={`/view_profile/${username}/`}><a>My Profile</a></Link></li>}
                             <li> <Link href="/feedback"><a>Feedback</a></Link></li>
-                            <li> <Link href={`${DOCS_ROOT_URL}about#what-is-spade`}><a>What is Spade?</a></Link></li>
-                            <li> <Link href={DOCS_ROOT_URL}><a>Docs</a></Link></li>
+                            <li> <a href={`${DOCS_ROOT_URL}about#what-is-spade`}>What is Spade?</a></li>
+                            <li> <a href={DOCS_ROOT_URL}>Docs</a></li>
 
                             {/* <li> <Link href="/report"><a>Report</a></Link></li> */}
 

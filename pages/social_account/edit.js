@@ -49,10 +49,12 @@ function Edit() {
         const response = await fetch(`${FRONTEND_ROOT_URL}/api/social_account/get_initial_info`);
 
         const dataj = await response.json();
+        console.log("Here Initial")
 
-        if(typeof window !== "undefined" && !dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
+        if(!dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
           setLoadingText('Welcome Back, Redirecting you...')
-          window.location.href = FRONTEND_ROOT_URL
+          // window.location.href = FRONTEND_ROOT_URL
+          router.push('/')
           return;
         }
 
