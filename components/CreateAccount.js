@@ -28,7 +28,7 @@ function CreateAccount({data,t_and_c_ref,handleOnChange, handleSubmit, loading, 
     if(response.status === 200) {
 
       setVerifyView(true)
-      setActionButtonText('Verify Verification Code')
+      setActionButtonText('2. Verify Verification Code')
 
 
     }else if(response.status === 403){
@@ -152,7 +152,7 @@ const disableVerifyView = async () => {
         }
         <br/>
 
-        <LoadingButton loading={loading} disabled={buttonDisabled} onClick={!isVerified ? verifyView ? disableVerifyView : enableVerifyView : handleSubmit} fullWidth variant="contained" sx={{height: '3rem', borderRadius: '10px', backgroundColor: '#5463FF', textTransform: 'initial', fontWeight: '600'}}>{!isVerified ? actionButtonText : "Submit"}</LoadingButton>
+        <LoadingButton loading={loading} disabled={buttonDisabled} onClick={!isVerified ? verifyView ? disableVerifyView : enableVerifyView : handleSubmit} fullWidth variant="contained" sx={{height: '3rem', borderRadius: '10px', backgroundColor: '#5463FF', textTransform: 'initial', fontWeight: '600'}}>{!isVerified ? actionButtonText : "Finally, Submit"}</LoadingButton>
         <div style={{marginLeft: '5%', width: '32.5%', display: 'grid', placeItems: 'center', fontFamily: 'Changa'}}>
 
         {/* <p>Already have a profile? <a href="https://www.google.com" style={{textDecoration: 'underline', color: '#5463FF'}}>Sign In</a></p> */}
