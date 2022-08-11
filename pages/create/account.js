@@ -134,6 +134,7 @@ function Account() {
           <title>Create Profile | Spade</title>
         </Head>
           <StaticHeader />
+          <hr/>
             <Snackbar open={formError} autoHideDuration={6000} onClose={() => {setFormError(false)}}>
                 <Alert onClose={() => {setFormError(false)}}  severity="error" sx={{ width: '100%'}}>
                     {errorData}
