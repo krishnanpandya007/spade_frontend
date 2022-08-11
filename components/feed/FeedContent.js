@@ -87,7 +87,7 @@ function SlideTransition(props) {
   }
 
 var initial=0;
-function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments}) {
+function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments, autoOpenMarked}) {
 
     const [likesCount, setLikesCount] = React.useState(likes_count ?? 0);
     const postModalContext = useContext(PostModalContext)
@@ -154,6 +154,12 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
         })
         
     };
+
+    useEffect(() => {
+        if( autoOpenMarked){
+            handleOpen();
+        }
+    }, [])
     // const handleClose = () => setOpen(false);
 
     const handleCommentInputChange = (e) => setCommentText(e.target.value)

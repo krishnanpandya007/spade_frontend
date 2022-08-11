@@ -9,7 +9,7 @@ function ExploreExactPostView({data}) {
     <div>
         <h2 style={{marginLeft: '5%', fontFamily: 'Changa', fontSize: '2.3rem'}}>Search Results</h2>
         {/* Exact View */}
-        <Feed data={[data[0]]} isExploreView={true} marked />
+        <Feed data={[data[0]]} isExploreView={true} marked autoOpenMarked={true} />
 
         <Feed data={data.slice(1)} isExploreView={true} />
     </div>
