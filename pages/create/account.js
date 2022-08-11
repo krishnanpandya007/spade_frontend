@@ -2,18 +2,13 @@
 
 // import { Button, Divider, InputAdornment, Snackbar, TextField } from "@material-ui/core"
 
-import { EmailOutlined, HttpOutlined, HttpsOutlined, PersonOutlineOutlined } from "@mui/icons-material"
 
-import { Button, Divider, InputAdornment, Snackbar, TextField} from '@mui/material'
+import {Snackbar} from '@mui/material'
 
-import { grey } from '@mui/material/colors';
 
 // Box
 
-import CircularProgress, {
-    circularProgressClasses,
-  } from '@mui/material/CircularProgress';
-import { Box } from "@mui/system";
+
 import React, { useEffect } from "react";
 import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from "../../config";
 import { Alert } from "@mui/material";
@@ -133,7 +128,7 @@ function Account() {
     
 
 
-    return (<div>
+    return (<>
 
         <Head>
           <title>Create Profile | Spade</title>
@@ -146,7 +141,7 @@ function Account() {
             </Snackbar>
 
         <CreateAccount handleFormError={setFormError} handleErrorData={setErrorData} data={formData} t_and_c_ref={terms_and_condi_agree_ref} handleOnChange={handleOnChange} handleSubmit={handleSubmit} loading={isSubmitting} setLoading={setIsSubmitting} profileCreated={profileCreated} />
-    </div>
+    </>
     )
 }
 
