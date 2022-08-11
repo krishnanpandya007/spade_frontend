@@ -51,7 +51,7 @@ function ShareModal({share_url, open, _onClose}){
 
 }
 
-function MobileModal({ postContextInstance, current_mode, changeCurrentMode, username }) {
+function MobileModal({ postContextInstance, is_authenticated, current_mode, changeCurrentMode, username, openSignInDrawer }) {
 
     const [commentText, setCommentText] = React.useState('');
 
@@ -132,7 +132,7 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
                         {
                             postContextInstance.tags?.length ? 
                                 postContextInstance.tags.map((val, idx) => (
-                                    <Link key={idx} href={`/explore/tag/${val}`}><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0', backgroundColor: '#516BEB',letterSpacing: '2px', fontFamily: 'Poppins', textTransform: 'uppercase'}}>{val}</a></Link>
+                                    <Link key={idx} href={`/explore/tag/${val}`}><a style={{padding: '0.45rem 1.5rem', color: 'white', fontWeight: '500', borderRadius: '10px', flexShrink: '0', backgroundColor: '#516BEB',letterSpacing: '2px', fontFamily: 'Roboto', textTransform: 'uppercase', fontSize: '0.89rem'}}>{val}</a></Link>
                                 ))
                             :<div style={{padding: '0.3rem 1rem', color: 'black', border: '1px solid #c4c4c4',fontWeight: '200', borderRadius: '10px', flexShrink: '0', fontFamily: 'Roboto', fontSize: '0.88rem'}}>No Tags Included</div>
                         }
@@ -141,10 +141,9 @@ function MobileModal({ postContextInstance, current_mode, changeCurrentMode, use
 
                     </div>
                 </div>
-
                 <div style={{ display: 'flex',justifyContent: 'space-between', alignItems: 'center',width: 'calc(100vw - 2rem)', position: 'absolute', bottom: '1vh', height: '3.8rem', backgroundColor: 'white', padding: '0 1rem'}}>
-                    <input value={commentText} onChange={(e) => {setCommentText(e.target.value)}} placeholder="Quick Comment..." style={{ width: '80%', height: "80%", outline: 'none', border: '1px solid #A4A4A4', borderRadius: '10px', paddingLeft: '0.9rem', fontFamily: 'Poppins', fontSize: '1rem' }}/>
-                    <IconButton disabled={postContextInstance.create_mode} onClick={handleCommentSubmit}>
+                    <input disabled={!is_authenticated} value={commentText} onChange={(e) => {setCommentText(e.target.value)}} placeholder="Quick Comment..." style={{ width: '80%', height: "80%", outline: 'none', border: '1px solid #A4A4A4', borderRadius: '10px', paddingLeft: '0.9rem', fontFamily: 'Poppins', fontSize: '1rem' }}/>
+                    <IconButton disabled={postContextInstance.create_mode} onClick={is_authenticated?handleCommentSubmit:openSignInDrawer}>
                         <Send style={{color: '#516BEB'}} fontSize='large' />
                     </IconButton>
                 </div>
@@ -225,7 +224,7 @@ function PostModal() {
 
 
     return (
-        auth.is_on_mobile ? <MobileModal current_mode={currentMode} changeCurrentMode={setCurrentMode} postContextInstance={postModalContext} username={auth.user_data.username} />:
+        auth.is_on_mobile ? <MobileModal openSignInDrawer={() => {auth.set_open_drawer(true, "Login Required!")}} current_mode={currentMode} changeCurrentMode={setCurrentMode} postContextInstance={postModalContext} is_authenticated={auth.is_authenticated} username={auth.user_data.username} />:
         <Modal
         aria-labelledby="unstyled-modal-title"
             aria-describedby="unstyled-modal-description"
