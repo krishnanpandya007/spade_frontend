@@ -2,7 +2,7 @@
 
 .main{
     width: clamp(390px, 100%, 600px);
-    border: 1px solid #b4b4b460;
+    /* border: 1px solid #b4b4b460; */
     border-radius: 10px;
     margin-top: 5vw;
     padding: 0rem 1.5rem 1rem 1.5rem;
