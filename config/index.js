@@ -7,8 +7,8 @@ export const defaultBorderColor = '#bdbdbd'
 export const NEW_UNCOMPLETED_PROFILE_PREFFIX = 'NEW_'
 
 // Spade Core-Id/Secret 
-export const CLIENT_ID = 'cCTTnSfqe0p3HtVJlgF1LSEEszZkJX4uNmRIYIRe'
+export const CLIENT_ID = 'V44iomZHWwpZvATuBYUjMKEl5y0BbUEFMPgc0LP3'
 
-export const CLIENT_SECRET = process.env.NODE_ENV === "development" ? 'pbkdf2_sha256$320000$QxV0wNwbJPiIEEA0qtsaDF$dmzFPWhPCRIbVTF7DTFRmji/ciyCXkhy/qHhoptcENU=' : 'ousK9Ltw9QRV27ITeBsLjMd1vRWIqnpiDabjZuzSTILJKbrwwnqk2cAkhzv2gw1TYSxcIUsvLuJ52M8WGozG9QRfPXiRXkucZ9p4u0qxjRS3rLbh7XiR4bDLNs7GdGnA'
+export const CLIENT_SECRET = process.env.NODE_ENV === "development" ? 'pbkdf2_sha256$320000$QxV0wNwbJPiIEEA0qtsaDF$dmzFPWhPCRIbVTF7DTFRmji/ciyCXkhy/qHhoptcENU=' : '5vmkPjmtTqp3gkRxeKNYwg5SImnqXcVKMzRZP0lkyK22dPbrnxUB45gNrnNW21REGVxfm0ziq0kJm8D9uYnnQBfQS2wpsmPKDyQ17cgJB93XO3nvs5QCMzNeXXqgElrg'
 
 export const SOCIAL_ACCOUNT_ACCESS_KEY = "ThisRandomKey69IsSomethingBig";
