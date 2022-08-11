@@ -45,3 +45,19 @@ export async function verify_verification_code (username, email, verification_co
   return response
 
 }
+
+export async function handle_global_email(email, send=false, verify=false, code=false){
+
+
+  const response = await fetch(`../../../api/profile/edit/handle_global_email/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept' :'application/json'
+    },
+    body: JSON.stringify({email, send, verify, code})
+  })
+
+  return response
+
+}

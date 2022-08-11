@@ -11,7 +11,9 @@ export default async (req, res) => {
             username,
             password,
             re_password,
-            email
+            email,
+            status,
+            statusIndicator
         } = req.body;
 
         const body = JSON.stringify({
@@ -20,7 +22,9 @@ export default async (req, res) => {
             username,
             password,
             re_password,
-            email
+            email,
+            status,
+            statusIndicator
         })
 
 

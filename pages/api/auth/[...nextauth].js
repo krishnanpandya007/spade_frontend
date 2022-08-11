@@ -15,65 +15,65 @@ export default async function auth(req, res){
     // Configure one or more authentication providers
     providers: [
       CredentialsProvider({
-  
+
         name: "Spade",
-  
+
         credentials: {
-  
+
           username: { label: "Username", type: 'text' },
           password: { label: "Password", type: 'password' },
-  
+
         },
-  
+
         async authorize(credentials, req) {
-  
+
           // Make Call to backend for access_token and refresh_token
-        
+
           const user = {id: 1, name: 'John Doe'}
-  
+
           if (user) {
-  
+
             return user;
-  
+
           }else {
-  
+
             return null
-  
+
           }
-  
+
         }
-  
-  
+
+
       }),
       FacebookProvider({
         clientId: process.env.FACEBOOK_ID,
-        clientSecret: process.env.FACEBOOK_SECRET,
+        clientSecret: process.env.FACEBOOK_SECRET,      
       }),
       TwitterProvider({
         clientId: process.env.TWITTER_ID,
         clientSecret: process.env.TWITTER_SECRET,
-        version: "2.0", 
+        version: "2.0",
       }),
       GoogleProvider({
         clientId: process.env.GOOGLE_ID,
         clientSecret: process.env.GOOGLE_SECRET,
         checks: 'both',
         async authorize(credentials, req) {
-  
+
           // Make Call to backend for access_token and refresh_token
-        
+
           const user = {id: 1, name: 'John Doe'}
-  
+
           if (user) {
-  
+
             return user;
-  
+
           }else {
-  
+
             return null
-  
+
           }
-  
+
         }
         // authorization:{
         //   params:{
@@ -82,9 +82,9 @@ export default async function auth(req, res){
         // }
       }),
       // ...add more providers here
-      
+
     ],
-  
+
     callbacks: {
 
       /*
@@ -95,7 +95,7 @@ export default async function auth(req, res){
         // Persist the OAuth access_token to the token right after signin
         console.log("Access: ", token)
         console.log("Full Account: ", account)
-        // token.accessToken = account.access_token 
+        // token.accessToken = account.access_token
         const response = await fetch(`${BACKEND_ROOT_URL}apio/create/social_account/`, {
           method: "POST",
           headers: {
@@ -109,11 +109,11 @@ export default async function auth(req, res){
             social_account_access_key: SOCIAL_ACCOUNT_ACCESS_KEY,
             name: token.name,
             email: token.email,
-            profile: token.profile 
-            
+            profile: token.profile
+
           })
         })
-    
+
         const data = await response.json();
 
         console.log("Data: ", data);
@@ -139,12 +139,12 @@ export default async function auth(req, res){
             )
           ]
           );
-  
+
 
           token.accessToken = account.access_token;
-        
+
         return token;
-  
+
       },
 
       async signIn({ user, account, profile, email, credentials }) {
@@ -154,9 +154,12 @@ export default async function auth(req, res){
         return true
       },
     },
+    pages: {
+      error: "social_account/error"
+    },
 
     secret: process.env.NEXT_PUBLIC_SECRET
-    
-  
+
+
   })
 }

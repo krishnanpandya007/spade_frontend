@@ -20,16 +20,6 @@ export default async (req, res) => {
 
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
-        req.method = 'get'; // For authentication
-
-            const data = await authenticate(req, res, true); // Called by it-self (server)
-
-        if (data.error){
-            return res.status(401).json({error: 're-login needed'})
-
-        }
-
-        access = data.access;
 
         const {
             email
@@ -40,25 +30,38 @@ export default async (req, res) => {
         const body = JSON.stringify({
             new_email: email   
         })
+        console.log("BROOO")
+        let apiResponse
+        if (access) {
 
+            apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/send_verification_code/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${access}`
+    
+                },
+                body: body
+            }).catch((err) => {console.log(err)})
+        } else {
+            apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/send_verification_code/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+    
+                },
+                body: body
+            }).catch((err) => {console.log(err)})
 
-        const apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/send_verification_code/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${access}`
-
-            },
-            body: body
-        }).catch((err) => {console.log(err)})
-
-        const dataj = await apiResponse.json()
+        }
 
         if (apiResponse.status === 200){
             // Account Created Successfully
             return res.status(200).json({success: 'Verification Code sent!'})
         }else{
+            console.log("Hello")
             return res.status(apiResponse.status).json({error: 'Can\'t send Verification Code'})
         }
 

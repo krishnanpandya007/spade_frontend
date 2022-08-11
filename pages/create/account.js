@@ -25,14 +25,39 @@ import {useRouter} from 'next/router'
 
 
 
+function assertBasicRules(form_data){
 
+  let error = true, message = ""
+
+  for(const key in form_data){
+
+    if(form_data[key] === ''){
+      message = `Please provide ${key.replace("_", " ")}`
+      return { error, message }
+    }
+
+  }
+  if(form_data['password']?.length < 8){
+    message = "Password must be atleast 8 char(s) long"
+    return { error, message }
+
+  }
+  if(form_data['password'] !== form_data['re_password']){
+    message = "Passwords do not match!"
+    return { error, message }
+  }
+
+  return { error: false, message: null }
+
+
+}
 
 
 
 function Account() {
 
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [formData, setFormData] = React.useState({first_name: null, last_name: null, email: null, password: null, re_password: null, username: null});
+    const [formData, setFormData] = React.useState({first_name: '', last_name: '', email: '', password: '', re_password: '', username: '', status: 'working', statusIndicator: 'available'});
     const [formError, setFormError] = React.useState(false);
     const [errorData, setErrorData] = React.useState(null);
     const terms_and_condi_agree_ref = React.useRef()
@@ -55,6 +80,16 @@ function Account() {
 
         if(!(terms_and_condi_agree_ref.current.checked)){
           setErrorData("Please agree terms and conditions!")
+          setFormError(true)
+          setIsSubmitting(false)
+
+          return;
+        }
+
+        const {error, message} = assertBasicRules(formData);
+
+        if(error){
+          setErrorData(message)
           setFormError(true)
           setIsSubmitting(false)
 
@@ -110,7 +145,7 @@ function Account() {
                 </Alert>
             </Snackbar>
 
-        <CreateAccount t_and_c_ref={terms_and_condi_agree_ref} handleOnChange={handleOnChange} handleSubmit={handleSubmit} loading={isSubmitting} setLoading={setIsSubmitting} profileCreated={profileCreated} />
+        <CreateAccount handleFormError={setFormError} handleErrorData={setErrorData} data={formData} t_and_c_ref={terms_and_condi_agree_ref} handleOnChange={handleOnChange} handleSubmit={handleSubmit} loading={isSubmitting} setLoading={setIsSubmitting} profileCreated={profileCreated} />
     </div>
     )
 }

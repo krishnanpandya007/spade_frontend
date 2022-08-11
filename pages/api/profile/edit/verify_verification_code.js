@@ -20,16 +20,8 @@ export default async (req, res) => {
 
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
-        req.method = 'get'; // For authentication
 
-            const data = await authenticate(req, res, true); // Called by it-self (server)
 
-        if (data.error){
-            return res.status(401).json({error: 're-login needed'})
-
-        }
-
-        access = data.access;
 
         const {
             username,
@@ -45,24 +37,42 @@ export default async (req, res) => {
             verification_code   
         })
 
+        let apiResponse
 
-        const apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/verify_verification_code/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${access}`
+        if(access){
 
-            },
-            body: body
-        }).catch((err) => {console.log(err)})
+            apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/verify_verification_code/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${access}`
+    
+                },
+                body: body
+            }).catch((err) => {console.log(err)})
+        } else {
+            apiResponse = await fetch(`${BACKEND_ROOT_URL}profile/edit/email/verify_verification_code/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+    
+                },
+                body: body
+            }).catch((err) => {console.log(err)})
+            
+        }
 
         const dataj = await apiResponse.json()
 
-        if (apiResponse.status === 200 && dataj.success){
+        if (apiResponse.status === 200){
             // Account Created Successfully
-            return res.status(200).json({success: 'Email Updated Successfully!'})
+            console.log("asdsdd")
+            return res.status(200).json({success: "Verification successfull!"})
         }else if ( apiResponse.status === 200 && dataj.error){
+            console.log("ASDSAD")
+
             return res.status(200).json({error: 'Verification Code is Invalid!'})
             
         }
