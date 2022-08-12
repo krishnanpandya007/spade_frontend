@@ -283,9 +283,9 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
           <h2 style={{fontWeight:'400', fontFamily: 'Poppins', color: '#c4c4c4'}}>{data?.first_name} {data?.last_name}</h2>
           {/* <Chip label={data?.status} variant="outlined" icon={<div style={{width: '15px', height: '15px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px', margin: '0 0 0 10px'}} />} style={{borderRadius: '5px'}} /> */}
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%'}}>
-            <div style={{display: 'flex',padding: '6px 8px', gap: '0.7rem',boxShadow: '0 0 0 1px #c4c4c4', justifyContent: 'flex-start', alignItems: 'center', borderRadius: '5px'}}>
-              <div style={{width: '15px', height: '15px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px'}} />
-              <p style={{marginLeft: '8px', margin: '0', padding: '0', fontFamily: 'Poppins', letterSpacing: '1px'}}>Working</p>
+            <div style={{display: 'flex',padding: '3px 6px',height: '2.2rem', gap: '0.5rem',boxShadow: '0 0 0 1px #c4c4c4', justifyContent: 'flex-start', alignItems: 'center', borderRadius: '3px'}}>
+              <div style={{width: '10px', height: '10px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px'}} />
+              <p style={{marginLeft: '8px', margin: '0', padding: '0', fontFamily: 'Poppins', fontSize: '0.8rem'}}><b><i>{data?.status}</i></b></p>
             </div>
             <LoadingButton  loading={joinLoading} onClick={is_authenticated?joined ? LeaveCommunity : JoinCommunity:()=>{auth.set_open_drawer(true, "Login Required!")}} startIcon={joined ? <Remove /> :<Add />} variant="contained" disableElevation sx={{backgroundColor: joined ? '#FB3640' : '#548CFF'}} >
               {joined ? 'LEAVE' : 'JOIN'}
