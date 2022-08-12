@@ -56,7 +56,7 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
 
   const set_open = (to_state) => {
 
-    console.log("called...")
+    // console.log("called...")
 
     setPostModalData({...postModalData, open: to_state})
 
@@ -193,7 +193,7 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
 
   const set_user_data = (username_, profile_pic_, first_name_, last_name_) => {
 
-    console.log("Called", username_, profile_pic_, first_name_, last_name_)
+    // console.log("Called", username_, profile_pic_, first_name_, last_name_)
     // setUser({ is_authenticated: user.is_authenticated, user_data: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }});
     setUserData({ username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ });
   }

@@ -1,7 +1,7 @@
 import { FRONTEND_ROOT_URL } from "../../config";
 
 export default async function getUserInfo(){
-    console.log("There we go")
+    // console.log("There we go")
     let res_message;
         const response = await fetch(`${FRONTEND_ROOT_URL}api/get_user_info/`, {
             method: 'GET',
@@ -15,7 +15,7 @@ export default async function getUserInfo(){
 
 
 
-    console.log("There we go")
+    // console.log("There we go")
 
     if (response.status !== 200){
         // Something went wrong
@@ -27,7 +27,7 @@ export default async function getUserInfo(){
 
 export async function getStaffUserInfo() {
 
-    console.log("There we go")
+    // console.log("There we go")
     try{
 
 
@@ -44,7 +44,7 @@ export async function getStaffUserInfo() {
     }
 
 
-    console.log("There we go")
+    // console.log("There we go")
 
     if (response.status !== 200){
         // Something went wrong

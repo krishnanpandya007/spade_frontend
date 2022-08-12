@@ -30,7 +30,7 @@ export async function get_posts_by_tagname(tag_name) {
         }
     });
 
-    console.log("*********FETCHED********")
+    // console.log("*********FETCHED********")
 
     const data = await response.json();
 
@@ -78,7 +78,7 @@ export async function get_posts_by_author(author) {
         })
     });
 
-    console.log("*********FETCHED********")
+    // console.log("*********FETCHED********")
 
     const data = await response.json();
 
@@ -128,7 +128,7 @@ export async function get_relevant_posts_by_searchquery(search_query) {
         }
     });
 
-    console.log("*********FETCHED********")
+    // console.log("*********FETCHED********")
 
     const data = await response.json();
 
@@ -177,7 +177,7 @@ export async function get_relevant_posts_by_postid(id) {
         }
     });
 
-    console.log("*********FETCHED********")
+    // console.log("*********FETCHED********")
 
     const data = await response.json();
 
@@ -234,8 +234,8 @@ export async function get_posts_by_catagory(catagory, access=false) {
         })
     });
 
-    console.log("*********FETCHED********")
-    console.log("Status::", response.status)
+    // console.log("*********FETCHED********")
+    // console.log("Status::", response.status)
 
     const data = await response.json();
 

@@ -4,7 +4,7 @@ export default async function redirect_login(res, login_url='/login') {
 
     try{
 
-        console.log("Redirecting to login page")
+        // console.log("Redirecting to login page")
 
         res.setHeader("location", login_url);
         res.statusCode = 302;
@@ -14,7 +14,7 @@ export default async function redirect_login(res, login_url='/login') {
 
     } catch(e) {
 
-        console.log(e)
+        // console.log(e)
 
         return false;
 

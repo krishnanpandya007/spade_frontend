@@ -9,7 +9,7 @@ export default async function AuthenticateUser(){
         }
     }).catch((err) => {console.log(err)});
     const data = await response.json();
-    console.log("DEBUG: ", data.is_authenticated);
+    // console.log("DEBUG: ", data.is_authenticated);
     return data.is_authenticated;
 
 

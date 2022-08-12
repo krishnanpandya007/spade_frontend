@@ -85,12 +85,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
   const user = useContext(authContext)
   const snackbarContext = useContext(SnackbarContext)
 
-  useEffect(() => {
 
-    console.log("In Header")
-    console.log(user.user_data.first_name)
-
-   }, [])
 
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -163,7 +158,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
         setSearchMode('post')
       }
 
-      console.log(searchData)
+      // console.log(searchData)
       if (searchData) {
         setSearchResults(searchData);
       }

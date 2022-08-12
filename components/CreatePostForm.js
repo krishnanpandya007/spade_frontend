@@ -109,7 +109,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
             return
         }
-        console.log("FileName: " + event.target.files[0])
+        // console.log("FileName: " + event.target.files[0])
 
         
         switch (file_id) {
@@ -123,7 +123,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
 
                 setImageB(event.target.files[0])
-                console.log(imageB);
+                // console.log(imageB);
                 break;
 
             case "x":
@@ -131,7 +131,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
                 // setAttachedFiles({image_x: {name: event.target.files[0].name, content: event.target.files[0]}, image_a: attachedFiles.image_a, image_b: attachedFiles.image_b, image_y: attachedFiles.image_y});
                 setImageX(event.target.files[0])
-                console.log(imageX);
+                // console.log(imageX);
                 // console.log(attachedFiles);
                 break;
     
@@ -139,13 +139,13 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
 
                 setImageY(event.target.files[0])
-                console.log(imageY);
+                // console.log(imageY);
                 // setAttachedFiles({image_y: {name: event.target.files[0].name, content: event.target.files[0]}, image_a: attachedFiles.image_a, image_x: attachedFiles.image_x, image_b: attachedFiles.image_b});
                 // console.log(attachedFiles);
                 break;
 
             default:
-                console.warn("Invalid Change formation found!")
+                // console.warn("Invalid Change formation found!")
                 break;
 
         }
@@ -163,13 +163,13 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             case "a":
                 // setAttachedFiles({image_a: {name: null, content: ''}, image_b: attachedFiles.image_b, image_x: attachedFiles.image_x, image_y: attachedFiles.image_y});
                 setImageA(null)
-                console.log(imageA);
+                // console.log(imageA);
                 // console.log(attachedFiles);
                 break;
             case "b":
                 // setAttachedFiles({image_b: {name: null, content: ''}, image_a: attachedFiles.image_a, image_x: attachedFiles.image_x, image_y: attachedFiles.image_y});
                 setImageB(null)
-                console.log(imageB);
+                // console.log(imageB);
                 // console.log(attachedFiles);
 
                 break;
@@ -177,7 +177,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             case "x":
                 // setAttachedFiles({image_x: {name: null, content: ''}, image_a: attachedFiles.image_a, image_b: attachedFiles.image_b, image_y: attachedFiles.image_y});
                 setImageX(null)
-                console.log(imageX);
+                // console.log(imageX);
                 // console.log(attachedFiles);
 
                 break;
@@ -185,13 +185,13 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             case "y":
                 // setAttachedFiles({image_y: {name: null, content: ''}, image_a: attachedFiles.image_a, image_x: attachedFiles.image_x, image_b: attachedFiles.image_b});
                 setImageY(null)
-                console.log(imageY);
+                // console.log(imageY);
                 // console.log(attachedFiles);
 
                 break;
 
             default:
-                console.warn("Invalid Remove Action found!")
+                // console.warn("Invalid Remove Action found!")
                 break;
         }
      } 
@@ -235,7 +235,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
         let val = SlugifyTagName(tagInputValue);
         if (val){
 
-            console.log(chip_data.length)
+            // console.log(chip_data.length)
             for(let i = 0; i < chip_data.length; i++){
                 if(chip_data[i].label === val){
                     return;

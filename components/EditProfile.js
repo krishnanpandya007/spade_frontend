@@ -52,7 +52,7 @@ export default function EditProfile({userInfo, isAuthenticated}) {
         const user_info = await getUserInfo();
         setUserData(user_info.data);
         setIsLoading(false)
-        console.log("LOGGER: ", user_info.data)
+        // console.log("LOGGER: ", user_info.data)
         setIsLoading(false)
     }, [])
     const componentIndicators = {

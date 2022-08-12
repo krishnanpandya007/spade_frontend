@@ -46,12 +46,7 @@ function Header ({changeFilterBy, currentFilterBy, includesFilters, mode }) {
 
     // }
 
-     useEffect(() => {
 
-      console.log("In Header")
-      console.log(user.user_data.first_name)
-
-     }, [])
 
     const [searchQuery, setSearchQuery] = React.useState('');
 

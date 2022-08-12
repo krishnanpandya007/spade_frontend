@@ -39,8 +39,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
   const [currentData, setCurrentData] = React.useState(data.created_posts);
 
   const [communityCount, setCommunityCount] = React.useState(data.community?.length ?? 0)
-
-  const [joined, setJoined] = React.useState(data.community?.includes(userData.user_info.f__id));
+  const [joined, setJoined] = React.useState(data.community?.includes(userData.user_info?.f__id));
 
   const auth = useContext(authContext);
 
@@ -56,7 +55,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
   
   }
 
-  console.log("PORTING: ", joined, "ANOTHER:", userData)
+  // console.log("PORTING: ", joined, "ANOTHER:", userData)
 
   const LeaveCommunity = async () => {
 
@@ -164,7 +163,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
 
   const dataj = await new_data.json();
 
-  console.log("Vadhelaa::", dataj)
+  // console.log("Vadhelaa::", dataj)
 
     setCurrentData(currData => dataj);
 
@@ -177,7 +176,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
 
   return (
     <React.Fragment >
-    {auth.is_on_mobile ? <MobileProfileView data={data} status_indicator_colors={status_indicator_colors} joinLoading={joinLoading} handleJoinLoading={setJoinLoading} joined={joined} LeaveCommunity={LeaveCommunity} JoinCommunity={JoinCommunity} communityCount={communityCount} /> :  
+    {auth.is_on_mobile ? <MobileProfileView is_authenticated={userData.is_authenticated} data={data} status_indicator_colors={status_indicator_colors} joinLoading={joinLoading} handleJoinLoading={setJoinLoading} joined={joined} LeaveCommunity={LeaveCommunity} JoinCommunity={JoinCommunity} communityCount={communityCount} /> :  
       <div className={styles.user_info_main}>
         <div className={styles.user_personal_info}>
           <div className={styles.user_profile}>
@@ -203,7 +202,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
                   {
                     !joinLoading?
                   <Tooltip title={joined ? "Leave Community" : "Join Community"}>
-                    <IconButton onClick={joined ? LeaveCommunity : JoinCommunity} style={{backgroundColor: blue[500], color: 'whitesmoke'}}>
+                    <IconButton disabled={!userData.is_authenticated} onClick={joined ? LeaveCommunity : JoinCommunity} sx={{backgroundColor: blue[500], color: 'whitesmoke'}}>
                       {joined ? <Remove  /> : <Add />}
 
                     </IconButton>
@@ -268,7 +267,9 @@ export default function ProfileView({data, userData, postData, profileViewUserna
 }
 
 
-function MobileProfileView({data, status_indicator_colors, joinLoading, handleJoinLoading, joined, LeaveCommunity, JoinCommunity, communityCount}) {
+function MobileProfileView({data, status_indicator_colors, joinLoading, handleJoinLoading, joined, LeaveCommunity, JoinCommunity, communityCount, is_authenticated}) {
+
+  const auth = useContext(authContext);
 
   return (
 
@@ -286,7 +287,7 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
               <div style={{width: '15px', height: '15px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px'}} />
               <p style={{marginLeft: '8px', margin: '0', padding: '0', fontFamily: 'Poppins', letterSpacing: '1px'}}>Working</p>
             </div>
-            <LoadingButton loading={joinLoading} onClick={joined ? LeaveCommunity : JoinCommunity} startIcon={joined ? <Remove /> :<Add />} variant="contained" disableElevation style={{backgroundColor: joined ? '#FB3640' : '#548CFF'}} >
+            <LoadingButton  loading={joinLoading} onClick={is_authenticated?joined ? LeaveCommunity : JoinCommunity:()=>{auth.set_open_drawer(true, "Login Required!")}} startIcon={joined ? <Remove /> :<Add />} variant="contained" disableElevation sx={{backgroundColor: joined ? '#FB3640' : '#548CFF'}} >
               {joined ? 'LEAVE' : 'JOIN'}
             </LoadingButton>
           </div>

@@ -2,7 +2,7 @@ import { FRONTEND_ROOT_URL } from "../../config";
 
 export default async function get_common_tags(){
 
-    console.log("CALLED")
+    // console.log("CALLED")
         const response = await fetch(`${FRONTEND_ROOT_URL}api/get_common_tags/`, {
             method: 'GET',
             headers: {
@@ -12,7 +12,7 @@ export default async function get_common_tags(){
         })
         const common_tags = await response.json();
         
-        console.log("HERE: ", common_tags)
+        // console.log("HERE: ", common_tags)
 
     if (response.status !== 200){
         // Something went wrong

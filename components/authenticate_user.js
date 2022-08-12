@@ -6,7 +6,7 @@ import { BACKEND_ROOT_URL, CLIENT_ID, CLIENT_SECRET } from "../config";
 
 async function get_user_info(access_token) {
 
-    console.log("InFunc. access: ", access_token)
+    // console.log("InFunc. access: ", access_token)
 
 
     const user_info_response = await fetch(`${BACKEND_ROOT_URL}account/user/`, {
@@ -26,7 +26,7 @@ async function get_user_info(access_token) {
 
     }
 
-    console.log(user_info_data) 
+    // console.log(user_info_data) 
 
     return { is_authenticated: true, message: 'Successfully Recieved User Information', user_info: user_info_data }
 
@@ -47,7 +47,7 @@ export async function validate_user(context) {
     const access  = cookies.access ?? false;
     const refresh = cookies.refresh ?? false;
 
-    console.log("In Function")
+    // console.log("In Function")
 
 
     if(access) {
@@ -58,7 +58,7 @@ export async function validate_user(context) {
         
         if (refresh){
 
-            console.log("In Refresh")
+            // console.log("In Refresh")
 
             // Set access token to client
 
@@ -77,7 +77,7 @@ export async function validate_user(context) {
 
                 const backend_data = await backend_response.json();
 
-                console.log("BACKEND_DATA: ", backend_data);
+                // console.log("BACKEND_DATA: ", backend_data);
 
                 let new_access = backend_data.access_token;
                 let new_refresh = backend_data.refresh_token;
@@ -109,7 +109,7 @@ export async function validate_user(context) {
 
             } catch (e) {
 
-                console.log(e)
+                // console.log(e)
                 return {is_authenticated: false, message: 'Can\'t able to set Access token!'}
 
             }

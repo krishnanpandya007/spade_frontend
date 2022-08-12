@@ -57,7 +57,7 @@ function LoginDrawerCredentialsSignIn() {
 
       setLoading(true);
 
-        console.log("Done", username, password)
+        // console.log("Done", username, password)
         const success = await login(username, password);
 
 
@@ -70,7 +70,7 @@ function LoginDrawerCredentialsSignIn() {
 
             const user_data = await getUserInfo();
 
-            console.log("User Data [RECV.] = ", user_data)
+            // console.log("User Data [RECV.] = ", user_data)
 
             const username = user_data.data.username;
             const profile_pic = user_data.data.profile_pic;
@@ -79,7 +79,7 @@ function LoginDrawerCredentialsSignIn() {
             
             
             auth.set_user_data(username, profile_pic, first_name, last_name)
-            console.log("Manual: ",  auth.user_data)
+            // console.log("Manual: ",  auth.user_data)
 
           auth.authenticate();
           setSuccessfullLogin(true);
