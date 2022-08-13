@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, TextField } from "@mui/material";
 
 import styles from './rules.module.css'
 import edit_bio from '../profile_edit_apis/edit_bio';
+import authContext from '../basic/contexts/layout_auth_context';
 
 export default function EditBio({username, current_bio, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [bio, setBio] = React.useState(current_bio);
 
-  
+  const auth = useContext(authContext)
+
   const handleRaiseMessageOnSnackbar = (severity, message) => {
 
     ParentSnackbarMessage(message)
@@ -45,10 +47,10 @@ export default function EditBio({username, current_bio, ParentSnackbarMessage, P
   }
 
   return (
-    <div style={{ width: '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
-    <h3>Edit Bio.</h3>
-    <textarea name="bio" id="" cols="40" rows="10" value={bio} onChange={(e) => {setBio(e.target.value)}}></textarea>
+    {!auth.is_on_mobile && <h3>Edit Bio.</h3>}
+    <textarea name="bio" placeholder="Type in your inner person, Shortly" id="" cols="40" rows="10" value={bio} onChange={(e) => {setBio(e.target.value)}}></textarea>
     <h4 style={{marginTop: '10%'}}>Purpose:</h4>
     <ul className={styles.UL}>
         <li>Represents your Skills | achievements | Goals | Passion on your profile</li>
@@ -58,7 +60,7 @@ export default function EditBio({username, current_bio, ParentSnackbarMessage, P
         {/* <li>Number of characters must be between 8 to 20.</li> */}
     </ul>
 
-    <Button variant="contained" style={{transform: 'scale(1.1)',position: 'absolute', bottom: '0', right: '0'}} onClick={handleEditBio}>Apply Changes</Button>
+    <Button variant="contained" style={{position: 'absolute', bottom: auth.is_on_mobile ? '-3rem':'-1.2rem', right: '1rem', borderRadius :'100px'}} onClick={handleEditBio}>Apply Changes</Button>
 </div>
   )
 }

@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 import styles from './rules.module.css'
 import edit_status from '../profile_edit_apis/edit_status';
+import authContext from '../basic/contexts/layout_auth_context';
 export default function EditStatus({username, current_status, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [status, setStatus] = React.useState(current_status)
+
+  const auth = useContext(authContext)
 
   const handleRaiseMessageOnSnackbar = (severity, message) => {
 
@@ -42,9 +45,9 @@ export default function EditStatus({username, current_status, ParentSnackbarMess
   }
 
   return (
-    <div style={{ width: '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
-    <h3>Change Status:</h3>
+    {!auth.is_on_mobile && <h3>Change Status:</h3>}
     <br />
     <br />
 
@@ -72,7 +75,7 @@ export default function EditStatus({username, current_status, ParentSnackbarMess
         <li>Spading: is just a word saying you are on Spade web-site.</li>
     </ul>
 
-    <Button variant="contained" style={{transform: 'scale(1.1)',position: 'absolute', bottom: '0', right: '0'}} onClick={handleEditStatus}>Apply Changes</Button>
+    <Button variant="contained" style={{position: 'absolute', bottom: auth.is_on_mobile ? '-3rem':'-1.2rem', right: '1rem', borderRadius :'100px'}} onClick={handleEditStatus}>Apply Changes</Button>
 </div>
   )
 }

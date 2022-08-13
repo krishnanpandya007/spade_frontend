@@ -1,7 +1,8 @@
-import { Add, Delete } from '@mui/icons-material'
+import { Add, Delete, Edit } from '@mui/icons-material'
 import { Avatar, Button, Divider, IconButton, Input, TextField, Tooltip } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import {FRONTEND_ROOT_URL } from '../../config'
+import authContext from '../basic/contexts/layout_auth_context'
 import styles from './rules.module.css'
 // import { Input } from '@material-ui/core'
 
@@ -10,6 +11,8 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
 
     const [profilePicContent, setProfilePicContent] = React.useState(null);
     const [profilePicName, setProfilePicName] = React.useState(null);
+
+    const auth = useContext(authContext)
 
     const [url, setUrl] = React.useState(null);
 
@@ -103,19 +106,19 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
     }
 
   return (
-    <div style={{ width: '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
-    <h3>Edit Profile Pic.</h3>
+    {!auth.is_on_mobile && <h3>Edit Profile Pic.</h3>}
     <br />
-    <div style={{display: 'flex', alignItems: 'center', width: '30%',justifyContent: 'space-between'}}>
-    <div style={{display: 'flex', width: '50%', justifyContent: 'space-between', alignItems: 'center'}}>
+    <div style={{display: 'flex', alignItems: 'center', width: '100%',justifyContent: 'center'}}>
+    <div style={{display: 'flex', width: '30%', justifyContent: 'space-between', alignItems: 'center'}}>
     <Avatar style={{transform: 'scale(1.25)'}} src={profile_pic} />
     <label htmlFor="contained-button-pic">
         <Input accept="image/*" style={{display: 'none'}} id="contained-button-pic" onChange={(e) => {setProfilePicContent(e.target.files[0]);setProfilePicName(e.target.files[0].name)}} multiple type="file" />
 
         <Tooltip title="Upload New">
             <IconButton variant="contained" component="span">
-                <Add />
+                <Edit />
             </IconButton>
         </Tooltip>
     </label>
@@ -143,7 +146,7 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
 
     </ul>
 
-    <Button variant="contained" style={{transform: 'scale(1.1)',position: 'absolute', bottom: '0', right: '0'}} onClick={SubmitEditProfilePic}>Apply Changes</Button>
+    <Button variant="contained" style={{position: 'absolute', bottom: auth.is_on_mobile ? '-3rem':'-1.2rem', right: '1rem', borderRadius :'100px'}} onClick={SubmitEditProfilePic}>Apply Changes</Button>
 </div>
   )
 }

@@ -1,5 +1,6 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, ToggleButton, ToggleButtonGroup } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
+import authContext from '../basic/contexts/layout_auth_context'
 import edit_status_indicator from '../profile_edit_apis/edit_status_indicator'
 import styles from './rules.module.css'
 
@@ -19,6 +20,8 @@ export const status_indicator_colors = {
 export default function EditStatusIndicator({username, current_status_indicator, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [currentIndicator, setCurrentIndicator] = React.useState(current_status_indicator)
+
+  const auth = useContext(authContext)
 
   const handleRaiseMessageOnSnackbar = (severity, message) => {
 
@@ -54,15 +57,15 @@ export default function EditStatusIndicator({username, current_status_indicator,
   }
 
   return (
-    <div style={{ width: '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
-    <h3>Current:</h3>
+    {!auth.is_on_mobile && <><h3>Current:</h3>
     <ToggleButtonGroup
-              // orientation="vertical"
-              value={""}
-              exclusive
-              onChange={(e, newValue) => {}}
-            >
+    // orientation="vertical"
+    value={""}
+    exclusive
+    onChange={(e, newValue) => {}}
+    >
               <ToggleButton value="status_indicator" aria-label="list" >
               <div style={{height: '10px', width: '10px', borderRadius: '1000px', backgroundColor: status_indicator_colors[current_status_indicator.toLowerCase()]}}/>
               </ToggleButton>
@@ -75,7 +78,8 @@ export default function EditStatusIndicator({username, current_status_indicator,
     <br />
     <br />
     <br />
-    <h3>Change Indicator:</h3>
+    <h3>Change Indicator:</h3></>
+            }
     <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{current_status_indicator}</InputLabel>
         <Select
@@ -115,7 +119,7 @@ export default function EditStatusIndicator({username, current_status_indicator,
         
     </ul>
 
-    <Button variant="contained" style={{transform: 'scale(1.1)',position: 'absolute', bottom: '0', right: '0'}} onClick={handleEditStatusIndicator}>Apply Changes</Button>
+    <Button variant="contained" style={{position: 'absolute', bottom: auth.is_on_mobile ? '-3rem':'-1.2rem', right: '1rem', borderRadius :'100px'}} onClick={handleEditStatusIndicator}>Apply Changes</Button>
 </div>
   )
 }

@@ -1,12 +1,15 @@
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import edit_username from "../profile_edit_apis/edit_username";
+import authContext from '../basic/contexts/layout_auth_context';
 
 import styles from './rules.module.css'
 
 export default function EditUsername({username, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [editedUsername, SetEditedUsername] = useState(username);
+
+  const auth = useContext(authContext)
 
   const handleRaiseMessageOnSnackbar = (severity, message) => {
 
@@ -44,9 +47,9 @@ export default function EditUsername({username, ParentSnackbarMessage, ParentSna
   }
 
   return (
-    <div style={{ width: '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '50%', padding: '0 3%', position: 'relative', backgroundColor: '#c4c4c430'}}>
 
-        <h3>Edit Username</h3>
+        {!auth.is_on_mobile && <h3>Edit Username</h3>}
         <TextField placeholder="krishnan_pandya" onChange={(e) => {SetEditedUsername(e.target.value)}} value={editedUsername}  label="username"/>
         <h4 style={{marginTop: '10%'}}>Rules:</h4>
         <ul className={styles.UL}>
@@ -57,7 +60,7 @@ export default function EditUsername({username, ParentSnackbarMessage, ParentSna
             <li>Number of characters must be between 8 to 20.</li>
         </ul>
 
-        <Button onClick={handleEditUsername} variant="contained" style={{transform: 'scale(1.1)',position: 'absolute', bottom: '0', right: '0'}}>Apply Changes</Button>
+        <Button onClick={handleEditUsername} variant="contained" style={{transform: 'scale(1)',position: 'absolute', bottom: auth.is_on_mobile ? '-3rem':'-1.2rem', right: '1rem', borderRadius: '200px'}}>Apply Changes</Button>
     </div>
 
   )

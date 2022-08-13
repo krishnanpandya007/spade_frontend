@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Alert, Button, Snackbar, TextField } from "@mui/material";
 
 
 
 import styles from './rules.module.css'
 import edit_reset_password from '../profile_edit_apis/edit_reset_password';
+import authContext from '../basic/contexts/layout_auth_context';
 export default function EditResetPassword({username, parentOpenSnackBar, ParentSnackbarMessage, ParentSnackbarSeverity}) {
 
   const [oldPassword, setOldPassword] = React.useState('')
   const [newPassword, setNewPassword] = React.useState('')
   const [newPasswordAgain, setNewPasswordAgain] = React.useState('')
 
+  const auth = useContext(authContext)
 
   const handleRaiseMessageOnSnackbar = (severity, message) => {
 
@@ -41,7 +43,7 @@ export default function EditResetPassword({username, parentOpenSnackBar, ParentS
         return;
       }
 
-      if(newPassword.length < 6){
+      if(newPassword.length < 8){
         // setSnackBarMessage('New Password is too short | length must be 6 or above')
         // setSeverity('warning')
         // setOpenSnackBar(true);
@@ -82,10 +84,10 @@ export default function EditResetPassword({username, parentOpenSnackBar, ParentS
   }
 
   return (
-    <div style={{ width: '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
 
-    <h3>Reset Password:</h3>
+    {!auth.is_on_mobile && <h3>Reset Password:</h3>}
     <TextField type="password" label="Old Password" value={oldPassword} onChange={(e) => {setOldPassword(e.target.value)}}/>
     <br/>
     <br/>
@@ -93,15 +95,15 @@ export default function EditResetPassword({username, parentOpenSnackBar, ParentS
 
     <TextField style={{marginRight: '1rem'}} type="password" label="New Password" value={newPassword} onChange={(e) => {setNewPassword(e.target.value)}}/>
     {/* <br /> */}
-    <TextField type="password" label="Retype New Password" value={newPasswordAgain} onChange={(e) => {setNewPasswordAgain(e.target.value)}}/>
+    <TextField type="password"  label="Retype New Password" value={newPasswordAgain} onChange={(e) => {setNewPasswordAgain(e.target.value)}}/>
 
 
     <h4 style={{marginTop: '10%'}}>Rules:</h4>
     <ul className={styles.UL}>
-        <li>Needs to be atleast 6 characters long</li>
+        <li>Needs to be atleast 8 characters long</li>
     </ul>
 
-    <Button variant="contained" style={{transform: 'scale(1.1)',position: 'absolute', bottom: '0', right: '0'}} onClick={handleEditResetPassword}>Reset Password</Button>
+    <Button variant="contained" style={{position: 'absolute', bottom: auth.is_on_mobile ? '-3rem':'-1.2rem', right: '1rem', borderRadius :'100px'}} onClick={handleEditResetPassword}>Reset Password</Button>
 </div>
   )
 }

@@ -6,7 +6,7 @@ import { BACKEND_ROOT_URL, CLIENT_ID, CLIENT_SECRET } from "../config";
 
 async function get_user_info(access_token) {
 
-    // console.log("InFunc. access: ", access_token)
+    console.log("InFunc. access: ", access_token)
 
 
     const user_info_response = await fetch(`${BACKEND_ROOT_URL}account/user/`, {
@@ -77,7 +77,7 @@ export async function validate_user(context) {
 
                 const backend_data = await backend_response.json();
 
-                // console.log("BACKEND_DATA: ", backend_data);
+                console.log("BACKEND_DATA: ", backend_data);
 
                 let new_access = backend_data.access_token;
                 let new_refresh = backend_data.refresh_token;
