@@ -235,10 +235,10 @@ export async function get_posts_by_catagory(catagory, access=false) {
     });
 
     // console.log("*********FETCHED********")
-    // console.log("Status::", response.status)
-
+    
     const data = await response.json();
-
+    
+    // console.log("Status::", data)
     // const post_ids = data.map((val, idx) => val.id)
 
     // //Update in the records

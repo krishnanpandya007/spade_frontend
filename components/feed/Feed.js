@@ -105,27 +105,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
     }
 
-    const sharePost = () => {
-        if (typeof navigator !== 'undefined'){
-            
-            if(navigator.share || navigator.canShare){
-                navigator.share({
-                    url: `${FRONTEND_ROOT_URL}explore/post/${post_id}`,
-                    title: 'Spade',
-                    text: 'Share hacks, gain hacks!'
-                })
-            }else{
 
-                openShare(post_id);
-
-            }
-
-        }else{
-
-            openShare(post_id);
-        }
-
-    }
 
     const handleShareOpen = (post_id) => {
 
@@ -211,6 +191,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
 
 
+
             {(isProfileView ? data.created_posts : data).map((post, idx) => {
                 return (
                     // <Grid key={idx} container spacing={0} sx={{position: 'relative',width: '60vw', height: '40vh', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '3px', marginBottom: '5vh'}} alignItems='center' justifyContent='center'>
@@ -229,7 +210,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                         
                         {/* <Grid item xs={8.9} sx={{ height: '100%'}}> */}
                             {/* Add isLiked and isDisliked */}
-                            <FeedContent autoOpenMarked={autoOpenMarked} profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={post.likes.includes(auth.user_data?.username)} is_disliked={post.dislikes.includes(auth.user_data?.username)} username={auth.user_data?.username} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
+                            <FeedContent autoOpenMarked={autoOpenMarked} profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={post.likes.includes(auth.user_data?.username)} is_disliked={post.dislikes.includes(auth.user_data?.username)} username={post.author_name} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
                         </div>
                     </div>
                 )

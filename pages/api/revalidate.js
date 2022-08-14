@@ -109,6 +109,28 @@ export default async function revalidate(req, res) {
                         break;
                         
                         
+                    case 'username':
+                        // Update Dislikes on every url-path
+                        cacheResponse = cache.get(url) || [];
+
+                        if (cacheResponse.length === 0) {
+                            cache.put(url, data, hours * 1000 * 60 * 60);
+                            break;
+                        }
+                        
+                        cacheResponse = cacheResponse.map((val, idx) => {
+                            if(val.id === Number(target_post_id)){
+                                console.log("Dta::", data)
+                                val.author_name = data[0]
+                            }
+                            return val;
+                        })
+
+                        // const hours = 1;
+
+                        cache.put(url, cacheResponse, hours * 1000 * 60 * 60);
+                        break;
+                        
 
                     case 'comments': 
                         // Update Comments on every url-path
