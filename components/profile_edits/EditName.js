@@ -9,7 +9,7 @@ import styles from './rules.module.css'
 
 
 
-export default function EditName({username, first_name, last_name, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditName({styl,username, first_name, last_name, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [firstName, setFirstName] = React.useState(first_name);
   const [lastName, setLastName] = React.useState(last_name);
@@ -53,7 +53,7 @@ export default function EditName({username, first_name, last_name, ParentSnackba
   }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative', ...styl}}>
 
     {!auth.is_on_mobile&&<h3>Edit Name</h3>}
     <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>

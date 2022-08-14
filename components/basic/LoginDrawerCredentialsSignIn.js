@@ -20,6 +20,8 @@ const StyledInput = styled.input`
   font-weight: 400;
   border-radius: 10px;
   width: 100%;
+  max-width: 400px;
+  
   padding: 15px;
   margin: 1rem;
   position: relative;
@@ -105,7 +107,7 @@ function LoginDrawerCredentialsSignIn() {
                 
                 spacing={0}
                 width="100%"
-                style={{margin: '0.4rem 1rem'}}
+                style={{margin: '0.4rem 1rem', maxWidth: '400px'}}
             >
 
                 <Link href={`${FRONTEND_ROOT_URL}reset/password`}><a style={{marginLeft: '15px', fontFamily: 'Poppins', color: '#4D77FF'}}>Forgot Password?</a></Link>
@@ -115,7 +117,7 @@ function LoginDrawerCredentialsSignIn() {
                   // disabled={!successfullLogin}
                   variant="contained"
                   
-                  sx={{borderRadius: '8px', width: '25%', backgroundColor: successfullLogin ? green[400] :blue[500], letterSpacing: '1px'}}
+                  sx={{borderRadius: '8px', backgroundColor: successfullLogin ? green[400] :blue[500], letterSpacing: '1px'}}
                   disableElevation
                   size="large"  
                   onClick={() => {!successfullLogin ? handleLogin() : null}}

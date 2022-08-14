@@ -22,14 +22,14 @@ const CenteredDiv = styled.div`
 // const EditShareReccomendation = dynamic(() => import("../EditShareReccomendation"), {loading: () => <CenteredDiv><CircularProgress /></CenteredDiv>, ssr:false })
 
 
-export default function EditCustomization() {
+export default function EditCustomization({styl}) {
 
     const [openChangeRecommendation, setOpenChangeRecommendation] = React.useState(false)
 
     const auth = useContext(authContext)
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ ...styl,width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
 
 

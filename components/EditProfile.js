@@ -57,22 +57,22 @@ export default function EditProfile({userInfo, isAuthenticated}) {
         setIsLoading(false)
     }, [])
     const componentIndicators = {
-        "username": <EditUsername username={userData.username} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
-        "name": <EditName username={userData.username} first_name={userData.first_name} last_name={userData.last_name} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
-        "profile_pic": <EditProfilePicture profile_pic={userData.profile_pic} removeProfilePic={() => {setUserData({...userData, profile_pic: null})}} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
-        "email": <EditEmail username={userData.username} current_email={userData.email} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar}/>,
-        "status": <EditStatus username={userData.username} current_status={userData.status} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar}/>,
-        "status_indicator": <EditStatusIndicator username={userData.username} current_status_indicator={userData.status_indicator} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
-        "bio": <EditBio username={userData.username} current_bio={userData.bio} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
-        "reset_password": <EditResetPassword username={userData.username} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
-        "customization": <EditCustomization />
+        "username": <EditUsername styl={{paddingTop: '1.5rem'}} username={userData.username} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
+        "name": <EditName styl={{paddingTop: '1.5rem'}} username={userData.username} first_name={userData.first_name} last_name={userData.last_name} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
+        "profile_pic": <EditProfilePicture styl={{paddingTop: '1.5rem'}} profile_pic={userData.profile_pic} removeProfilePic={() => {setUserData({...userData, profile_pic: null})}} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
+        "email": <EditEmail styl={{paddingTop: '1.5rem'}} username={userData.username} current_email={userData.email} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar}/>,
+        "status": <EditStatus styl={{paddingTop: '1.5rem'}} username={userData.username} current_status={userData.status} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar}/>,
+        "status_indicator": <EditStatusIndicator styl={{paddingTop: '1.5rem'}} username={userData.username} current_status_indicator={userData.status_indicator} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
+        "bio": <EditBio styl={{paddingTop: '1.5rem'}} username={userData.username} current_bio={userData.bio} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
+        "reset_password": <EditResetPassword styl={{paddingTop: '1.5rem'}} username={userData.username} ParentSnackbarMessage={setMessage} ParentSnackbarSeverity={setSeverity} parentOpenSnackBar={SetOpensnackbar} />,
+        "customization": <EditCustomization styl={{paddingTop: '1.5rem'}} />
       }
 
   return (
       
         isLoading ? <SpadeLoader is_loading={isLoading} /> : auth.is_on_mobile ? 
         <React.Fragment>
-          <center style={{backgroundColor: "#C4C4C4"}}><p style={{padding: '0.3rem', fontFamily: 'Poppins'}}>Edit {actionValue[0].toUpperCase()+actionValue.slice(1).replace('_', ' ')}</p></center>
+          <center style={{backgroundColor: "#C4C4C4"}}><p style={{padding: '0.3rem', fontFamily: 'Poppins', color: 'black'}}>Edit {actionValue[0].toUpperCase()+actionValue.slice(1).replace('_', ' ')}</p></center>
           <br/>
           <center>
             <p style={{textAlign: 'left', width: '80%', marginBlockEnd: '0', fontSize: '0.9rem', color: '#979797'}}>Select a field to Edit.</p>

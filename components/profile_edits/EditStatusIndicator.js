@@ -17,7 +17,7 @@ export const status_indicator_colors = {
 }
 
 
-export default function EditStatusIndicator({username, current_status_indicator, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditStatusIndicator({styl,username, current_status_indicator, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [currentIndicator, setCurrentIndicator] = React.useState(current_status_indicator)
 
@@ -57,7 +57,7 @@ export default function EditStatusIndicator({username, current_status_indicator,
   }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ ...styl,width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
     {!auth.is_on_mobile && <><h3>Current:</h3>
     <ToggleButtonGroup

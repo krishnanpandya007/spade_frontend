@@ -10,12 +10,50 @@ import "../styles/globals.css";
 import theme from '../styles/theme';
 import SnackbarContext from '../components/basic/contexts/snackbar_context';
 import { Alert, Button, Snackbar } from '@mui/material';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { createTheme } from '@mui/material/styles';
+import ColorModeContext from '../components/basic/contexts/color_mode_context';
+
 // Integrating Authentication For Next.js APK
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
+const darkTheme = {
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#082032'
+    },
+    text: {
+      primary: '#ECECEC',
+      secondary: '#0096FF'
+    }
+    // spade: {
+    //   default: '#554994'
+    // }
+  }
+
+}
+
 export default function MyApp(props) {
+
+  const [mode, setMode] = useState('light');
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const currTheme = useMemo(
+    () =>
+      createTheme(mode === 'dark' ? darkTheme : theme),
+    [mode],
+  );
+
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } } = props;
 
   const [snackbarData, setSnackbarData] = useState({open:false, severity:'', message:'',includes_callback: false, callback_fn: () => {}, action_button_title:null})
@@ -43,12 +81,13 @@ export default function MyApp(props) {
 
   return (
     <CacheProvider value={emotionCache}>
-        <NextNProgress height={4} />   
+        <NextNProgress height={4} options={{showSpinner: false}} />   
       <Head>
         <title>Spade</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
+      <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={currTheme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <motion.div initial="pageInitial" animate="pageAnimate" variants={{
@@ -74,6 +113,7 @@ export default function MyApp(props) {
           </SnackbarContext.Provider>
         </motion.div>
       </ThemeProvider>
+    </ColorModeContext.Provider>
     </CacheProvider> 
   );
 }

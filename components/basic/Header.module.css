@@ -3,7 +3,7 @@
     margin: 1rem;
     width: min(800px, 100vw);
     /* width: clamp(250px, 70%, 1900px); */
-    background-color: #FAFAFA;
+    /* background-color: #FAFAFA; */
     border-radius: 10px;
     align-items: center;
     display: flex;

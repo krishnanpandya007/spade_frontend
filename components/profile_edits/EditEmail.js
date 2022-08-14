@@ -4,7 +4,7 @@ import { Button, TextField } from "@mui/material";
 import styles from './rules.module.css'
 import edit_email, {send_verification_code, verify_verification_code} from '../profile_edit_apis/edit_email';
 import authContext from '../basic/contexts/layout_auth_context';
-export default function EditEmail({username, current_email, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditEmail({styl, username, current_email, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [email, setEmail] = React.useState(current_email);
   const [actionButtonText, setActionButtonText] = React.useState('Verify Email')
@@ -100,7 +100,7 @@ export default function EditEmail({username, current_email, ParentSnackbarMessag
   }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ ...styl,width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
     {!auth.is_on_mobile && <h3>Edit Email</h3>}
     <TextField disabled={verifyView} placeholder="krishnanpandya06@gmail.com" label="Email" fullWidth value={email} onChange={(e) => {setEmail(e.target.value)}}/>

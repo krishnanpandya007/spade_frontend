@@ -7,7 +7,7 @@ import styles from './rules.module.css'
 // import { Input } from '@material-ui/core'
 
 
-export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, removeProfilePic,ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditProfilePicture({styl,profile_pic, ParentSnackbarMessage, removeProfilePic,ParentSnackbarSeverity, parentOpenSnackBar}) {
 
     const [profilePicContent, setProfilePicContent] = React.useState(null);
     const [profilePicName, setProfilePicName] = React.useState(null);
@@ -106,7 +106,7 @@ export default function EditProfilePicture({profile_pic, ParentSnackbarMessage, 
     }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ ...styl,width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
     {!auth.is_on_mobile && <h3>Edit Profile Pic.</h3>}
     <br />

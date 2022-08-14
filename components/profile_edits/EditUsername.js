@@ -5,7 +5,7 @@ import authContext from '../basic/contexts/layout_auth_context';
 
 import styles from './rules.module.css'
 
-export default function EditUsername({username, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditUsername({styl,username, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [editedUsername, SetEditedUsername] = useState(username);
 
@@ -47,7 +47,7 @@ export default function EditUsername({username, ParentSnackbarMessage, ParentSna
   }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '50%', padding: '0 3%', position: 'relative', backgroundColor: '#c4c4c430'}}>
+    <div style={{ width: auth.is_on_mobile ? '100%' : '50%', padding: '0 3%', position: 'relative', ...styl}}>
 
         {!auth.is_on_mobile && <h3>Edit Username</h3>}
         <TextField placeholder="krishnan_pandya" onChange={(e) => {SetEditedUsername(e.target.value)}} value={editedUsername}  label="username"/>

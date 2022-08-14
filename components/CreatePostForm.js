@@ -440,6 +440,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
             {editorLoaded ? <CKEditor
                 editor={ ClassicEditor }
                 data={editorData}
+                skin={'mono'}
                 onReady={ editor => {
                 // You can store the "editor" and use when it is needed.
                 console.log('Editor is ready to use!', editor);           
@@ -465,7 +466,9 @@ function CreatePostForm({ChangeChipData, chip_data}) {
                     listStyle: 'none',
                     padding: 0.5,
                     margin: 0,
-                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    borderRadius: '5px', 
                     height: 'max(10rem, 15vh)',
                     width: auth.is_on_mobile ?'100%' :'30vw',
                     overflow: 'auto auto',

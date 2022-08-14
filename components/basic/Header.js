@@ -1,4 +1,4 @@
-import { Button, CircularProgress, IconButton, Tooltip } from '@mui/material'
+import { Button, CircularProgress, IconButton, Tooltip, useTheme } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -83,9 +83,8 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
 
       
   const user = useContext(authContext)
-  const snackbarContext = useContext(SnackbarContext)
 
-
+  const theme = useTheme();
 
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -286,14 +285,14 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
     </React.Fragment>
     {/* otherHeaderComponents END */}
 
-        <div className={styles.header_main}>  
+        <div className={styles.header_main} style={{backgroundColor: (theme.palette.mode !== 'dark') ? '#FAFAFA' : '#4D77FF20'}}>  
             <div className={styles.header_left}>
                 <Link href="/">
                     <a href="/" style={{margin: '0.5rem', padding: '0'}}>
                         <Image src="/spade_icon.svg" width="25" height="25" />
                     </a>
                 </Link>
-                <input aria-autocomplete={false} style={isMobile ? {width: 'max(10ch,40vw)'} : {width: 'auto'}} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
+                <input aria-autocomplete={false} style={(isMobile ? {width: 'max(10ch,40vw)', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover} : {width: 'auto', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover})} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
                 {includesFilters && !isMobile ?
                     <Tooltip title="Filter">
                         <IconButton onClick={handleClick} style={{borderRadius: '2px'}}>

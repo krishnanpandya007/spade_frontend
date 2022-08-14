@@ -4,7 +4,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@m
 import styles from './rules.module.css'
 import edit_status from '../profile_edit_apis/edit_status';
 import authContext from '../basic/contexts/layout_auth_context';
-export default function EditStatus({username, current_status, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditStatus({styl,username, current_status, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [status, setStatus] = React.useState(current_status)
 
@@ -45,7 +45,7 @@ export default function EditStatus({username, current_status, ParentSnackbarMess
   }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ ...styl,width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
     {!auth.is_on_mobile && <h3>Change Status:</h3>}
     <br />

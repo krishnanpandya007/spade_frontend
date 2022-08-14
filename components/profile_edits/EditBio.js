@@ -5,7 +5,7 @@ import styles from './rules.module.css'
 import edit_bio from '../profile_edit_apis/edit_bio';
 import authContext from '../basic/contexts/layout_auth_context';
 
-export default function EditBio({username, current_bio, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
+export default function EditBio({styl, username, current_bio, ParentSnackbarMessage, ParentSnackbarSeverity, parentOpenSnackBar}) {
 
   const [bio, setBio] = React.useState(current_bio);
 
@@ -47,7 +47,7 @@ export default function EditBio({username, current_bio, ParentSnackbarMessage, P
   }
 
   return (
-    <div style={{ width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
+    <div style={{ ...styl, width: auth.is_on_mobile ? '100%' : '40%', padding: '0 3%', position: 'relative'}}>
 
     {!auth.is_on_mobile && <h3>Edit Bio.</h3>}
     <textarea name="bio" placeholder="Type in your inner person, Shortly" id="" cols="40" rows="10" value={bio} onChange={(e) => {setBio(e.target.value)}}></textarea>

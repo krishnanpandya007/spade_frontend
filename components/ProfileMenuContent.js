@@ -1,9 +1,10 @@
-import { Add, Logout, Notifications, Person, Settings } from '@mui/icons-material'
-import { Avatar, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
+import { Add, DarkMode, Light, LightMode, Logout, Notifications, Person, Settings } from '@mui/icons-material'
+import { Avatar, Button, ButtonGroup, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material'
 import { blue } from '@mui/material/colors'
 import Link from 'next/link'
 import React, { useContext } from 'react'
 import { FRONTEND_ROOT_URL } from '../config'
+import ColorModeContext from './basic/contexts/color_mode_context'
 import authContext from './basic/contexts/layout_auth_context'
 import SnackbarContext from './basic/contexts/snackbar_context'
 import logout from './basic/logout'
@@ -15,6 +16,8 @@ function ProfileMenuContent() {
 
     const auth = useContext(authContext)
     const snackbar = useContext(SnackbarContext);
+    const colorMode = useContext(ColorModeContext)
+    const theme = useTheme();
 
     const options = [
         {
@@ -52,7 +55,8 @@ function ProfileMenuContent() {
     const current_url = window ? window.location.href : ''
 
   return (
-      <>
+      <div style={{display: 'flex', height: '100vh',flexDirection: 'column', justifyContent: 'space-between'}}>
+       <div>
         <div style={{display: 'flex', justifyContent: 'flex-start', padding: '5%', alignItems: 'center', width: auth.is_on_mobile ? '30vh' : '15vw'}}>
             
             <Avatar src={auth.user_data?.profile_pic} color="primary">{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name[0].toUpperCase() + auth.user_data.last_name[0].toUpperCase() : auth.user_data.username?.slice(0, 2).toUpperCase()}</Avatar>
@@ -88,7 +92,21 @@ function ProfileMenuContent() {
             </ListItemButton>
         </ListItem>
     </List>
-    </>
+    </div>
+    <center>
+        <ToggleButtonGroup
+            color="primary"
+            value={theme.palette.mode}
+            exclusive
+            style={{marginBottom: '2rem'}}
+            onChange={colorMode.toggleColorMode}
+        >
+            <ToggleButton value="light"><LightMode /> &nbsp;&nbsp;Light</ToggleButton>
+            <ToggleButton value="dark"><DarkMode/>&nbsp;&nbsp;Dark</ToggleButton>
+
+        </ToggleButtonGroup>
+    </center>
+    </div>
   )
 }
 

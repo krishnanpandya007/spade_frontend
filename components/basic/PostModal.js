@@ -13,7 +13,7 @@ import authContext from "./contexts/layout_auth_context";
 import PostModalContext from "./contexts/post_modal_context";
 
 import React from "react";
-import { Avatar, Badge, Button, Divider, IconButton, Modal, Popover, SwipeableDrawer, Tooltip, Typography } from "@mui/material";
+import { Avatar, Badge, Button, Divider, IconButton, Modal, Popover, SwipeableDrawer, Tooltip, Typography, useTheme } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { ArrowBackIosOutlined, BookmarkBorderOutlined, CancelOutlined, Close, CommentOutlined, FacebookOutlined, KeyboardArrowDown, LocalOfferOutlined, PhotoOutlined, Send, ShareOutlined, ThumbDownAltOutlined, ThumbUpAltOutlined } from "@mui/icons-material";
 import { FRONTEND_ROOT_URL } from "../../config";
@@ -57,6 +57,8 @@ function MobileModal({ postContextInstance, is_authenticated, current_mode, chan
 
     console.log("HERERERERERER",postContextInstance)
 
+    const theme = useTheme()
+    
 
     const handleCommentSubmit = async () => {
 
@@ -121,7 +123,7 @@ function MobileModal({ postContextInstance, is_authenticated, current_mode, chan
                     {current_mode === 'main' ? <><h2 style={{padding: '1rem 0.5rem', fontFamily: 'Poppins', color: '#516BEB', marginBottom: '2px', fontWeight: '600'}}>{postContextInstance.title}</h2>
 
                     <div style={{height: '100%', overflowY: 'auto'}}>
-                        <div dangerouslySetInnerHTML={{__html: postContextInstance.descr}} style={{padding: '0.5rem', color: '#2C3333', lineHeight:'2.5ch',margin: '0', fontSize:'14px', fontWeight: '400', fontFamily: 'Poppins'}}></div>
+                        <div dangerouslySetInnerHTML={{__html: postContextInstance.descr}} style={{padding: '0.5rem', color: theme.palette.mode !== 'dark' && '#2C3333', lineHeight:'2.5ch',margin: '0', fontSize:'14px', fontWeight: '400', fontFamily: 'Poppins'}}></div>
 
                     </div></>: current_mode === 'comments' ? <CommentBody comments={postContextInstance.comments} username={'krishnan'} /> : <ImageBody createMode={postContextInstance.create_mode} images={[postContextInstance.image_1, postContextInstance.image_2, postContextInstance.image_3, postContextInstance.image_4]} />}
 

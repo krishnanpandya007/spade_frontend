@@ -270,7 +270,6 @@ export default function ProfileView({data, userData, postData, profileViewUserna
 function MobileProfileView({data, status_indicator_colors, joinLoading, handleJoinLoading, joined, LeaveCommunity, JoinCommunity, communityCount, is_authenticated}) {
 
   const auth = useContext(authContext);
-
   return (
 
     <React.Fragment>
@@ -284,7 +283,7 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
           {/* <Chip label={data?.status} variant="outlined" icon={<div style={{width: '15px', height: '15px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px', margin: '0 0 0 10px'}} />} style={{borderRadius: '5px'}} /> */}
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%'}}>
             <div style={{display: 'flex',padding: '3px 6px',height: '2.2rem', gap: '0.5rem',boxShadow: '0 0 0 1px #c4c4c4', justifyContent: 'flex-start', alignItems: 'center', borderRadius: '3px'}}>
-              <div style={{width: '10px', height: '10px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px'}} />
+              <div style={{width: '10px', height: '10px',backgroundColor: status_indicator_colors[data?.status_indicator[0].toUpperCase() + data?.status_indicator.slice(1)], borderRadius: '10px'}} />
               <p style={{marginLeft: '8px', margin: '0', padding: '0', fontFamily: 'Poppins', fontSize: '0.8rem'}}><b><i>{data?.status}</i></b></p>
             </div>
             <LoadingButton  loading={joinLoading} onClick={is_authenticated?joined ? LeaveCommunity : JoinCommunity:()=>{auth.set_open_drawer(true, "Login Required!")}} startIcon={joined ? <Remove /> :<Add />} variant="contained" disableElevation sx={{backgroundColor: joined ? '#FB3640' : '#548CFF'}} >
