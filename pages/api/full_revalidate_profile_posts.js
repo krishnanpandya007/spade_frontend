@@ -37,7 +37,7 @@ export default async function revalidate(req, res) {
             if(url === `cache_posts/created_posts/${target_author}/`){
 
 
-                cache.put(url, data) // Cache Forever
+                cache.put(url, data, 1000 * 60 * 60) // Cache Forever
 
 
             }

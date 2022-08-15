@@ -18,7 +18,7 @@ export async function get_posts_by_tagname(tag_name) {
 
     // (Set) or Re-validate
 
-    const hours = 24;
+    const hours = 2;
 
     const total_miliseconds = hours * 1000 * 60 * 60;
 
@@ -116,7 +116,7 @@ export async function get_relevant_posts_by_searchquery(search_query) {
 
     // (Set) or Re-validate
 
-    const hours = 24;
+    const hours = 2;
 
     const total_miliseconds = hours * 1000 * 60 * 60;
 
@@ -165,7 +165,7 @@ export async function get_relevant_posts_by_postid(id) {
 
     // (Set) or Re-validate
 
-    const hours = 24;
+    const hours = 2;
 
     const total_miliseconds = hours * 1000 * 60 * 60;
 
