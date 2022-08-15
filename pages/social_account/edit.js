@@ -10,6 +10,9 @@ import { FRONTEND_ROOT_URL, NEW_UNCOMPLETED_PROFILE_PREFFIX } from '../../config
 import { useRouter } from 'next/router';
 import { status_indicator_colors } from '../../components/profile_edits/EditStatusIndicator';
 import SnackbarContext from '../../components/basic/contexts/snackbar_context';
+import { validate_user } from '../../components/authenticate_user';
+import Layout from '../../components/basic/layout';
+import authContext from '../../components/basic/contexts/layout_auth_context';
 
 // import status_indicator_colors from 
 
@@ -27,6 +30,17 @@ const CustomLoadingButton = styled(LoadingButton)`
 
 `
 
+function EditParent(props){
+
+  return (
+
+    <Layout title="Complete Social Signup - Spade" content="Complete social signup process after social login" isAuthenticated={props.is_authenticated} userInfo={props.user_info}>
+      <Edit />
+    </Layout>
+  )
+
+}
+
 function Edit() {
 
     const ref = useRef(null);
@@ -36,13 +50,15 @@ function Edit() {
 
     const [loadingText, setLoadingText] = useState('Retrieving Information...')
 
-    const [userInfo, setUserInfo] = React.useState({username: null, password: '', re_password: '', email: '', status: '', status_indicator: ''})
+    const [userInfo, setUserInfo] = React.useState({username: 'null', password: '', re_password: '', email: '', status: '', status_indicator: ''})
   
     const router = useRouter();
 
     const callback_url = router.query.callback_url ?? encodeURIComponent(FRONTEND_ROOT_URL)
 
     const snackbar = useContext(SnackbarContext);
+
+    const auth = useContext(authContext);
 
     const InitialInformationFetch = async () => {
 
@@ -65,7 +81,7 @@ function Edit() {
     }
 
     useEffect(async() => {
-      await InitialInformationFetch();
+      // await InitialInformationFetch();
       import('lottie-web').then((Lottie) => setLottie(Lottie.default));
     }, []);
   
@@ -121,27 +137,27 @@ function Edit() {
       setSubmitting(false)
     }
 
-
   return (
+        // <Layout title="Complete Social Signup - Spade" content="Complete social signup process after social login" isAuthenticated={is_authenticated} userInfo={user_info}>
       <>
-        <StaticHeader />
         {/* <CircularProgress /> */}
         {
             userInfo.username === null ? 
             <><LinearProgress /><center><h2 style={{marginTop: '30vh', color: 'grey'}}>{loadingText}</h2></center></>
             :
 
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', flexWrap :'wrap', marginTop: '10vh'}}>
-                <div ref={ref} style={{width: '30vw'}}></div>
+            <center style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', flexWrap :'wrap', marginTop: '7vh'}}>
+                {!auth.is_on_mobile && <div ref={ref} style={{width: '30vw'}}></div>}
                 {/* <h1 style={{ flex: '1'}}>+</h1> */}
-                <div>
+
+                <center>
                     <h1 style={{fontFamily: 'Roboto', fontSize: '2.5rem', fontWeight: '600'}} >Complete Profile</h1>
 
                     <br />
 
                     <TextField label="Username" variant="standard" style={{margin: '2rem 0', width: '30ch'}} value={userInfo.username} onChange={(e) => {setUserInfo({...userInfo,username:e.target.value})}}/>
                     {/* <TextField label="Status" variant="standard" style={{margin: '2rem 15ch'}} value={userInfo.status} onChange={(e) => {setUserInfo({...userInfo,status:e.target.value})}}/> */}
-                    <TextField label="Working Email" variant="standard" style={{margin: '2rem 8ch', width: '30ch'}} value={userInfo.email} onChange={(e) => {setUserInfo({...userInfo,email:e.target.value})}} type="email"/>
+                    <TextField label="Working Email" variant="standard" style={{margin: auth.is_on_mobile ? '1rem 0':'2rem 0 2rem 8ch', width: '30ch'}} value={userInfo.email} onChange={(e) => {setUserInfo({...userInfo,email:e.target.value})}} type="email"/>
                     <br />
                     <Select
                     style={{margin: '3rem 0', width: '30ch'}}
@@ -160,7 +176,7 @@ function Edit() {
 
                     </Select>
                     <Select
-                    style={{margin: '1rem 8ch', width: '30ch'}}
+                    style={{margin: auth.is_on_mobile ? '1rem 0':'1rem 0 1rem 8ch', width: '30ch'}}
                       variant="standard"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select-si"
@@ -181,7 +197,7 @@ function Edit() {
                     {/* <TextField label="Status Indicator" variant="standard" style={{margin: '0.5rem 8ch', width: '30ch'}} value={userInfo.status_indicator} onChange={(e) => {setUserInfo({...userInfo,status_indicator:e.target.value})}} type="text"/> */}
                     {/* <br /> */}
 
-                    <TextField label="Password (again)" variant="standard" style={{margin: '1rem 8ch', width: '30ch'}} value={userInfo.re_password} onChange={(e) => {setUserInfo({...userInfo,re_password:e.target.value})}} type="password"/>
+                    <TextField label="Password (again)" variant="standard" style={{margin: auth.is_on_mobile ? '1rem 0':'1rem 0 1rem 8ch', width: '30ch'}} value={userInfo.re_password} onChange={(e) => {setUserInfo({...userInfo,re_password:e.target.value})}} type="password"/>
 
                     <br />
                     <br />
@@ -191,11 +207,33 @@ function Edit() {
 
                     <CustomLoadingButton onClick={handleSubmit} loading={submitting} disableElevation style={{padding: '0.7rem 1.3rem', borderRadius: '0px'}} endIcon={<svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.18194 4.18185C6.35767 4.00611 6.6426 4.00611 6.81833 4.18185L9.81833 7.18185C9.90272 7.26624 9.95013 7.3807 9.95013 7.50005C9.95013 7.6194 9.90272 7.73386 9.81833 7.81825L6.81833 10.8182C6.6426 10.994 6.35767 10.994 6.18194 10.8182C6.0062 10.6425 6.0062 10.3576 6.18194 10.1819L8.86374 7.50005L6.18194 4.81825C6.0062 4.64251 6.0062 4.35759 6.18194 4.18185Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>} variant="contained">Continue</CustomLoadingButton>
 
-                </div>
-            </div>
+                </center>
+            </center>
         }
-      </>
+        </>
   )
 }
 
-export default Edit
+export default EditParent
+
+export async function getServerSideProps(context) {
+
+    
+    
+  const response = await validate_user(context);
+
+  // if(response.is_authenticated){
+  //   return {
+  //     redirect: {
+  //       destination: '/',
+  //       permanent: false
+  //     }
+  //   }
+  // }
+  
+  return {
+      props: {is_authenticated: response.is_authenticated ,user_info: response.is_authenticated ? response.user_info : null}
+  }
+
+
+}
