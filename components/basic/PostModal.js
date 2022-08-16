@@ -277,7 +277,7 @@ function PostModal() {
             }}>
                 <DialogTitle sx={{fontSize: '1.4rem', fontWeight: '900',color: '#FF4949', fontFamily: 'Poppins'}}>Are You sure?</DialogTitle>
                 <Divider variant="middle" />
-                <DialogContent style={{fontWeight: '400', fontFamily: 'Poppins', color :theme.palette.text.default}}><b>This action is not reversable!</b> De-link this post from your profile?<br/><a style={{color: '#5800FF', textDecoration: 'underline', fontSize: '0.8rem'}} href="https://docs.spadebeta.in">Learn More.</a></DialogContent>
+                <DialogContent style={{fontWeight: '400', fontFamily: 'Poppins', color :theme.palette.text.default}}><b>This action is not reversable!</b> De-link this post from your profile?<br/><a style={{color: '#5800FF', textDecoration: 'underline', fontSize: '0.8rem'}} href="https://docs.spadebeta.in/feature-delink-post">...</a></DialogContent>
                 {/* <p>By <b><i>De-Link</i></b> ing the post</p> */}
                 <DialogContent>
                 <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
