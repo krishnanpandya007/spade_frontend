@@ -65,7 +65,6 @@ function Edit() {
         const response = await fetch(`${FRONTEND_ROOT_URL}/api/social_account/get_initial_info`);
 
         const dataj = await response.json();
-        console.log("Here Initial")
 
         if(!dataj.username.startsWith(NEW_UNCOMPLETED_PROFILE_PREFFIX)){
           setLoadingText('Welcome Back, Redirecting you...')
@@ -74,7 +73,7 @@ function Edit() {
           return;
         }
 
-        setUserInfo({...userInfo, username: dataj.username ?? '', email: dataj.email ?? '',status: dataj.status ?? '', status_indicator: dataj.status_indicator ?? ''});
+        setUserInfo({...userInfo, username: dataj.username?.replace('NEW_', '') ?? '', email: dataj.email ?? '',status: dataj.status ?? '', status_indicator: dataj.status_indicator ?? ''});
 
 
 
