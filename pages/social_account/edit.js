@@ -75,7 +75,7 @@ function Edit() {
 
     const [loadingText, setLoadingText] = useState('Retrieving Information...')
 
-    const [userInfo, setUserInfo] = React.useState({username: 'null', password: '', re_password: '', email: '', status: '', status_indicator: ''})
+    const [userInfo, setUserInfo] = React.useState({username: null, password: '', re_password: '', email: '', status: '', status_indicator: ''})
   
     const router = useRouter();
 
@@ -105,7 +105,7 @@ function Edit() {
     }
 
     useEffect(async() => {
-      // await InitialInformationFetch();
+      await InitialInformationFetch();
       if(!auth.is_on_mobile){
 
         import('lottie-web').then((Lottie) => setLottie(Lottie.default));
