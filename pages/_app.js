@@ -10,7 +10,7 @@ import "../styles/globals.css";
 import theme from '../styles/theme';
 import SnackbarContext from '../components/basic/contexts/snackbar_context';
 import { Alert, Button, Snackbar } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 import ColorModeContext from '../components/basic/contexts/color_mode_context';
 
@@ -22,7 +22,7 @@ const darkTheme = {
   palette: {
     mode: 'dark',
     background: {
-      default: '#082032'
+      default: '#071D2D'
     },
     text: {
       primary: '#ECECEC',
@@ -41,6 +41,8 @@ export default function MyApp(props) {
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
+        localStorage.setItem('spade-core-color-theme', mode === 'light' ? 'dark' : 'light');
+
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
@@ -78,6 +80,36 @@ export default function MyApp(props) {
       </>
     )
   }
+  
+  useEffect(() => {
+
+    if(typeof localStorage !== undefined){
+
+      switch(localStorage.getItem('spade-core-color-theme')){
+
+        case null:
+          // Not defined yet
+          localStorage.setItem('spade-core-color-theme', 'light');
+          break;
+
+        case 'light':
+          setMode('light');
+          break;
+
+        case 'dark':
+          setMode('dark');
+          break;
+
+        default:
+          console.info("Invalid Value for color-theme in LocalStorage, setting default to light")
+          localStorage.setItem('spade-core-color-theme', 'light');
+          break;
+
+      }
+
+    }
+
+  }, [])
 
   return (
     <CacheProvider value={emotionCache}>

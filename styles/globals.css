@@ -17,7 +17,6 @@ a {
   /* color: white */
 }
 
-
 body{
   overflow-x: hidden
 }
@@ -26,4 +25,12 @@ body{
 
   padding-left: 0.5rem;
 
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  background-color: #5cd5eb;
+  height: 2rem;
+  width: 1rem;    
 }

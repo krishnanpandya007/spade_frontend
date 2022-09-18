@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spade Animation</title>
+
+    <style>
+        /* body{
+            background-color: rgb(28, 65, 69);
+        } */
+
+        .shimmer {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+        color: grey;
+        margin-top: 40vh;
+        display:inline-block;
+        -webkit-mask:linear-gradient(60deg,#000 30%,#0005,#000 70%) left/300% 100%;
+        /* mask:linear-gradient(-60deg,#000 30%,red,#000 70%) right/300% 100%; */
+        background-repeat: no-repeat;
+        /* rotate: 0deg; */
+        rotate: 0deg;
+        animation: shimmer 2.5s infinite;
+        font-size: 50px;
+        max-width:200px;
+        }
+
+        @keyframes shimmer {
+
+            0%{
+                rotate: 0deg;
+                -webkit-mask-position: left;
+                /* scale: 1; */
+                /* opacity: 1; */
+                /* offset-position: auto 0; */
+                /* top: 0rem */
+                /* position */
+            }
+            25%{
+                -webkit-mask-position: left;
+                /* offset-position: auto -2rem; */
+                /* scale: 1; */
+                /* opacity: 1; */
+
+                rotate: 360deg
+            }
+            70%{
+                -webkit-mask-position: right;
+                /* offset-position: auto 0; */
+                /* opacity: 1; */
+                /* top: 0rem; */
+                rotate: 360deg;
+                /* scale: 1; */
+
+            }
+            75%{
+                /* offset-position: auto -2rem; */
+                /* opacity: 0.6; */
+                /* top: -1rem; */
+                /* scale: 0.85; */
+                rotate: 360deg
+
+            }
+            100%{
+                /* offset-position: auto 20rem; */
+                /* opacity: 0; */
+                /* top: 50rem; */
+                /* scale: 0.1; */
+                rotate: 360deg
+
+            }
+
+        }
+
+        .loader_shimmer{
+            position: absolute;
+            height: 200px;
+            width: 50px;
+            z-index: -1;
+            /* background-color: red; */
+            /* border: 1px solid red; */
+            backdrop-filter: blur(1000px);
+            background: linear-gradient(90deg, transparent, transparent,  white, transparent, transparent);
+            top: -7rem;
+            right: -2rem;
+            rotate: -45deg;
+            animation: shim 1s linear alternate infinite;
+        }
+
+        @keyframes shim {
+
+            from  {
+
+                top: -7rem;
+                right: -2rem;
+                /* bottom: auto;
+                left: auto; */
+
+            } to {
+                top: 1rem;
+                right: 5rem;
+                /* bottom: -7rem;
+                left: -2rem; */
+
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+    <div style="position: relative;width: 100px;height: 100px;margin-left: 40vw;margin-top: 40vh;">
+        
+    <img class="shimmer" src="./▶ Instagram post - 1.png"></img>
+    <!-- <div class="loader_shimmer"></div> -->
+</div>
+</body>
+</html>

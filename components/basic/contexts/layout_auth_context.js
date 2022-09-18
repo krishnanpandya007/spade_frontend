@@ -5,7 +5,7 @@ const authContext = createContext({
     is_authenticated: false,
     is_on_mobile: false,
     drawer_title: "Let&apos;s Connect !",
-    open_drawer :false, // Only triggered by external sources (href) & (Protectted Buttons) 
+    open_drawer :false, // Only triggered by external sources (href) & (Protectted Buttons/Actions) 
     user_data: {
         username: null,
         profile_pic: null,

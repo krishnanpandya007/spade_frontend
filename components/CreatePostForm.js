@@ -340,7 +340,7 @@ function CreatePostForm({ChangeChipData, chip_data}) {
 
 
 
-                snackbar.open(data.error ? "error" : "simple", data.message, true, () => {window.location.href=`${FRONTEND_ROOT_URL}/explore/post/${data.created_post_id}`},"View post")                
+                snackbar.open(data.error ? "error" : "simple", data.message, true, () => {window.location.href=`${FRONTEND_ROOT_URL}explore/post/${data.created_post_id}`},"View post")                
 
 
 

@@ -17,6 +17,8 @@ import Head from "next/head";
 import StaticHeader from '../../components/basic/StaticHeader'
 
 import {useRouter} from 'next/router'
+// import TodayOverview from '../../components/basic/TodayOverview';
+// import Script from 'next/script';
 
 
 
@@ -133,6 +135,7 @@ function Account() {
         <Head>
           <title>Create Profile | Spade</title>
         </Head>
+        
           <StaticHeader />
           <hr/>
             <Snackbar open={formError} autoHideDuration={6000} onClose={() => {setFormError(false)}}>
@@ -140,8 +143,9 @@ function Account() {
                     {errorData}
                 </Alert>
             </Snackbar>
-
         <CreateAccount handleFormError={setFormError} handleErrorData={setErrorData} data={formData} t_and_c_ref={terms_and_condi_agree_ref} handleOnChange={handleOnChange} handleSubmit={handleSubmit} loading={isSubmitting} setLoading={setIsSubmitting} profileCreated={profileCreated} />
+ 
+    
     </>
     )
 }

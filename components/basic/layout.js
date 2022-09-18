@@ -13,10 +13,11 @@ import PostModal from './PostModal';
 import PostModalContext from './contexts/post_modal_context';
 import { handle_action_post } from './handle_action';
 import MHeader from '../../mobile_components/Header';
+import TodayOverview from './TodayOverview';
 
 // import getUserInfo from './get_user_info';
 
-function Layout({ title, children,includesFilters,changeFilterBy, currentFilterBy,isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
+function Layout({ title, children,includesFilters, includesTodayOverview,changeFilterBy, currentFilterBy,isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
 
   const [user, setUser] = React.useState({is_authenticated: isAuthenticated});
 
@@ -256,7 +257,7 @@ function Layout({ title, children,includesFilters,changeFilterBy, currentFilterB
 
 
       {/* { children } */}
-    
+      {includesTodayOverview && isAuthenticated ? <TodayOverview /> : null}
       <Footer username={userData.username}/>
     </authContext.Provider>
 
