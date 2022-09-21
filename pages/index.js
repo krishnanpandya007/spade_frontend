@@ -158,7 +158,7 @@ function ThinWrapper({animation_controller, currentData, filterBy, setCurrentDat
             </div>
             <Grid item xs={4} justifyContent="center" alignItems="center">
         
-                <HomeInfo />
+                <HomeInfo authInstance={auth} />
             </Grid>
         </Grid>}
                 
