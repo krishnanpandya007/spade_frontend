@@ -841,12 +841,12 @@ function AudioPost({ data }) {
   }
 
   useEffect(() => {
-    audioRef.current = new Audio(`${BACKEND_ROOT_URL.slice(0, -1)}${data.secondary_field}`)
+    audioRef.current = new Audio(`${BACKEND_ROOT_URL}media/${data.secondary_field}`)
     audioRef.current.addEventListener("timeupdate", updateTrackProgress)
 
     const getDuration = async () => {
 
-      let sync_duration = await getBlobDuration(`${BACKEND_ROOT_URL.slice(0, -1)}${data.secondary_field}`)
+      let sync_duration = await getBlobDuration(`${BACKEND_ROOT_URL}media/${data.secondary_field}`)
 
       setDuration(sync_duration)
 
