@@ -501,10 +501,11 @@ function AudioDailyContent() {
     <React.Fragment>
       
       {
-
+        audio_content.length > 0 ? 
         audio_content.map((val, idx) => (
           <AudioPost key={idx} data={val} />
         ))
+        : <b><br/>Strange!, no share(s) found.</b>
 
       }
       <div  ref={fetchTriggerRef} style={{style: '1px solid red',width: '50%', height: '40px',display: 'grid', placeItems: 'center', marginTop: '2rem'}}> 
@@ -715,10 +716,11 @@ function TextDailyContent() {
     <React.Fragment>
 
       {
+        text_content.length > 0 ? 
 
         text_content.map((val, idx) => (
           <TextPost key={idx} data={val} />
-        ))
+        )) : <b><br/>Strange!, no share(s) found.</b>
 
       }
 
@@ -841,16 +843,17 @@ function AudioPost({ data }) {
   }
 
   useEffect(() => {
-    audioRef.current = new Audio(`${BACKEND_ROOT_URL}media/${data.secondary_field}`)
+    audioRef.current = new Audio(`${BACKEND_ROOT_URL.slice(0, BACKEND_ROOT_URL.length-1)}${data.secondary_field}`)
     audioRef.current.addEventListener("timeupdate", updateTrackProgress)
 
     const getDuration = async () => {
 
-      let sync_duration = await getBlobDuration(`${BACKEND_ROOT_URL}media/${data.secondary_field}`)
+      let sync_duration = await getBlobDuration(`${BACKEND_ROOT_URL.slice(0, BACKEND_ROOT_URL.length-1)}${data.secondary_field}`)
 
       setDuration(sync_duration)
 
     }
+    console.log("DEBUG::", data.title, `${BACKEND_ROOT_URL.slice(0, BACKEND_ROOT_URL.length-1)}${data.secondary_field}`)
 
     getDuration()
 
