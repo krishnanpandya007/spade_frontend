@@ -178,7 +178,7 @@ function VoiceShareMainClone({title,reverseToStartState, toggleTitleMinLengthNot
 
         let form = new FormData();
         form.append("title", title);
-        form.append("type", "audio");
+        form.append("content_type", "audio");
         form.append("audio", file);
 
         try{
