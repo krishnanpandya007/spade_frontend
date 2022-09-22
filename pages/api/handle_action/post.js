@@ -44,7 +44,12 @@ export default async (req, res) => {
             const dataj = await apiResponse.json()
 
             console.log("AFTER AFTER")
-            if (apiResponse.status === 200){
+            if (apiResponse.status === 201){
+
+
+                // Revalidate cache
+                
+
                 // Account Created Successfully
                 return res.status(200).json({success: 'Action Updated'})
             }else{

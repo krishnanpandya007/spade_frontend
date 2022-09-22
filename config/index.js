@@ -1,5 +1,5 @@
 
-export const BACKEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:8000/' : 'http://134.209.148.176/'
+export const BACKEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:8000/' : 'https://core.backend-61489.spadebeta.in/'
 export const FRONTEND_ROOT_URL = process.env.NODE_ENV === "development" ? 'http://127.0.0.1:3000/' : 'https://www.spadebeta.in/'
 export const DOCS_ROOT_URL = 'https://docs.spadebeta.in/'
 
