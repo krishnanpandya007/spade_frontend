@@ -1,5 +1,5 @@
 import { BACKEND_ROOT_URL } from "../../../config";
-
+import cache from "memory-cache"
 import cookie from 'cookie'
 import authenticate from "../authenticate";
 
@@ -44,6 +44,27 @@ export default async (req, res) => {
 
             if (apiResponse.status === 201){
                 // Account Created Successfully
+
+                cache.keys().forEach((key_url) => {
+                    // For Each Catagory
+                    let cacheResponse = cache.get(key_url) || [];
+
+                    if(cacheResponse){
+
+                        cacheResponse.map((val, idx) => {
+
+                            if (val.id === post_id) {
+
+                                val.comments.push(dataj.new_comment_serializer_data)
+
+                            }
+
+                        })
+                        
+                    }
+                    
+                })
+
                 return res.status(201).json({success: 'Comment Created'})
             }else{
                 return res.status(apiResponse.status).json({error: 'Can\'t Create Comment'})

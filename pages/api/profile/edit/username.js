@@ -3,7 +3,7 @@ import authenticate from "../../authenticate";
 
 import cookie from 'cookie'
 import { BACKEND_ROOT_URL } from "../../../../config";
-
+import cache from "memory-cache"
 
 
 
@@ -60,6 +60,30 @@ export default async (req, res) => {
 
             if (apiResponse.status === 200){
                 // Account Created Successfully
+
+
+                // Revalidate cache
+                
+                cache.keys().forEach((key_url) => {
+                    // For Each Catagory
+                    let cacheResponse = cache.get(key_url) || [];
+
+                    if(cacheResponse){
+
+                        cacheResponse.map((val, idx) => {
+
+                            if (val.author_name === data.old_username) {
+
+                                val.author_name = new_username
+
+                            }
+
+                        })
+                        
+                    }
+                    
+                })
+
                 return res.status(200).json({success: 'Username Updated'})
             }else{
                 return res.status(apiResponse.status).json({error: 'Can\'t Update Username'})

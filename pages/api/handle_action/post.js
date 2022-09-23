@@ -3,6 +3,7 @@ import { BACKEND_ROOT_URL } from "../../../config";
 
 import cookie from 'cookie'
 import authenticate from "../authenticate";
+import cache from "memory-cache";
 
 export default async (req, res) => {
 
@@ -49,6 +50,56 @@ export default async (req, res) => {
 
                 // Revalidate cache
                 
+                cache.keys().forEach((key_url) => {
+                    // For Each Catagory
+                    let cacheResponse = cache.get(key_url) || [];
+
+                    if(cacheResponse){
+
+                        cacheResponse.map((val, idx) => {
+
+                            if (val.id === post_id) {
+
+                                let remainingTime = JSON.parse(cache.exportJson())[key_url].expire - Date.now()
+                                console.warn("Remaining time: ", remainingTime)
+
+                                choice.split(" ").map((choice, idx) => {
+
+                                    if (choice === 'like') {
+
+                                        if(action.split(" ")[idx] === 'add'){
+                                            // Adding Like
+                                            val.likes.push(dataj.revalidate_data) // Push Likr username
+
+                                        }else {
+                                            // Removing Like
+                                            val.likes = val.likes.filter((in_key) => in_key !== dataj.revalidate_data) // Push Likr username
+
+                                        }
+
+                                    } else if (choice === 'dislike') {
+
+                                        if(action.split(" ")[idx] === 'add'){
+                                            // Adding Like
+                                            val.dislikes.push(dataj.revalidate_data) // Push Likr username
+
+                                        }else {
+                                            // Removing Like
+                                            val.dislikes = val.dislikes.filter((in_key) => in_key !== dataj.revalidate_data) // Push Likr username
+
+                                        }
+
+                                    }
+
+                                })
+
+                            }
+
+                        })
+                        
+                    }
+                    
+                })
 
                 // Account Created Successfully
                 return res.status(200).json({success: 'Action Updated'})
