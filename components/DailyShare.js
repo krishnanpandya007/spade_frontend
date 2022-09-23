@@ -13,6 +13,7 @@ import authContext from '../components/basic/contexts/layout_auth_context'
 import {useRouter} from 'next/router'
 import Link from 'next/link'
 import { ContentCopyOutlined } from '@mui/icons-material'
+import useLongPress from '../hooks/use-long-press'
 
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share'
 import styled from '@emotion/styled'
@@ -767,7 +768,7 @@ function AudioPost({ data }) {
   const [trackProgress, setTrackProgress] = useState(0);
   const [shareData, setShareData] = React.useState({open: false, post_id: null})
   // const duration = getBlobDuration
-
+  const {action, handlers} = useLongPress();
 
 
   useEffect(() => {
@@ -833,6 +834,8 @@ function AudioPost({ data }) {
     }else{
       snackbar.open("error", "Please try again later!")
     }
+    setShowMoreOptions(false)
+    // DELETE FROM CURRENT UI
 
   }
 
@@ -843,7 +846,7 @@ function AudioPost({ data }) {
         
         if(navigator.share || navigator.canShare){
             navigator.share({
-                url: `${FRONTEND_ROOT_URL}explore/post?id=${post_id}&type=audio`,
+                url: `${FRONTEND_ROOT_URL}explore/daily_share?id=${post_id}&type=audio`,
                 title: 'Spade',
                 text: 'Share hacks, gain hacks!'
             })
@@ -857,6 +860,7 @@ function AudioPost({ data }) {
 
         setShareData({open: true, post_id: post_id});
     }
+    setShowMoreOptions(false)
 
 }
 
@@ -895,6 +899,19 @@ function AudioPost({ data }) {
 
 
   }
+
+
+  useEffect(() => {
+
+    if(action === 'click'){
+        // openPostModal();
+        setShowMoreOptions(true);
+    }else if(action === 'longpress') {
+        sharePost(data.id); 
+
+    }
+    handlers.onMouseUp();handlers.onTouchEnd();
+}, [action])
 
   const updateTrackProgress = (e) => {
 
@@ -949,7 +966,7 @@ function AudioPost({ data }) {
                         <center><h2>Share With</h2></center>
                         <div style={{width: '100%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
                             <Tooltip title="Copy URL">
-                                <StyledIconButton onClick={() => {navigator.clipboard.writeText(`${FRONTEND_ROOT_URL}explore/post?id=${post_id}&type=audio`);snackbar.open('simple', "Copied to clipboard!")}}>
+                                <StyledIconButton onClick={() => {navigator.clipboard.writeText(`${FRONTEND_ROOT_URL}explore/daily_share?id=${data.id}&type=audio`);snackbar.open('simple', "Copied to clipboard!")}}>
                                     <ContentCopyOutlined style={{color: 'black'}} />
                                     
                                 </StyledIconButton>
@@ -1023,7 +1040,7 @@ function AudioPost({ data }) {
 
             <div onMouseEnter={(e) => {e.target.style.cursor = 'pointer'}} style={{position: 'absolute', right: '0.7rem', top: '0.2rem'}}>
     
-            <svg onClick={() => {setShowMoreOptions(curr => !curr)}}  width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg  {...handlers} onClick={() => {setShowMoreOptions(curr => !curr)}}  width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" clipRule="evenodd" d="M3.625 7.5C3.625 8.12132 3.12132 8.625 2.5 8.625C1.87868 8.625 1.375 8.12132 1.375 7.5C1.375 6.87868 1.87868 6.375 2.5 6.375C3.12132 6.375 3.625 6.87868 3.625 7.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM12.5 8.625C13.1213 8.625 13.625 8.12132 13.625 7.5C13.625 6.87868 13.1213 6.375 12.5 6.375C11.8787 6.375 11.375 6.87868 11.375 7.5C11.375 8.12132 11.8787 8.625 12.5 8.625Z" fill="#6BA37E"/>
     
             </svg>
@@ -1033,13 +1050,13 @@ function AudioPost({ data }) {
     
               <div className={styles.post_options_main} style={{boxShadow: `0 0 0 1px ${get_pallete_variant(data.colorPallete, 'primary')}70`, borderRadius: '5px', backgroundColor: '#FEFBF6', padding: '0.7rem 0.4rem'}}>
     
-                <button onMouseEnter={(e) => {e.target.style.cursor = 'pointer'}} onClick={() => {sharePost(data.id)}}><Share style={{transform: 'scale(0.8)'}} />  Share </button>
+                <button onMouseEnter={(e) => {e.target.style.cursor = 'pointer'}}  onClick={() => {sharePost(data.id)}}><Share style={{transform: 'scale(0.8)'}} />  Share </button>
                 {/* <button onClick={downloadPost}><Download style={{transform: 'scale(0.8)', color: 'black'}} />  Download </button> */}
                 {
                   auth.user_data.username === data.author_name &&
                   <button onMouseEnter={(e) => {e.target.style.cursor = 'pointer'}} onClick={deletePost} style={{marginTop: '0.5rem'}}><DeleteOutline style={{transform: 'scale(0.8)'}} />  Delete </button>
                 }
-                <button onMouseEnter={(e) => {e.target.style.cursor = 'pointer'}} onClick={reportPost} style={{marginTop: '0.5rem', borderTop: '1px solid #c4c4c470', paddingTop: '0.5rem'}}><Report style={{transform: 'scale(0.8)'}} color="error" />  Report </button>
+                <button onMouseEnter={(e) => {e.target.style.cursor = 'pointer'}}  onClick={reportPost} style={{marginTop: '0.5rem', borderTop: '1px solid #c4c4c470', paddingTop: '0.5rem'}}><Report style={{transform: 'scale(0.8)'}} color="error" />  Report </button>
     
     
               </div>
@@ -1089,6 +1106,8 @@ function TextPost({ data }) {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [showMoreOptions, setShowMoreOptions] = React.useState(false);
   const [shareData, setShareData] = React.useState({open: false, post_id: null})
+  const {action, handlers} = useLongPress();
+
 
   const deletePost = async () => {
 
@@ -1117,6 +1136,7 @@ function TextPost({ data }) {
     }else{
       snackbar.open("error", "Please try again later!")
     }
+    setShowMoreOptions(false)
 
   }
 
@@ -1127,7 +1147,7 @@ function TextPost({ data }) {
         
         if(navigator.share || navigator.canShare){
             navigator.share({
-                url: `${FRONTEND_ROOT_URL}explore/post?id=${post_id}&type=text`,
+                url: `${FRONTEND_ROOT_URL}explore/daily_share?id=${post_id}&type=text`,
                 title: 'Spade',
                 text: 'Share hacks, gain hacks!'
             })
@@ -1141,6 +1161,8 @@ function TextPost({ data }) {
 
         setShareData({open: true, post_id: post_id});
     }
+    setShowMoreOptions(false)
+
 
 }
 
@@ -1180,6 +1202,19 @@ function TextPost({ data }) {
 
   }
 
+
+  useEffect(() => {
+
+    if(action === 'click'){
+        // openPostModal();
+        setShowMoreOptions(true);
+    }else if(action === 'longpress') {
+        sharePost(data.id); 
+
+    }
+    handlers.onMouseUp();handlers.onTouchEnd();
+}, [action])
+
   return (
 
     <div className={styles.audio_post_main} style={{ backgroundColor: get_pallete_variant(data.colorPallete, 'primary') }}>
@@ -1204,7 +1239,7 @@ function TextPost({ data }) {
                         <center><h2>Share With</h2></center>
                         <div style={{width: '100%', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
                             <Tooltip title="Copy URL">
-                                <StyledIconButton onClick={() => {navigator.clipboard.writeText(`${FRONTEND_ROOT_URL}explore/post?id=${post_id}&type=text`);snackbar.open('simple', "Copied to clipboard!")}}>
+                                <StyledIconButton onClick={() => {navigator.clipboard.writeText(`${FRONTEND_ROOT_URL}explore/daily_share?id=${data.id}&type=text`);snackbar.open('simple', "Copied to clipboard!")}}>
                                     <ContentCopyOutlined style={{color: 'black'}} />
                                     
                                 </StyledIconButton>
