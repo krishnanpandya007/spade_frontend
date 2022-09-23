@@ -831,6 +831,8 @@ function AudioPost({ data }) {
 
     if(response.status === 201){
       snackbar.open("success", "Post removed")
+      window.location.reload();
+
     }else{
       snackbar.open("error", "Please try again later!")
     }
@@ -1133,6 +1135,7 @@ function TextPost({ data }) {
 
     if(response.status === 201){
       snackbar.open("success", "Post removed")
+      window.location.reload();
     }else{
       snackbar.open("error", "Please try again later!")
     }
