@@ -1,12 +1,8 @@
-import { useRouter } from 'next/router';
 import React from 'react'
 import { get_relevant_posts_by_postid } from '../../../caching';
 import { validate_user } from '../../../components/authenticate_user';
 import Layout from '../../../components/basic/layout';
-import ExploreByTagName from '../../../components/ExploreByTagName';
 import ExploreExactPostView from '../../../components/ExploreExactPostView';
-import ProfileView from '../../../components/ProfileView';
-import { BACKEND_ROOT_URL } from '../../../config';
 
 function PostByTag({data, target_post_title, is_authenticated, user_info}) {
 

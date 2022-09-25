@@ -14,9 +14,6 @@ function ImageBody({images, createMode}) {
     const imagesHeight = auth.is_on_mobile ? 'auto' : 400;
     const imagesWidth = auth.is_on_mobile ? window.innerWidth * 0.6 : 400;
 
-    useEffect(() => {
-    console.log(BACKEND_ROOT_URL.slice(0,-1)+images[0])        
-    }, [])
 
     return (
         <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '2rem'}}>

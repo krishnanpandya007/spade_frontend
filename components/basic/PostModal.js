@@ -135,7 +135,7 @@ function MobileModal({ enableDeLink,openDelink,postContextInstance, is_authentic
                     <div style={{height: '100%', overflowY: 'auto'}}>
                         <div dangerouslySetInnerHTML={{__html: postContextInstance.descr}} style={{padding: '0.5rem', color: theme.palette.mode !== 'dark' && '#2C3333', lineHeight:'2.5ch',margin: '0', fontSize:'14px', fontWeight: '400', fontFamily: 'Poppins'}}></div>
 
-                    </div></>: current_mode === 'comments' ? <CommentBody comments={postContextInstance.comments} username={'krishnan'} /> : <ImageBody createMode={postContextInstance.create_mode} images={[postContextInstance.image_1, postContextInstance.image_2, postContextInstance.image_3, postContextInstance.image_4]} />}
+                    </div></>: current_mode === 'comments' ? <CommentBody comments={postContextInstance.comments} username={'krishnan'} /> : <ImageBody createMode={postContextInstance.create_mode} images={postContextInstance.images || []} />}
 
                 </div>
                 <div style={{ display: 'flex', margin: '0rem 0.5rem', alignItems: 'center', gap: '1rem'}}>

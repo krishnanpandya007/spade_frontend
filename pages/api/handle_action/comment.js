@@ -11,18 +11,7 @@ export default async (req, res) => {
 
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
-        req.method = 'get'; // For authentication
 
-
-        const data = await authenticate(req, res, true); // Called by it-self (server)
-
-
-        if (data.error){
-            return res.status(401).json({error: 're-login needed'})
-
-        }
-
-        access = data.access;
 
         const {
 
@@ -53,8 +42,6 @@ export default async (req, res) => {
             }).catch((err) => {console.log(err)})
 
             const dataj = await apiResponse.json()
-
-            console.log("THIDDDD:", dataj)
 
             if (apiResponse.status === 200){
                 // Account Created Successfully
