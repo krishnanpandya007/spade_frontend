@@ -1,5 +1,8 @@
+const withPWA = require('next-pwa')({
+  dest: 'public'
+})
 
-module.exports = {
+nextConfig = {
   reactStrictMode: true,
   // swcMinify: true, // ! Trial
   images: {
@@ -14,3 +17,5 @@ module.exports = {
     ]
   },
 }
+
+module.exports = withPWA(nextConfig)
