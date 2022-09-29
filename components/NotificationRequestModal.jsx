@@ -24,7 +24,7 @@ function urlBase64ToUint8Array(base64String) {
 
 function Body({ notification_success }) {
 
-  const subscriptionDoneAnimationRef = useRef();
+  const subscriptionDoneAnimationRef = useRef(null);
 
   useEffect(() => {
 
