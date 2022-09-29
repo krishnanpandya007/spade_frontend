@@ -59,7 +59,7 @@ function Header() {
   return (
 
     <div style={{ borderRadius: '10px 10px 0 0', backgroundColor: '#3B44F6', width: '100%', fontFamily: 'Poppins', position: 'relative', marginBottom: '2rem'}}>
-      <center><h2 style={{marginBlock: '0', padding: '1.2rem 0', fontSize: '1.3rem', fontWeight: '700' }}>Lemme Notify!</h2></center>
+      <center><h2 style={{marginBlock: '0', padding: '1.2rem 0', fontSize: '1.3rem', fontWeight: '700', border: '1px solid red'}}>Lemme Notify!</h2></center>
       <div ref={notificationAnimationRef} style={{position: 'absolute', left: '1.5rem', top: '2rem', borderRadius: '15px', width: '60px', height: '60px', backgroundColor: 'white',filter: 'drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))'}}>
 
       </div>

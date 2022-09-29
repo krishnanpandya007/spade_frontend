@@ -120,12 +120,6 @@ export default function MyApp(props) {
       let first_load = localStorage.getItem('first_load')
       if(first_load === null){
 
-        localStorage.setItem('first_load', true)
-
-      } else {
-
-        // first_load exists => Not first time user loading this page
-
         if(Notification.permission === 'denied'){
 
           notificationModalRef.current = require('../components/NotificationRequestModal').default
@@ -133,6 +127,7 @@ export default function MyApp(props) {
 
 
         }
+        localStorage.setItem('first_load', true)
 
       }
 
