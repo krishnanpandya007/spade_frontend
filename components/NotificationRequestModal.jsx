@@ -24,9 +24,33 @@ function urlBase64ToUint8Array(base64String) {
 
 function Body({ notification_success }) {
 
+  const subscriptionDoneAnimationRef = useRef();
+
+  useEffect(() => {
+
+    const notificationAnimation = Lottie.loadAnimation({
+      name: "notification_completion",
+    container: subscriptionDoneAnimationRef.current,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+   
+    // path to your animation file, place it inside public folder
+    path: '/notification_complete.json',
+  });
+
+  return () => {
+
+    notificationAnimation.destroy();
+
+  }
+
+  }, [])
+
+
   return (
 
-    notification_success ? null :
+    notification_success ? <div ref={subscriptionDoneAnimationRef} style={{ width: '150px', height: '150px' }}></div> :
     <>
     <div style={{color: 'black', padding: '0.5rem 1.2rem', fontFamily: 'Poppins'}}> 
     <h4>We’ll notify you only on when you’re on posted content, This includes</h4>
@@ -201,7 +225,7 @@ function NotificationRequestModal() {
 
         <br/>
 
-        <div style={{ display: 'flex', backgroundColor: '#3B44F6', padding: '0.8rem', borderRadius: '0 0 10px 10px',alignItems: 'center', justifyContent: 'space-between' }}>
+        { (currentState === 'denied' || currentState === 'pending') && <div style={{ display: 'flex', backgroundColor: '#3B44F6', padding: '0.8rem', borderRadius: '0 0 10px 10px',alignItems: 'center', justifyContent: 'space-between' }}>
 
           <Button onClick={() => {setOpen(false)}} style={{ fontFamily: 'Poppins' }} sx={{color: 'white', letterSpacing: '1px', textTransform: 'initial'}}>
             Discard
@@ -211,7 +235,7 @@ function NotificationRequestModal() {
             ok, notify me
           </LoadingButton>
 
-        </div>
+        </div>}
 
       </Box>
 
