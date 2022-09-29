@@ -10,10 +10,11 @@ import "../styles/globals.css";
 import theme from '../styles/theme';
 import SnackbarContext from '../components/basic/contexts/snackbar_context';
 import { Alert, Button, Snackbar } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 import ColorModeContext from '../components/basic/contexts/color_mode_context';
 
+// import NotificationRequestModal from '../components/NotificationRequestModal';
 // Integrating Authentication For Next.js APK
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -38,6 +39,11 @@ const darkTheme = {
 export default function MyApp(props) {
 
   const [mode, setMode] = useState('light');
+  const notificationModalRef = useRef(null);
+  const [notificationModalLoaded, setNotificationModalLoaded] = useState(false);
+  const NotificationModal = notificationModalRef.current;
+  // console.log(NotificationModal)
+
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
@@ -109,6 +115,52 @@ export default function MyApp(props) {
 
     }
 
+    if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches || true){
+
+      let first_load = localStorage.getItem('first_load')
+      if(first_load === null){
+
+        localStorage.setItem('first_load', true)
+
+      } else {
+
+        // first_load exists => Not first time user loading this page
+
+        if(Notification.permission === 'denied'){
+
+          notificationModalRef.current = require('../components/NotificationRequestModal').default
+          setNotificationModalLoaded(true)
+
+
+        }
+
+      }
+
+      if(Notification.permission === 'granted'){
+        alert("Youre already subsscribed")
+
+
+
+      } else {
+
+        Notification.requestPermission(result => { 
+          if (result === 'granted') { 
+            alert("Youre Now subsscribed")
+            notificationModalRef.current = require('../components/NotificationRequestModal').default
+            console.log("Here:::::", notificationModalRef.current)
+            setNotificationModalLoaded(true)
+              //displayConfirmNotification();
+              // configurePushSubscription();
+          } else if(result === 'denied'){
+            alert("Denied")
+          }
+        
+        })
+
+      }
+
+    }
+
   }, [])
 
   return (
@@ -132,6 +184,11 @@ export default function MyApp(props) {
             scale: 1
           },
         }}>
+          {
+            notificationModalLoaded &&
+            // <h1>Here</h1>
+            <NotificationModal/>
+          }
           
           <SnackbarContext.Provider value={{...snackbarData, open: open, close: close, undo_action: undo_action}}>
             <Snackbar autoHideDuration={5000} anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} message={snackbarData.severity === "simple" ? snackbarData.message : null} open={snackbarData.open} onClose={close} action={snackbarData.includes_callback ? undo_action(snackbarData.callback_fn, snackbarData.action_button_title) : null} >
