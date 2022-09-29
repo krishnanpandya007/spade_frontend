@@ -187,6 +187,7 @@ function NotificationRequestModal() {
                   .then(response => {
                       if (response.ok) {
                           displayConfirmNotification();
+                          setCurrentState('granted')
                       }
                   })
                   .catch(error => console.log(error));
