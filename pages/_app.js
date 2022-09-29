@@ -136,28 +136,28 @@ export default function MyApp(props) {
 
       }
 
-      if(Notification.permission === 'granted'){
-        alert("Youre already subsscribed")
+      // if(Notification.permission === 'granted'){
+      //   alert("Youre already subsscribed")
 
 
 
-      } else {
+      // } else {
 
-        Notification.requestPermission(result => { 
-          if (result === 'granted') { 
-            alert("Youre Now subsscribed")
-            notificationModalRef.current = require('../components/NotificationRequestModal').default
-            console.log("Here:::::", notificationModalRef.current)
-            setNotificationModalLoaded(true)
-              //displayConfirmNotification();
-              // configurePushSubscription();
-          } else if(result === 'denied'){
-            alert("Denied")
-          }
+        // Notification.requestPermission(result => { 
+        //   if (result === 'granted') { 
+        //     alert("Youre Now subsscribed")
+        //     notificationModalRef.current = require('../components/NotificationRequestModal').default
+        //     console.log("Here:::::", notificationModalRef.current)
+        //     setNotificationModalLoaded(true)
+        //       //displayConfirmNotification();
+        //       // configurePushSubscription();
+        //   } else if(result === 'denied'){
+        //     alert("Denied")
+        //   }
         
-        })
+        // })
 
-      }
+      // }
 
     }
 
