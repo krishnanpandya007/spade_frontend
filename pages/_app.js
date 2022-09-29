@@ -120,7 +120,7 @@ export default function MyApp(props) {
       let first_load = localStorage.getItem('first_load')
       console.log("true")
       
-      if(first_load === null){
+      if(first_load === null || true){
         console.log("true")
         console.log("PERM:", Notification.permission)
         if(Notification.permission === 'denied' || Notification.permission === 'default'){
