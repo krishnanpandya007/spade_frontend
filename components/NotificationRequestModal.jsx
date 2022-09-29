@@ -225,7 +225,7 @@ function NotificationRequestModal() {
 
         <br/>
 
-        { (currentState === 'denied' || currentState === 'pending') && <div style={{ display: 'flex', backgroundColor: '#3B44F6', padding: '0.8rem', borderRadius: '0 0 10px 10px',alignItems: 'center', justifyContent: 'space-between' }}>
+        { (currentState === 'disable' || currentState === 'pending') && <div style={{ display: 'flex', backgroundColor: '#3B44F6', padding: '0.8rem', borderRadius: '0 0 10px 10px',alignItems: 'center', justifyContent: 'space-between' }}>
 
           <Button onClick={() => {setOpen(false)}} style={{ fontFamily: 'Poppins' }} sx={{color: 'white', letterSpacing: '1px', textTransform: 'initial'}}>
             Discard
