@@ -118,26 +118,18 @@ export default function MyApp(props) {
    
 
     if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches || true){
-      console.log("true")
       let first_load = localStorage.getItem('first_load')
-      console.log("true")
       
       if(first_load === null || true){
-        console.log("true")
-        console.log("PERM:", Notification.permission)
         if(Notification.permission === 'denied' || Notification.permission === 'default'){
-          console.log("true3")
 
           notificationModalRef.current = require('../components/NotificationRequestModal').default
           setNotificationModalLoaded(true)
 
-          console.log("true4")
 
         }
-      console.log("true7")
 
         localStorage.setItem('first_load', true)
-        console.log("true")
 
       }
 

@@ -19,6 +19,7 @@
     "@mui/lab": "^5.0.0-alpha.72",
     "@mui/material": "^5.0.0-rc.1",
     "@mui/styles": "^5.10.3",
+    "@prisma/client": "^4.4.0",
     "cookie": "^0.4.2",
     "form-data": "^4.0.0",
     "formidable": "^2.0.1",
