@@ -191,6 +191,7 @@ function NotificationRequestModal() {
               })
                // Verzenden Push Subscription naar de server (step 7)
               .then(pushSubscription => {
+                console.log("THIS IS MY PUSH SUBS>", pushSubscription)
                   return fetch(`${FRONTEND_ROOT_URL}api/subscribe`, {
                       method: 'POST',
                       headers: {
