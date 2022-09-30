@@ -161,7 +161,6 @@ function NotificationRequestModal() {
         
         
       } else {
-        setLoading(false)
         setCurrentState('denied')
         setNotificationBlocked(true);
 
@@ -179,6 +178,7 @@ function NotificationRequestModal() {
               })
               .then(subscription => {
                   if (subscription === null) {
+                    alert("Subscribing")
                     console.log("Debug: Notification Key::", process.env.NEXT_PUBLIC_NOTIFICATION_KEY)
                       // Create a new Push Subscription (step 5 and 6)
                       return serviceWorkerRegistration.pushManager.subscribe({
@@ -201,19 +201,18 @@ function NotificationRequestModal() {
                   });
               })
               .then(response => {
-                setLoading(false)
                   if (response.ok) {
                       displayConfirmNotification();
                       setCurrentState('granted')
                   }
               })
-              .catch(error => {console.log(error);setLoading(false)});
+              .catch(error => {console.log(error)});
       }
    };
 
    configurePushSubscription();
 
-
+   setLoading(false)
   }
 
   return (
