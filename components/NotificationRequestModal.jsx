@@ -22,7 +22,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
-function Body({ notification_success }) {
+function Body({ notification_success, notification_blocked}) {
 
   const subscriptionDoneAnimationRef = useRef(null);
 
@@ -45,12 +45,13 @@ function Body({ notification_success }) {
 
   }
 
-  }, [])
+  }, [notification_success])
 
 
   return (
 
-    notification_success ? <div ref={subscriptionDoneAnimationRef} style={{ width: '150px', height: '150px' }}></div> :
+    notification_success ? <center><div ref={subscriptionDoneAnimationRef} style={{ width: '150px', height: '150px' }}></div></center> :
+    notification_blocked ? <div style={{color: 'black',  padding: '0.5rem 1.2rem', fontFamily: 'Poppins'}}><h3 style={{ color: '#D61C4E' }}>Looks like permission are blocked!</h3><ol><li style={{marginBottom: '0.8rem'}}>Check your browser settings to allow permissions</li><li style={{marginBottom: '0.8rem'}}>Settings > Site Settings > Notifications</li><li style={{marginBottom: '0.8rem'}}>Click on <b>OK, NOTIFY ME</b> button.</li></ol></div> :
     <>
     <div style={{color: 'black', padding: '0.5rem 1.2rem', fontFamily: 'Poppins'}}> 
     <h4>We’ll notify you only on when you’re on posted content, This includes</h4>
@@ -63,7 +64,7 @@ function Body({ notification_success }) {
     </ul>
     <br/>
     </div>
-    <div style={{width: '100%', borderRadius: '8px', color: 'black', fontFamily: 'Poppins', backgroundColor: '#FFD24C50', padding: '0.7rem 1rem'}}>
+    <div style={{width: '100%', color: 'black', fontFamily: 'Poppins', backgroundColor: '#FFD24C50', padding: '0.7rem 1rem'}}>
       <b style={{color: '#A48119'}}>Note: </b><span style={{fontSize: '0.9rem'}}>This app need permission in order to notify you on such events.</span>
     </div>
     </>
@@ -113,95 +114,104 @@ function Header() {
 function NotificationRequestModal() {
 
   const [open, setOpen] = useState(true);
+  const [loading, setLoading] = useState(false)
   const [currentState, setCurrentState] = useState('disable') // disable | granted | pending
+  const [notificationBlocked, setNotificationBlocked] = useState(false)
 
   const handleNotifyAction = async () => {
+    setLoading(true);
 
+        const displayConfirmNotification = () => { 
+          if ('serviceWorker' in navigator) { 
+            const options = {
+                  body: 'You successfully subscribed to our Notification service!',
+                  icon: 'icons/icon-192x192.png',
+                  image: 'icons/icon-192x192.png',
+                  dir: 'ltr',
+                  lang: 'en-US',
+                  badge: 'icons/icon-192x192.png',
+                  tag: 'confirm-notification',
+                  actions: [ 
+                      {
+                          action: 'confirm',
+                          title: 'Okay',
+                          icon: 'icons/icon-192x192.png' 
+                      }, 
+                      {
+                          action: 'cancel',
+                          title: 'Cancel',
+                          icon: 'icons/icon-192x192.png' 
+                        
+                      } 
+                  ] 
+            }; 
+            navigator.serviceWorker.ready 
+              .then(sw => Notification.permission === 'granted' && sw.showNotification('Successfully subscribed!', options));
+              setNotificationBlocked(false);
+          }
+    }; 
     Notification.requestPermission(result => { 
       if (result === 'granted') { 
 
         // Need Spade 96x96 + Badge Logo
-
-        const displayConfirmNotification = () => { 
-          if ('serviceWorker' in navigator) { 
-             const options = {
-                   body: 'You successfully subscribed to our Notification service!',
-                   icon: 'icons/icon-192x192.png',
-                   image: 'icons/icon-192x192.png',
-                   dir: 'ltr',
-                   lang: 'en-US',
-                   badge: 'icons/icon-192x192.png',
-                   tag: 'confirm-notification',
-                   actions: [ 
-                      {
-                           action: 'confirm',
-                           title: 'Okay',
-                           icon: 'icons/icon-192x192.png' 
-                       }, 
-                       {
-                           action: 'cancel',
-                           title: 'Cancel',
-                           icon: 'icons/icon-192x192.png' 
-                         
-                       } 
-                   ] 
-            }; 
-            navigator.serviceWorker.ready 
-              .then(sw => sw.showNotification('Successfully subscribed!', options));
-          } 
-     }; 
+        
+        displayConfirmNotification();
 
         // Do Those stuff with servise worker
-        const configurePushSubscription = () => {
-          if ('serviceWorker' in navigator && "PushManager" in window) {
-              let serviceWorkerRegistration;
-               // Service worker registratie (step 4)
-              navigator.serviceWorker.ready
-                  .then(registration => {
-                      serviceWorkerRegistration = registration;
-                      return registration.pushManager.getSubscription();
-                  })
-                  .then(subscription => {
-                      if (subscription === null) {
-                        console.log("Debug: Notification Key::", process.env.NEXT_PUBLIC_NOTIFICATION_KEY)
-                          // Create a new Push Subscription (step 5 and 6)
-                          return serviceWorkerRegistration.pushManager.subscribe({
-                              userVisibleOnly: true,
-                              applicationServerKey: urlBase64ToUint8Array(
-                                   process.env.NEXT_PUBLIC_NOTIFICATION_KEY
-                              )
-                          });
-                      }
-                  })
-                   // Verzenden Push Subscription naar de server (step 7)
-                  .then(pushSubscription => {
-                      return fetch(`${FRONTEND_ROOT_URL}api/subscribe`, {
-                          method: 'POST',
-                          headers: {
-                              'Content-Type': 'application/json',
-                              'Accept': 'application/json'
-                          },
-                          body: JSON.stringify(pushSubscription)
-                      });
-                  })
-                  .then(response => {
-                      if (response.ok) {
-                          displayConfirmNotification();
-                          setCurrentState('granted')
-                      }
-                  })
-                  .catch(error => console.log(error));
-          }
-       };
-
-       configurePushSubscription();
-
-
-      } else if(result === 'denied'){
+        
+        
+      } else {
+        setLoading(false)
         setCurrentState('denied')
+        setNotificationBlocked(true);
+
       }
-    
+      
     })
+    const configurePushSubscription = () => {
+      if ('serviceWorker' in navigator && "PushManager" in window) {
+          let serviceWorkerRegistration;
+           // Service worker registratie (step 4)
+          navigator.serviceWorker.ready
+              .then(registration => {
+                  serviceWorkerRegistration = registration;
+                  return registration.pushManager.getSubscription();
+              })
+              .then(subscription => {
+                  if (subscription === null) {
+                    console.log("Debug: Notification Key::", process.env.NEXT_PUBLIC_NOTIFICATION_KEY)
+                      // Create a new Push Subscription (step 5 and 6)
+                      return serviceWorkerRegistration.pushManager.subscribe({
+                          userVisibleOnly: true,
+                          applicationServerKey: urlBase64ToUint8Array(
+                               process.env.NEXT_PUBLIC_NOTIFICATION_KEY
+                          )
+                      });
+                  }
+              })
+               // Verzenden Push Subscription naar de server (step 7)
+              .then(pushSubscription => {
+                  return fetch(`${FRONTEND_ROOT_URL}api/subscribe`, {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'Accept': 'application/json'
+                      },
+                      body: JSON.stringify(pushSubscription)
+                  });
+              })
+              .then(response => {
+                setLoading(false)
+                  if (response.ok) {
+                      displayConfirmNotification();
+                      setCurrentState('granted')
+                  }
+              })
+              .catch(error => {console.log(error);setLoading(false)});
+      }
+   };
+
+   configurePushSubscription();
 
 
   }
@@ -222,17 +232,17 @@ function NotificationRequestModal() {
 
         <Header/>
 
-        <Body notification_success={currentState === 'granted'} />
+        <Body notification_success={currentState === 'granted'} notification_blocked={notificationBlocked} />
 
         <br/>
 
-        { (currentState === 'disable' || currentState === 'pending') && <div style={{ display: 'flex', backgroundColor: '#3B44F6', padding: '0.8rem', borderRadius: '0 0 10px 10px',alignItems: 'center', justifyContent: 'space-between' }}>
+        { (currentState !== 'granted') && <div style={{ display: 'flex', backgroundColor: '#3B44F6', padding: '0.8rem', borderRadius: '0 0 10px 10px',alignItems: 'center', justifyContent: 'space-between' }}>
 
           <Button onClick={() => {setOpen(false)}} style={{ fontFamily: 'Poppins' }} sx={{color: 'white', letterSpacing: '1px', textTransform: 'initial'}}>
             Discard
           </Button>
 
-          <LoadingButton onClick={handleNotifyAction} loading={currentState === 'pending'} color="success" variant="contained" onMouseEnter={(e) => {e.target.style.backgroundColor= 'white'}} style={{color: '#3B44F6'}} sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '0.8rem 1.8rem', color: '#3B44F6', fontFamily: 'Poppins', fontWeight: 'bold' }}>
+          <LoadingButton onClick={handleNotifyAction} loading={loading} color="success" variant="contained" onMouseEnter={(e) => {e.target.style.backgroundColor= 'white'}} style={{color: '#3B44F6'}} sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '0.8rem 1.8rem', color: '#3B44F6', fontFamily: 'Poppins', fontWeight: 'bold' }}>
             ok, notify me
           </LoadingButton>
 

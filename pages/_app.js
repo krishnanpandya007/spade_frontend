@@ -115,39 +115,7 @@ export default function MyApp(props) {
 
     }
 
-    try{
-      const displayConfirmNotification = () => { 
-        if ('serviceWorker' in navigator) { 
-           const options = {
-                 body: 'You successfully subscribed to our Notification service!',
-                 icon: 'icons/icon-192x192.png',
-                 image: 'icons/icon-192x192.png',
-                 dir: 'ltr',
-                 lang: 'en-US',
-                 badge: 'icons/icon-192x192.png',
-                 tag: 'confirm-notification',
-                 actions: [ 
-                    {
-                         action: 'confirm',
-                         title: 'Okay',
-                         icon: 'icons/icon-192x192.png' 
-                     }, 
-                     {
-                         action: 'cancel',
-                         title: 'Cancel',
-                         icon: 'icons/icon-192x192.png' 
-                       
-                     } 
-                 ] 
-          }; 
-          navigator.serviceWorker.ready 
-            .then(sw => sw.showNotification('Successfully subscribed!', options));
-        } 
-   }; 
-   displayConfirmNotification();
-    } catch (e) {
-      console.log("Er:", e)
-    }
+   
 
     if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches || true){
       console.log("true")
@@ -172,29 +140,6 @@ export default function MyApp(props) {
         console.log("true")
 
       }
-
-      // if(Notification.permission === 'granted'){
-      //   alert("Youre already subsscribed")
-
-
-
-      // } else {
-
-        // Notification.requestPermission(result => { 
-        //   if (result === 'granted') { 
-        //     alert("Youre Now subsscribed")
-        //     notificationModalRef.current = require('../components/NotificationRequestModal').default
-        //     console.log("Here:::::", notificationModalRef.current)
-        //     setNotificationModalLoaded(true)
-        //       //displayConfirmNotification();
-        //       // configurePushSubscription();
-        //   } else if(result === 'denied'){
-        //     alert("Denied")
-        //   }
-        
-        // })
-
-      // }
 
     }
 
