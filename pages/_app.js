@@ -117,7 +117,7 @@ export default function MyApp(props) {
 
    
 
-    if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches || true){
+    if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
       let first_load = localStorage.getItem('first_load')
       
       if(first_load === null || true){

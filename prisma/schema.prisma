@@ -10,6 +10,7 @@ datasource db {
 model PushSubscription {
 
     id             Int @id @default(autoincrement())
+    username       String 
     endpoint       String @unique
     expirationTime String?
     p256dh         String?

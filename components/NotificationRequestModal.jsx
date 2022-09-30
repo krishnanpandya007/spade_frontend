@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Lottie from 'lottie-web'
 import {LoadingButton} from '@mui/lab'
 import { FRONTEND_ROOT_URL } from "../config/index"
-
+import authContext from "../components/basic/contexts/layout_auth_context"
 // Web-Push
 // Public base64 to Uint
 function urlBase64ToUint8Array(base64String) {
@@ -117,8 +117,15 @@ function NotificationRequestModal() {
   const [loading, setLoading] = useState(false)
   const [currentState, setCurrentState] = useState('disable') // disable | granted | pending
   const [notificationBlocked, setNotificationBlocked] = useState(false)
+  const auth = React.useContext(authContext)
 
   const handleNotifyAction = async () => {
+
+    if(!auth.is_authenticated){
+      localStorage.removeItem('first_load')
+      return;
+    }
+
     setLoading(true);
 
         const displayConfirmNotification = () => { 
@@ -191,6 +198,7 @@ function NotificationRequestModal() {
               })
                // Verzenden Push Subscription naar de server (step 7)
               .then(pushSubscription => {
+                pushSubscription['username'] = auth.user_data.username
                 console.log("THIS IS MY PUSH SUBS>", pushSubscription)
                   return fetch(`${FRONTEND_ROOT_URL}api/subscribe`, {
                       method: 'POST',
@@ -220,7 +228,7 @@ function NotificationRequestModal() {
     // Header ( STATIC )
     // Body ( DYNAMIC )
     // FOOTER ( STATIC )
-
+    auth.is_authenticated && 
     <Modal
       open={open}
       onClose={() => { setOpen(false) }}
