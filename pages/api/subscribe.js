@@ -9,7 +9,7 @@ export default async (req, res) => {
 
     const { endpoint, expirationTime, keys } = req.body;
     const { p256dh, auth } = keys;
-
+    console.log("DEBUG_INFO::", req.body)
     const push_subscription = await prisma.pushSubscription.create({
         data: {
 
@@ -20,6 +20,8 @@ export default async (req, res) => {
 
         }
     })
+
+    console.log("RETURN::", push_subscription)
 
     res.status(200).json({})
 
