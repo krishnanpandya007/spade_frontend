@@ -12,7 +12,7 @@ model PushSubscription {
     id             Int @id @default(autoincrement())
     endpoint       String @unique
     expirationTime String?
-    p256dh         String
-    auth           String
+    p256dh         String?
+    auth           String?
 
 }

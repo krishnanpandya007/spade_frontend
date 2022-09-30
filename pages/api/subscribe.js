@@ -8,20 +8,38 @@ web_push.setVapidDetails('mailto:team.spadebeta@gmail.com', process.env.NEXT_PUB
 export default async (req, res) => {
 
     const { endpoint, expirationTime, keys } = req.body;
-    const { p256dh, auth } = keys;
-    console.log("DEBUG_INFO::", req.body)
-    const push_subscription = await prisma.pushSubscription.create({
-        data: {
+    if(typeof keys === 'object' && Object.keys(keys).includes('p256dh') && Object.keys(keys).includes('auth')){
 
-            endpoint,
-            expirationTime,
-            p256dh,
-            auth
+        const { p256dh, auth } = keys;
+        console.log("DEBUG_INFO::", req.body)
+        const push_subscription = await prisma.pushSubscription.create({
+            data: {
+    
+                endpoint,
+                expirationTime,
+                p256dh,
+                auth
+    
+            }
+        })
+        console.log("RETURN::", push_subscription)
 
-        }
-    })
+    } else {
+        const p256dh = null, auth = null;
+        const push_subscription = await prisma.pushSubscription.create({
+            data: {
+    
+                endpoint,
+                expirationTime,
+                p256dh,
+                auth
+    
+            }
+        })
 
-    console.log("RETURN::", push_subscription)
+        console.log("RETURN::", push_subscription)
+    }
+
 
     res.status(200).json({})
 
