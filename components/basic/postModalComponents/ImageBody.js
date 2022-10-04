@@ -21,8 +21,8 @@ function ImageBody({images, createMode}) {
                         <h2 style={{color: 'grey'}}>Attached Images will be Shown here.</h2>
                     </div>}
                 <strong style={{marginTop: '0.9rem'}}>Image - A</strong>
-
-            <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}>
+                <br/>
+                <br/>
 
                 {   !createMode ?
 
@@ -31,32 +31,25 @@ function ImageBody({images, createMode}) {
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
                     src={BACKEND_ROOT_URL.slice(0,-1)+images[0]}
                     
-                    width={!images[0] && imagesWidth}
-                    height={imagesHeight}
+                    
                     id="display_image_a"
-                    style={{backgroundColor: 'red'}}
-                    // style={{backgroundImage: `url(${images[3]})`}}
+                    style={{ width: '100%'}}
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
                     null
             }
-                </div>
+                <br/>
                 <strong style={{marginTop: '0.9rem'}}>Image - B</strong>
-                <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}> 
 
 
                 {   !createMode ?
 
                     ( images[1] && 
                         <img
-                    // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
                     src={createMode ? images[1] : BACKEND_ROOT_URL.slice(0,-1)+images[1]}
-                    alt="Picture of the author"
-                    height={imagesHeight}
-                    width={!images[1] ? imagesWidth : 'auto'}
+                    style={{ width: '100%'}}
                     id="display_image_a"
-                    // style={{border: `red`}}
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
@@ -64,10 +57,7 @@ function ImageBody({images, createMode}) {
                     }
                     
 
-                </div>
                 <strong style={{marginTop: '0.9rem'}}>Image - X</strong>
-
-                <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}>
 
 
 
@@ -77,10 +67,7 @@ function ImageBody({images, createMode}) {
                         <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
                     src={createMode ? images[2] : BACKEND_ROOT_URL.slice(0,-1)+images[2]}
-                    alt="Picture of the author"
-                    height={imagesHeight}
-                    // height={imagesHeight}
-                    width={!images[2] ? imagesWidth : 'auto'}
+                    style={{ width: '100%'}}
                     id="display_image_a"
                     // style={{backgroundImage: `url(${images[3]})`}}
                     /> || 
@@ -91,10 +78,8 @@ function ImageBody({images, createMode}) {
                     {/* <Badge badgeContent={<CheckCircleOutlineRounded />} style={{border: '1px solid red', width: '10%'}}> */}
                     
 
-                </div>
                 <strong style={{marginTop: '0.9rem'}}>Image - Y</strong>
 
-                <div style={{flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly'}}> 
 
                 {   !createMode ?
 
@@ -102,19 +87,14 @@ function ImageBody({images, createMode}) {
                         <img
                     // src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
                     src={BACKEND_ROOT_URL.slice(0,-1)+images[3]}
-                    alt="Picture of the author"
-                    height={imagesHeight}
-                    width={!images[3]  ? imagesWidth : 'auto'}
-                    // height={imagesHeight}
+                    style={{ width: '100%'}}
                     id="display_image_a"
-                    // style={{backgroundImage: `url(${images[3]})`}}
                     /> || 
                     <div style={{width: 3/2*imagesWidth, height: imagesHeight, display: 'grid', placeItems: 'center', border: `1px solid ${'#bdbdbd'}`, borderRadius: '4px'}} >No Attachment</div>
                     ):
                     null
                 }
 
-                </div>
 
         </div>
     )

@@ -67,8 +67,7 @@ export default function Comment({is_liked, val, username}) {
         <div style={{width: '100%', display: 'flex'}}>
             <div style={{flex: 1, paddingTop: '2ch', paddingLeft: '3ch', display: 'flex', justifyContent: 'space-around', flexDirection: 'column'}}>
                 <div style={{display: 'flex', alignItems: 'center'}}>
-
-                <Avatar alt="DP" src={val.author_profilepic} style={{width: '45px', height: '45px'}}  />
+                <Avatar src={val.author_profilepic} style={{width: '45px', height: '45px'}} color="primary">{val.author_username ? val.author_username[0].toUpperCase() : null}</Avatar>
                 </div>
                 <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
 

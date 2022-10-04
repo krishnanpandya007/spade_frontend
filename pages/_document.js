@@ -11,7 +11,6 @@ export default class MyDocument extends Document {
 
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="bugs_bg.png"></link>
-          <meta name="google-site-verification" content="t0Y--5l9RzZVs74rmWXrYJym6ie2-OuwT-b4oIt5JFw" />
           <meta name="theme-color" content="#fff" />
 
           <link rel="shortcut icon" href="/spade_icon.ico" />
