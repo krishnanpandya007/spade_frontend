@@ -46,7 +46,7 @@ function FeedAbout({username, tags, created_on, profile_pic, first_name, last_na
                         :
                         <Chip label="No tags included" color="default" variant='outlined' sx={{margin: '0px', transform: 'scale(0.8)', borderRadius: '8px'}} />)}
 
-            <h5 style={{ position: 'absolute', left: '0', bottom :'0', padding: '0.5rem', color: 'rgba(0, 0, 0, 0.45)', fontWeight: '400', margin: '0', backgroundColor: 'white', borderRadius: '5px' }}>{created_on}</h5>
+            <h5 style={{ position: 'absolute', left: '0', bottom :'0', padding: '0.5rem', backgroundColor: 'transparent', fontWeight: '400', margin: '0', backgroundColor: 'transparent', borderRadius: '5px' }}>{created_on}</h5>
 
             
         </React.Fragment>

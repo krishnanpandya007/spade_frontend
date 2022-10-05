@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 
 // import ModalUnstyled from '@mui/base/ModalUnstyled';
 // import { Box, styled } from '@material-ui/system';
-import { styled, Box } from '@mui/system';
+import { styled, Box, useTheme } from '@mui/system';
 import {Chip, Fade, IconButton, Modal, Slide, Snackbar, Tooltip} from '@mui/material';
 // import { ModalUnstyled } from '@material-ui/unstyled';
 // import avatar_pic from './avatar_1.jpg'
@@ -64,10 +64,9 @@ const StyledCommentInput = emotion_styled.input`
 
     outline: none;
     border: none;
-    box-shadow: 0px 0px 0px 1px ${defaultBorderColor};
+    
     border-radius: 5px;
     font-size: 0.93rem;
-    // height: 85%;
     padding: 0.9rem 0.7rem;
     transition: 0.25s ease-in-out;
     width: 25ch;
@@ -79,7 +78,6 @@ const StyledCommentInput = emotion_styled.input`
     }
 
 `
-
 
 
 function SlideTransition(props) {
@@ -95,7 +93,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
 
     const [isLiked, setIsLiked] = React.useState(is_liked)
     const [isDisliked, setIsDisliked] = React.useState(is_disliked)
-
+    const theme = useTheme();
     
     const[doBookmark, setDoBookmark] = React.useState(false)
 
@@ -502,7 +500,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
 
             <h2 style={{margin: '0', fontFamily: 'Roboto', fontWeight: 'bold', color: blue[500]}}>{title}</h2>
             
-            <div style={{ fontWeight: '400', color: grey[800], lineHeight: '1.4rem', fontFamily: 'Roboto', fontSize: '0.9rem', overflow: 'hidden', maxHeight: '70%'}} dangerouslySetInnerHTML={{__html: (descr.length > 800 ? descr.substring(0,800): descr)}}/>
+            <div style={{ fontWeight: '400', opacity: '0.9', paddingTop: '1rem', lineHeight: '1.4rem', fontFamily: 'Roboto', fontSize: '0.9rem', overflow: 'hidden', maxHeight: '70%'}} dangerouslySetInnerHTML={{__html: (descr.length > 800 ? descr.substring(0,800): descr)}}/>
             <Chip
             
                 icon={<InsertPhotoRounded />}
@@ -522,7 +520,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
                     <div style={{display: 'grid', placeItems: 'center'}}>
                         {/* Like */}
                         <IconButton onClick={() => {HandleLike();clearTimOUT(initial);}}>
-                            <ThumbUpAltOutlined color={isLiked ? 'primary' : 'default'} />
+                            <ThumbUpAltOutlined color={isLiked ? 'primary' : 'default'} sx={{color: theme.palette.mode === 'dark' && !isLiked ? '#A4B1B8' : ''}} />
                         </IconButton>
                         <p style={{margin: '0', color: grey[600]}}>{likesCount}</p>
                     </div>
@@ -530,19 +528,19 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
                         {/* Like */}
                         <IconButton onClick={() => {HandleDislike();clearTimOUT(initial);}}>
 
-                            <ThumbDownAltOutlined color={isDisliked ? "error": 'default'}/>
+                            <ThumbDownAltOutlined color={isDisliked ? "error": 'default'} sx={{color: theme.palette.mode === 'dark' && !isDisliked ? '#A4B1B8' : ''}}/>
                         </IconButton>
                         <p style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
                     </div>
                     <IconButton onClick={sharePost}>
 
-                        <ShareOutlined />
+                        <ShareOutlined sx={{color: theme.palette.mode === 'dark'  ? '#A4B1B8' : ''}} />
                     </IconButton>
                 </div>
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
-                    <StyledCommentInput placeholder="Quick Comment..." onChange={handleCommentInputChange} />
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', opacity: '0.9'}}>
+                    <StyledCommentInput style={{ backgroundColor: theme.palette.mode === 'dark' ? '#1D3C4F' : 'white', color: theme.palette.mode === 'dark' ? 'white' : 'black' }} placeholder="Quick Comment..." onChange={handleCommentInputChange} />
                     <IconButton style={{height: '100%', aspectRatio: '1', borderRadius: '5px'}} onClick={handleCommentSubmit}>
-                        <Send />
+                        <Send sx={{color: blue[300]}} />
                     </IconButton>
                 </div>
             </div>
