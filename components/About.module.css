@@ -11,21 +11,29 @@
     font-family: Poppins;
     font-weight: 400;
     margin: 2rem 8rem 1rem 10rem;
+    margin-left: min(12vw, 10rem);
+    margin-right: min(7vw, 10rem);
 }
 
 .topic_subheading {
 
-    margin-left: 10rem;
-    margin-top: 3rem;
+    /* margin-left: 10rem; */
+    margin-top: 3rem;   
+    margin-left: min(10vw, 10rem);
+    /* margin-right: min(3vw, 10rem); */
+    opacity: 0.6;
     font-size: 20px;
     font-family: Poppins;
 }
 
 .faqs{
     margin: 2rem 8rem 1rem 10rem;
+    margin-left: min(10vw, 10rem);
+    margin-right: min(3vw, 10rem);
+
     border: 1px solid #c4c4c4;
     border-radius: 5px;
-    width: 70%;
+    width: min(100%, 700px);
     padding: 1em;
     
 }
@@ -38,4 +46,10 @@
 
 .faqs > p {
     margin-left: 3%;
+}
+
+.faqs > summary:hover{
+
+    cursor: pointer;
+
 }

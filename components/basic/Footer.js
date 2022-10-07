@@ -29,7 +29,6 @@ function Footer({username}) {
                     <div className={styles.catagory_section} >
                         {/* Quick Links */}
                         <h2>Quick Links</h2>
-                        <br/>
                         <ul>
                             <li> <Link href="/"><a>Home</a></Link></li>
                             <li> <a href={`${DOCS_ROOT_URL}about`}>About</a></li>
@@ -47,7 +46,6 @@ function Footer({username}) {
                     <div className={styles.catagory_section} >
                         {/* Help and support */}
                         <h2>Help &amp; Support</h2>
-                        <br/>
                         <ul>
                             <li> <Link href="/help_and_support"><a>Help &amp; Support</a></Link></li>
                             {/* <li> <Link href="/"><a>Explore Tickets</a></Link></li> */}
@@ -63,7 +61,6 @@ function Footer({username}) {
                     <div className={styles.catagory_section} >
                         {/* Help and support */}
                         <h2>Contact</h2>
-                        <br/>
                         <ul>
                             <li> <Link href="/contact"><a>Contact Us</a></Link></li>
                             <EmailListItem onClick={() => {setDialogOpen(true)}}>Email</EmailListItem>
@@ -85,7 +82,6 @@ function Footer({username}) {
                     <div className={styles.catagory_section} >
                         {/* Stay Connected */}
                         <h2>Stay Connected</h2>
-                        <br/>
                         <ul>
                             <li> <Link href="https://twitter.com/spade_community"><a>Twitter</a></Link></li>
                             {/* <li> <Link href="/"><a>Facebook</a></Link></li> */}
