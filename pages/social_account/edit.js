@@ -29,6 +29,24 @@ const CustomStatusSelect = styled(Select)`
 
 `
 
+const StyledH1 = emotion_styled('h1')`
+
+  position: relative;
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 46%;
+    content: '';
+    width: min(18%, 300px);
+    height: 3px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #004CBB, #0066ff, #6198FF);
+  }
+
+`
+
 const CustomStatusIndicatorSelect = emotion_styled(Select)`
 
   &:before{
@@ -68,9 +86,6 @@ function EditParent(props){
 
 function Edit() {
 
-    const ref = useRef(null);
-    const [lottie, setLottie] = useState(null);
-
     const [submitting, setSubmitting] = useState(false);
 
     const [loadingText, setLoadingText] = useState('Retrieving Information...')
@@ -98,7 +113,7 @@ function Edit() {
           return;
         }
 
-        setUserInfo({...userInfo, username: dataj.username?.replace('NEW_', '') ?? '', email: dataj.email ?? '',status: dataj.status ?? '', status_indicator: dataj.status_indicator ?? ''});
+        setUserInfo({...userInfo, username: dataj.username?.replace(NEW_UNCOMPLETED_PROFILE_PREFFIX, '') ?? '', email: dataj.email ?? '',status: dataj.status ?? '', status_indicator: dataj.status_indicator ?? ''});
 
 
 
@@ -106,26 +121,9 @@ function Edit() {
 
     useEffect(async() => {
       await InitialInformationFetch();
-      if(!auth.is_on_mobile){
 
-        import('lottie-web').then((Lottie) => setLottie(Lottie.default));
-      }
     }, []);
   
-    useEffect(() => {
-      if (lottie && ref.current) {
-        const animation = lottie.loadAnimation({
-          container: ref.current,
-          renderer: 'svg',
-          loop: false,
-          autoplay: true,
-          // path to your animation file, place it inside public folder
-          path: '/social_account_bg.json',
-        });
-  
-        return () => animation.destroy();
-      }
-    }, [lottie]);
 
     const handleSubmit = async () => {
 
@@ -174,20 +172,19 @@ function Edit() {
             :
 
             <center style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', flexWrap :'wrap', marginTop: '7vh'}}>
-                {!auth.is_on_mobile && <div ref={ref} style={{width: '30vw'}}></div>}
                 {/* <h1 style={{ flex: '1'}}>+</h1> */}
 
-                <div style={{width: '80%'}}>
-                    <h1 style={{fontFamily: 'Roboto', fontSize: '2.5rem', fontWeight: '600'}} >Complete Profile</h1>
+                <div style={{width: auth.is_on_mobile ? '100%' : '80%', color: 'black', borderRadius: '10px', boxShadow: '0px 0px 20px 1px rgba(0, 0, 0, 0.1)', paddingBottom: '3rem', background: auth.is_on_mobile ? '' : "url('/complete_profile_bg.svg')", backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
+                    <StyledH1 style={{fontFamily: 'Roboto', fontSize: '2.5rem', fontWeight: '600'}} >Complete Profile</StyledH1>
 
                     <br />
 
-                    <TextField label="Username" variant="standard" style={{margin: '0 02rem 0', width: '30ch'}} value={userInfo.username} onChange={(e) => {setUserInfo({...userInfo,username:e.target.value})}}/>
+                    <TextField label="Username" variant="standard" style={{input: { color: 'black' },margin: '2rem', width: '30ch', color: 'black'}} value={userInfo.username} onChange={(e) => {setUserInfo({...userInfo,username:e.target.value})}}/>
                     {/* <TextField label="Status" variant="standard" style={{margin: '2rem 15ch'}} value={userInfo.status} onChange={(e) => {setUserInfo({...userInfo,status:e.target.value})}}/> */}
-                    <TextField label="Working Email" variant="standard" style={{margin: auth.is_on_mobile ? '1rem 0':'2rem 0 8ch', width: '30ch'}} value={userInfo.email} onChange={(e) => {setUserInfo({...userInfo,email:e.target.value})}} type="email"/>
-                    <br />
+                    <TextField label="Working Email" variant="standard" style={{input: { color: 'black' },margin: auth.is_on_mobile ? '1rem 0':'2rem', width: '30ch', color: 'black'}} value={userInfo.email} onChange={(e) => {setUserInfo({...userInfo,email:e.target.value})}} type="email"/>
+                    <br/>
                     <CustomStatusSelect
-                    style={{margin: auth.is_on_mobile ? '1rem 0':'0rem 0 0 8ch', width: '30ch', textAlign:'left'}}
+                    style={{input: { color: 'black' },margin: auth.is_on_mobile ? '1rem 0':'2rem', marginTop: auth.is_on_mobile ? 'calc(1.3rem + 2rem)' : '2rem', width: '30ch', color: 'black', textAlign:'left'}}
                       variant="standard"
                       // labelId="demo-simple-select-label"
                       // id="demo-simple-select"
@@ -203,7 +200,7 @@ function Edit() {
 
                     </CustomStatusSelect>
                     <CustomStatusIndicatorSelect
-                    style={{margin: auth.is_on_mobile ? '1rem 0':'1rem 0 1rem 8ch', width: '30ch', textAlign:'left'}}
+                    style={{input: { color: 'black' },margin: auth.is_on_mobile ? '1rem 0':'2rem', color: 'black', marginTop: auth.is_on_mobile ? 'calc(1.3rem + 2rem)' : '2rem', width: '30ch', textAlign:'left'}}
                       variant="standard"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select-si"
@@ -220,11 +217,11 @@ function Edit() {
                     </CustomStatusIndicatorSelect>
                     <br />
 
-                    <TextField label="Password" variant="standard" style={{margin: '0.5rem 0', width: '30ch'}} value={userInfo.password} onChange={(e) => {setUserInfo({...userInfo,password:e.target.value})}} type="password"/>
+                    <TextField label="Password" variant="standard" sx={{input: { color: 'black' },margin: '2rem', width: '30ch', color: 'black'}} value={userInfo.password} onChange={(e) => {setUserInfo({...userInfo,password:e.target.value})}} type="password"/>
                     {/* <TextField label="Status Indicator" variant="standard" style={{margin: '0.5rem 8ch', width: '30ch'}} value={userInfo.status_indicator} onChange={(e) => {setUserInfo({...userInfo,status_indicator:e.target.value})}} type="text"/> */}
                     {/* <br /> */}
 
-                    <TextField label="Password (again)" variant="standard" style={{margin: auth.is_on_mobile ? '1rem 0':'1rem 0 1rem 8ch', width: '30ch'}} value={userInfo.re_password} onChange={(e) => {setUserInfo({...userInfo,re_password:e.target.value})}} type="password"/>
+                    <TextField label="Password (again)" variant="standard" sx={{input: {color: 'black'},margin: auth.is_on_mobile ? '1rem 0':'2rem', color: 'black !important', width: '30ch'}} value={userInfo.re_password} onChange={(e) => {setUserInfo({...userInfo,re_password:e.target.value})}} type="password"/>
 
                     <br />
                     <br />

@@ -385,7 +385,7 @@ function PostModal() {
                             }
                             <div style={{display: 'flex'}}>
                                 {/* <Button variant="outlined" endIcon={<BookmarkBorderOutlined />} /> */}
-                                {!postModalContext.create_mode?
+                                {!postModalContext.create_mode && !auth.is_authenticated?
                                     <>
                                     <Button onClick={handleAddBookmark}>Add Bookmark</Button>
 

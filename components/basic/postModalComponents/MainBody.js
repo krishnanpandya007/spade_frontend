@@ -1,6 +1,6 @@
 function MainBody({descr}) {
     return (
-        <div dangerouslySetInnerHTML={{__html: descr}}>
+        <div style={{fontFamily: 'Poppins'}} dangerouslySetInnerHTML={{__html: descr}}>
             
         </div>
     )

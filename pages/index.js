@@ -179,7 +179,7 @@ export async function getServerSideProps(context) {
     
     const backend_data = await get_posts_by_catagory('trending');
     
-    context.res.setHeader('Cache-Control', 'private, maxage=130000, stale-while-revalidate, must-revalidate')
+    // context.res.setHeader('Cache-Control', 'private, maxage=130000, stale-while-revalidate, must-revalidate')
  
     // Cache to client side as well
 

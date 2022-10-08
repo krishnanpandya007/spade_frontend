@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Head from 'next/head';
 import AuthenticateUser from './authenticate_user';
 import { useRouter } from 'next/router';
@@ -14,6 +14,8 @@ import PostModalContext from './contexts/post_modal_context';
 import { handle_action_post } from './handle_action';
 import MHeader from '../../mobile_components/Header';
 import TodayOverview from './TodayOverview';
+import SnackbarContext from './contexts/snackbar_context';
+import { FRONTEND_ROOT_URL } from '../../config';
 
 // import getUserInfo from './get_user_info';
 
@@ -26,6 +28,8 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
   const [drawer, setDrawer] = React.useState({ open_drawer: false, drawer_title: "Let&apos;s Connect !" })
 
   const [userData, setUserData] = React.useState(userInfo ?? { username: null, profile_pic: null, first_name: null, last_name: null });
+
+  const snackbar = useContext(SnackbarContext)
 
   // if(includesFilters){
 
@@ -228,8 +232,14 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
         handleResize();
 
         window.addEventListener('resize', handleResize);
+        if (isAuthenticated && userInfo?.authentication_error){
+          // alert("Opening")
+          snackbar.open('simple', "Complete Your profile, Get truely authorized!", true, () => {window.location.href = `${FRONTEND_ROOT_URL}social_account/edit`},"Let's Go")
+  
+        }
         return () => window.removeEventListener('resize', handleResize);
       }
+
 
 
     }, [])

@@ -303,12 +303,12 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
 
                 }
 
-<div style={{position: 'absolute',overflow: 'hidden', zIndex: '1', backgroundColor: 'white', bottom: '0', left: '0', width: '100%',transform: 'translateY(100%)', borderRadius: '5px', boxShadow: '0px 0px 3px 2px  '+blue[400], display: searchQuery !== "" ? '' : 'none'}}>
+<div style={{position: 'absolute',overflow: 'hidden', zIndex: '1', backgroundColor: theme.palette.background.default, bottom: '0', left: '0', width: '100%',transform: 'translateY(100%)', borderRadius: '5px', boxShadow: '0px 0px 3px 2px  '+blue[400], display: searchQuery !== "" ? '' : 'none'}}>
                             {/* <> */}
                             {searchMode !== 'post' ? <h5 style={{paddingLeft: '5%', color: grey[700], fontWeight: '900', fontSize: '0.85rem', textTransform: 'capitalize'}}>{searchMode + 's'}</h5> : null}
                         {
                           
-                            !loading?
+                            !(loading && searchQuery.length>0) ?
                             (
 
                               searchQuery === ""?
