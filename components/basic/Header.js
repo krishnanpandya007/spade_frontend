@@ -4,12 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 import styles from './Header.module.css'
 
-import { memo, useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import HeaderAppMenuLogged from './HeaderAppMenuLogged';
 
-import { blue, green, grey, purple } from '@mui/material/colors';
+import { blue, grey} from '@mui/material/colors';
 import get_search_results from './postModalComponents/get_search_results';
-import {LogoutOutlined, Settings} from '@mui/icons-material';
+import {LogoutOutlined} from '@mui/icons-material';
 
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -23,6 +23,14 @@ import TemporaryDrawer from './LoginDrawer';
 import authContext from './contexts/layout_auth_context';
 import SnackbarContext from './contexts/snackbar_context';
 import ProfileMenu from '../ProfileMenu'
+
+// Create a function to slugify a string
+function slugify(string) {
+  return string.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+     
+}
 
 function AppMenuAnonymous({userInstance, isMobile}) {
 
@@ -109,9 +117,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClickSettings = (event) => {
-    setAnchorElSettings(event.currentTarget);
-  };
+
   const handleClose = () => {
     setAnchorEl(null);
     user.set_open_drawer(false)
@@ -292,7 +298,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
                         <Image src="/spade_icon.svg" width="25" height="25" />
                     </a>
                 </Link>
-                <input aria-autocomplete={false} style={(isMobile ? {width: 'max(10ch,40vw)', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover} : {width: 'auto', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover})} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
+                <input aria-autocomplete={false} style={(isMobile ? {width: 'max(10ch,40vw)', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover} : {width: 'auto', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover})} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onKeyDown={(e) => {if(e.key === 'Enter'){window.location.href = `${FRONTEND_ROOT_URL}explore/see-more/${slugify(searchQuery)}`}}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
                 {includesFilters && !isMobile ?
                     <Tooltip title="Filter">
                         <IconButton onClick={handleClick} style={{borderRadius: '2px'}}>

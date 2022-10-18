@@ -131,6 +131,7 @@ export async function get_relevant_posts_by_searchquery(search_query) {
     // console.log("*********FETCHED********")
 
     const data = await response.json();
+    console.log("DATA_RECIEVED:", data);
 
     // const post_ids = data.map((val, idx) => val.id)
 

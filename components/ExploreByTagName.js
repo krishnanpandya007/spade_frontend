@@ -6,7 +6,7 @@ import Feed from './feed/Feed'
 function ExploreByTagName({data, tagname}) {
 
   const auth = useContext(authContext);
-
+  const [_data, setData] = React.useState(data);
 
   return (
       <div>
@@ -14,7 +14,7 @@ function ExploreByTagName({data, tagname}) {
 
         {/* <Typography fontWeight="600" variant="h4" style={{marginLeft: '0', display: 'block'}}>Posts Related:  </Typography> */}
 
-        <Feed data={data} />
+        <Feed data={_data} setData={setData} />
       </div>
   )
 }

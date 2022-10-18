@@ -8,13 +8,15 @@ function ExploreExactPostView({data}) {
 
   const auth = useContext(authContext);
 
+  const [_data, setData] = React.useState(data.slice(1));
+
   return (
     <div>
         <h2 style={{marginLeft: auth.is_on_mobile ? '2rem' : '5%', fontFamily: 'Changa', fontSize: '2.3rem'}}>Search Results</h2>
         {/* Exact View */}
         <Feed data={[data[0]]} isExploreView={true} marked autoOpenMarked={true} />
 
-        <Feed data={data.slice(1)} isExploreView={true} />
+        <Feed data={_data} setData={setData} isExploreView={true} />
     </div>
   )
 }

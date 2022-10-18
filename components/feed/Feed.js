@@ -38,6 +38,8 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
     const auth = useContext(authContext)
     const snackbar = useContext(SnackbarContext)
 
+    
+
     const [shareData, setShareData] = React.useState({open: false, post_id: null})
 
     const [loadMoreCounter, setLoadMoreCounter] = React.useState(1);
@@ -50,7 +52,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
     // ? For profileView we need load_more_posts filtered by author, bookmarked, liked
     // if (!isProfileView){
         async function load_more_posts() {
-            console.log("Filter by: ", filter_by, "LOADMORECOUNTER:::", loadMoreCounter)
+            // console.log("Filter by: ", filter_by, "LOADMORECOUNTER:::", loadMoreCounter)
             
             // ? filter_by can be ["trending", "relevant", "recent", "popular"]
             if((loadMoreCounter * 5) > data.length){
@@ -60,7 +62,8 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
     
             setIsLoadMoreLoading(true);
 
-            const { response, more_posts_data } = await _load_more_posts(filter_by, loadMoreCounter);
+
+            const { response, more_posts_data } = await _load_more_posts(filter_by ?? "trending", loadMoreCounter);
     
             if (response.status !== 200){
                 setIsLoadMoreLoading(false);
@@ -192,7 +195,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
 
 
-            {(isProfileView ? data.created_posts : data).map((post, idx) => {
+            {(isProfileView && data.created_posts ? data.created_posts : data).map((post, idx) => {
                 return (
                     // <Grid key={idx} container spacing={0} sx={{position: 'relative',width: '60vw', height: '40vh', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '3px', marginBottom: '5vh'}} alignItems='center' justifyContent='center'>
                     auth.is_on_mobile ? <MFeed spadeDef={theme.palette.mode==='dark' ? theme.palette.text.secondary : null} bgColor={theme.palette.mode==='dark'?theme.palette.divider:null} autoOpenMarked={autoOpenMarked} openSignInDrawer={() => {auth.set_open_drawer(true, "Login Required!")}} snackbar_instance={snackbar} openShare = {handleShareOpen} openPostModal={() => {handlePostModalOpen(post)}} idx={idx} post={post} is_authenticated={auth.is_authenticated} username={auth.user_data?.username} />:<div key={idx} style={{width: 'clamp(1000px, 60vw, 1200px)', height: 'clamp(300px, 40vh,400px)', border: '1px solid ' + defaultBorderColor, borderRadius: '5px', marginBottom: '5vh', display: 'flex'}}>
@@ -216,7 +219,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                 )
             })}
 
-            {!marked ? (isProfileView ? data.created_posts : data).length>0?
+            {!marked ? (isProfileView && data.created_posts? data.created_posts : data).length>0?
                 <center><LoadingButton loading={isLoadMoreLoading} onClick={load_more_posts} endIcon={<ExpandMoreRounded />} variant="outlined" size="small" >Load More</LoadingButton></center>
                 :<h3 style={{color: grey[500]}}>No Posts Found!</h3>:null
             }
