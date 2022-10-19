@@ -24,7 +24,7 @@ function CreateTicket() {
       
       if (ticketCreateData.success){
         
-        alert('[SUCCESS] Ticket Created')
+        alert('[SUCCESS] Ticket Added!')
         
         // Reirect to ticket page FRONTEND_ROOT_URL/explore/ticket/:ticket_id
         router.push(`/explore/ticket/${ticketCreateData.ticket_id}`)

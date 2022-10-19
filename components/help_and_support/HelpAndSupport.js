@@ -4,6 +4,8 @@ import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from '../../config'
 import SearchResults from '../basic/SearchResults'
 import { fetch_gloabal_tickets } from './search_query_api/fetch_gloabal_tickets';
 import styles from './HelpAndSupport.module.css';
+import { CircularProgress, useTheme } from '@mui/material';
+import useDebouncedValue from '../../hooks/use-debounced-value';
 
 // Create a function to slugify a string
 function slugify(string) {
@@ -17,98 +19,81 @@ function slugify(string) {
 function HelpAndSupport() {
 
     const [results, setResults] = React.useState([])
+    
+    
+    const theme = useTheme();
+    
+    const [loading, setLoading] = React.useState(false)
+    
+    const handleSearch = async (e) => {
         
-      const [searchQuery, setSearchQuery] = React.useState('');
-    
-      const [loading, setLoading] = React.useState(false)
-    
-      const handleSearch = async (e) => {
-
-
-
         setSearchQuery(slugify(e.target.value))
+        
+    }
 
-
+    const fetch_search_query_posts = async () => {
         // Fetch Data from backend
         setLoading(true)
-
-        if (e.target.value === '') {
+        
+        if (searchQuery === '') {
             setLoading(false)
             return;
           }
-
-        const data = await fetch_gloabal_tickets(slugify(e.target.value));
-
-
+          
+          const data = await fetch_gloabal_tickets(slugify(searchQuery));
+          
         setResults(data)
-
+        
         setLoading(false)
-
-      }
-
-  return (
-    <div style={{margin: '3rem', width :'auto'}}>
-        <h1 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa'}}>
-            Select Catagory 
+    }
+    const [searchQuery, setSearchQuery] = useDebouncedValue('', fetch_search_query_posts);
+    
+    return (
+    <div style={{margin: '3vw', width :'auto'}}>
+        <h1 style={{fontWeight: 'bolder', fontSize: '2.5rem', fontFamily: 'Chivo'}}>
+            Catagory 
         </h1>
 
-        <div style={{display: 'flex', width: 'auto', overflowX: 'scroll', paddingBottom: '1rem'}}>
+        <div style={{display: 'flex', width: 'auto', overflowX: 'auto', paddingBottom: '1rem'}}>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/profile/`}>
             
-                <div style={{width: 'clamp(400px, 30rem, 600px)', borderRadius: '10px', height: '250px', flexShrink: '0', backgroundColor: '#7900FF', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: '1.5rem', marginRight: '1%', backgroundImage: "url('profile_bg.png')", backgroundPosition: '95% center', backgroundSize: '150px', backgroundRepeat: 'no-repeat'}}>
-                    <h2 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa', color: '#f4f4f4', marginTop: '0'}}>
-                        Profile
-                    </h2>
-                    <h4 style={{color: '#f6f6f6', fontSize: '0.9rem'}}>
-                        Sign-up, Log-in, Edit Profile, Password
-                        <br />
-                        Recovery, etc...
-                    </h4>
+                <div className={styles.catagory_container}>
+                    <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>Profile</h3>
+                    <p>Sign-Up, Log-in, Edit Profile, Password Recovery, etc...</p>
                 </div>
+
             </Link>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/glitch_and_bug/`}>
 
-                <div style={{width: 'clamp(400px, 30vw, 600px)', borderRadius: '10px', height: '250px', flexShrink: '0', backgroundColor: '#7900FF', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: '1.5rem', marginRight: '1%', backgroundImage: "url('bugs_bg.png')", backgroundPosition: '95% center', backgroundSize: '150px', backgroundRepeat: 'no-repeat'}}>
-                    <h2 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa', color: '#f4f4f4', marginTop: '0'}}>
-                        Glitch/Bug
-                    </h2>
-                    <h4 style={{color: '#f6f6f6', fontSize: '0.9rem'}}>
-                    Found Any irretable glitch which let <br /> you feels irritating on this site
-                    </h4>
+                <div className={styles.catagory_container}>
+                    <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>Glitch/Bug</h3>
+                    <p>Creating Post, like existing post, posting comment, etc...</p>
                 </div>
+                
             </Link>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/my_app/`}>
 
-                <div style={{width: 'clamp(400px, 30vw, 600px)', borderRadius: '10px', height: '250px', flexShrink: '0', backgroundColor: '#7900FF', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: '1.5rem', marginRight: '1%', backgroundImage: "url('myapp_bg.png')", backgroundPosition: '95% center', backgroundSize: '150px', backgroundRepeat: 'no-repeat'}}>
-                    <h2 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa', color: '#f4f4f4', marginTop: '0'}}>
-                        My App
-                    </h2>
-                    <h4 style={{color: '#f6f6f6', fontSize: '0.9rem'}}>
-                    Some problem occurs only on your or <br /> specific accounts
-                    </h4>
+                <div className={styles.catagory_container}>
+                    <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>My App</h3>
+                    <p>Some problem occurs only on your or specific accounts</p>
                 </div>
+
             </Link>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/posts/`}>
 
-                <div style={{width: 'clamp(400px, 30vw, 600px)', borderRadius: '10px', height: '250px', flexShrink: '0', backgroundColor: '#7900FF', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: '1.5rem', marginRight: '1%', backgroundImage: "url('posts_bg.png')", backgroundPosition: '95% center', backgroundSize: '150px', backgroundRepeat: 'no-repeat'}}>
-                    <h2 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa', color: '#f4f4f4', marginTop: '0'}}>
-                        Posts
-                    </h2>
-                    <h4 style={{color: '#f6f6f6', fontSize: '0.9rem'}}>
-                    Creating Post, like existing post, <br />posting comment, etc...
-                    </h4>
+                <div className={styles.catagory_container}>
+                    <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>Posts</h3>
+                    <p>Some problem occurs only on your or specific accounts</p>
                 </div>
+                
             </Link>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/other/`}>
             
-                <div style={{width: 'clamp(400px, 30vw, 600px)', borderRadius: '10px', height: '250px', flexShrink: '0', backgroundColor: '#7900FF', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: '1.5rem', marginRight: '1%', backgroundImage: "url('other_bg.png')", backgroundPosition: '95% center', backgroundSize: '150px', backgroundRepeat: 'no-repeat'}}>
-                    <h2 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa', color: '#f4f4f4', marginTop: '0'}}>
-                        Other
-                    </h2>
-                    <h4 style={{color: '#f6f6f6', fontSize: '0.9rem'}}>
-                    My Issue catagory doesn’t lies on <br /> before mentioned catagories
-                    </h4>
+                <div className={styles.catagory_container}>
+                    <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>Other</h3>
+                    <p>My Issue catagory doesn’t lies on before mentioned catagories</p>
                 </div>
+
             </Link>
 
         </div> 
@@ -118,17 +103,44 @@ function HelpAndSupport() {
         <br />
 
 
-        <h1 style={{fontWeight: 600, fontSize: '2.5rem', fontFamily: 'Changa'}}>
-            Search Tickets 
+        <h1 style={{fontWeight: 700, fontSize: '2.1rem', fontFamily: 'Chivo'}}>
+            Search Issue 
         </h1>
         
 
         {/* <div 
         style={{width: '80%', height: '4rem', display: 'flex', border: '1px solid black', justifyContent: 'space-between'}}> */}
-        <div style={{position: 'relative', width: '80%'}}>
+        <div className={styles.search_primary} style={{position: 'relative', width: 'max(350px, 50vw)'}}>
+            <div className={styles.search_secondary} style={{borderBottom: searchQuery && (theme.palette.mode === 'dark' ? '1px dashed #ffffff60' : '1px dashed #00000060'), paddingBottom:'1.5rem', marginBottom: searchQuery && '2.5rem'}}>
+                <div className={styles.input_actions_wrapper}>
 
-            <input onChange={handleSearch} type="search" placeholder="Find Issues here..." name="search_ticket" id="search_ticket" style={{width: '100%', padding: '0 1.4%', height: '4rem', outline: 'none', fontSize: '1.4rem', fontFamily: 'Changa', border: `2px solid #1C6DD0`,fontWeight: '400', borderRadius: '10px'}} />
-            <SearchResults result={results} search_query={searchQuery} parent_loading={loading} />
+                    <input onChange={handleSearch} type="search" placeholder="Find quick solution..." name="search_ticket" style={{color: theme.palette.mode === 'dark' ? 'white' : 'black'}} id="search_ticket"  />
+                    <button>Search</button>
+                </div>
+                {/* <SearchResults result={results} search_query={searchQuery} parent_loading={loading} /> */}
+            </div>
+                {   searchQuery &&(loading ? <center><h3 style={{margin: '3rem 0', opacity: '0.8'}}><CircularProgress size={15} /></h3></center> : 
+                    <div style={{margin: '0 1rem 3rem 1rem'}}>
+
+                    {
+                        results.map((soln, idx) => (
+                            <Link href={`/explore/ticket/${soln.id}`} key={idx}>
+                                <a href={`/explore/ticket/${soln.id}`}>
+                                    <div className={soln.verified_answer ? styles.accepted_answer_badge : styles.answer_badge} title={soln.verified_answer ? "Solved" : "UnSolved"}/>
+                                    <span style={{fontFamily: 'Poppins'}}>{soln.title}</span>
+                                </a>
+                            </Link>
+                        ))
+                    }
+
+                    {/* <br/>
+                    <div className={styles.answer_badge} title="UnSolved"/>
+                    <span style={{fontFamily: 'Poppins'}}>Not able to Log in to my account on different device</span>
+                    <br/>
+                    <div className={styles.answer_badge} title="UnSolved"/>
+                    <span style={{fontFamily: 'Poppins'}}>What am i not able to Log in to my account</span> */}
+                    
+                </div>)}
         </div>
 
 
@@ -136,6 +148,7 @@ function HelpAndSupport() {
 
         {/* FAQ(s) */}
         <details className={styles.faqs}>
+
             <summary>Can&apos;t access Account after signing out</summary>
             <p>Looking like you&apos;ve forgotten the password, You should use Email for password-recovery</p>
         </details>

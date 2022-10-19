@@ -1,5 +1,5 @@
 import { Avatar, CircularProgress, Divider, Tooltip, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from './TicketDetailedView.module.css'
 
 import { useRouter } from 'next/router'
@@ -8,10 +8,11 @@ import { render } from 'react-dom';
 import { BACKEND_ROOT_URL } from '../../config';
 import { verify_answer } from './search_query_api/verify_answer';
 import handle_ticket_like from './search_query_api/handle_ticket_like';
-
+import authContext from '../../components/basic/contexts/layout_auth_context'
 function TicketDetailedView({ data, userIsAuthor, isAuthenticated, userProfilePic, username}) {
 
     const [dataCopy, setDataCopy] = React.useState(data)
+    const auth = useContext(authContext)
 
     const [newAnswerValue, setNewAnswerValue] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -23,7 +24,10 @@ function TicketDetailedView({ data, userIsAuthor, isAuthenticated, userProfilePi
     }, [dataCopy])
 
     const handleLike = async () => {
-
+        if(!auth.is_authenticated) {
+            auth.set_open_drawer(true, "Login Required !")
+            return;
+        }
         console.log(dataCopy.id)
         if(dataCopy.likes.includes(username)) {
 
@@ -85,7 +89,10 @@ function TicketDetailedView({ data, userIsAuthor, isAuthenticated, userProfilePi
     const router = useRouter();
 
     const createNewAnswer = async () => {
-
+        if(!auth.is_authenticated) {
+            auth.set_open_drawer(true, "Login Required !")
+            return;
+        }
         if (newAnswerValue.length < 5) {
 
             alert("Answer need to be at least 5 characters long");

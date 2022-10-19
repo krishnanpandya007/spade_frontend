@@ -16,6 +16,7 @@ export default class MyDocument extends Document {
           <link rel="shortcut icon" href="/spade_icon.ico" />
           <meta charset="UTF-8" />
           <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet"/>
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -28,6 +29,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Changa:300,400,500,700&display=swap"
           />
+          <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@200;300;400;500;600;700;900&family=Inter:wght@200;300&family=Poppins:ital,wght@0,200;1,100&family=Roboto:ital,wght@0,100;0,300;1,100&display=swap" rel="stylesheet"/>
         </Head>
         <body>
           <Main />

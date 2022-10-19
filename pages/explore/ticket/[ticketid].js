@@ -4,9 +4,10 @@ import Header from '../../../components/basic/Header';
 import TicketDetailedView from '../../../components/help_and_support/TicketDetailedView';
 import { BACKEND_ROOT_URL } from '../../../config';
 import { validate_user } from "../../../components/authenticate_user";
+import Layout from '../../../components/basic/layout';
 
 
-function Ticket({ data, user_is_author, is_authenticated, user_profilepic, username }) {
+function Ticket({ data, user_is_author, is_authenticated, user_profilepic, username, user_info }) {
 
     const breadcrumbs = [
         <Link underline="hover" key="1" color="inherit" href="/help_and_support" onClick={() => {}}>
@@ -22,14 +23,15 @@ function Ticket({ data, user_is_author, is_authenticated, user_profilepic, usern
   return (
     <div>
         
-        <Header />
+        {/* <Header /> */}
+        <Layout title={`${data.title}`} isAuthenticated={is_authenticated} userInfo={user_info}>
 
         <Breadcrumbs   separator="›" aria-label="breadcrumb" style={{ margin: '2% 0px 4rem 3rem'}}>
             {breadcrumbs}
         </Breadcrumbs>
 
         <TicketDetailedView data={data} userIsAuthor={user_is_author} isAuthenticated={is_authenticated} userProfilePic={user_profilepic} username={username} />
-
+        </Layout>
 
     </div>
   )
@@ -58,6 +60,7 @@ export async function getServerSideProps(context) {
     const ticket_id = context.query.ticketid;
 
     // Fetching Specific ticket data from backend
+    
     const response = await fetch(`${BACKEND_ROOT_URL}help_and_support/ticket/${ticket_id}`, {
         method: 'GET',
         headers: {
@@ -67,11 +70,11 @@ export async function getServerSideProps(context) {
     
     }).catch((err) => {console.log(err)});
 
-    const data = await response.json();
+    const data = await response?.json();
 
     return {
 
-        props: { data: data, user_is_author: username === data.author_username, is_authenticated: authentication_response.is_authenticated, user_profilepic:  profile_pic, username: username} // EditMode true if author is current page user => has credits to edit
+        props: { data: data, user_is_author: username === data.author_username, is_authenticated: authentication_response.is_authenticated, user_info: authentication_response.is_authenticated ? authentication_response.user_info : null, user_profilepic:  profile_pic, username: username} // EditMode true if author is current page user => has credits to edit
 
     }
 
