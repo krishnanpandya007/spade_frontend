@@ -24,6 +24,7 @@ import useLongPress from '../../hooks/use-long-press'
 import { Box } from '@mui/system'
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share'
 import {useTheme } from '@mui/material/styles'
+import PaginatorModal from '../basic/PaginatorModal'
 const StyledIconButton = styled(IconButton)`
 
 &:after{
@@ -41,12 +42,43 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
     
 
     const [shareData, setShareData] = React.useState({open: false, post_id: null})
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const [loadMoreCounter, setLoadMoreCounter] = React.useState(1);
 
     const [isLoadMoreLoading, setIsLoadMoreLoading] = React.useState(false);
 
     const theme = useTheme()
+
+    const likes_user_fetcher = async (needed_page_no) => {
+        const response = await fetch(`${FRONTEND_ROOT_URL}api/get_paginated_data/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'post',
+                model_id: anchorEl.getAttribute('data-postid'),
+                field: anchorEl.getAttribute('data-action'),
+                needed_page: needed_page_no
+            })
+        })
+
+        const dataj = await response.json();
+
+
+        if(response.status !== 200){
+            return {error: true, has_next:false, data: []}
+        }
+
+        return {error: false, has_next: dataj.has_next, data: dataj.data}
+
+    }
+
+    const paginator_item_click_handler = (username) => {
+        window.location.href = `${FRONTEND_ROOT_URL}view_profile/${username}`
+    }
     
     // For non profileView
     // ? For profileView we need load_more_posts filtered by author, bookmarked, liked
@@ -192,8 +224,10 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                     </Box>
                 </Modal>
 
+            {
 
-
+            Boolean(anchorEl) && <PaginatorModal title={anchorEl.getAttribute('data-action')[0].toUpperCase() + anchorEl.getAttribute('data-action').slice(1)} open={Boolean(anchorEl)} action_cb={paginator_item_click_handler} fetcher={likes_user_fetcher} anchorEl={anchorEl} handleClose={() => {setAnchorEl(null)}} />
+            }
 
             {(isProfileView && data.created_posts ? data.created_posts : data).map((post, idx) => {
                 return (
@@ -213,7 +247,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                         
                         {/* <Grid item xs={8.9} sx={{ height: '100%'}}> */}
                             {/* Add isLiked and isDisliked */}
-                            <FeedContent autoOpenMarked={autoOpenMarked} profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={post.likes.includes(auth.user_data?.username)} is_disliked={post.dislikes.includes(auth.user_data?.username)} username={post.author_name} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
+                            <FeedContent setAnchorEl={setAnchorEl} autoOpenMarked={autoOpenMarked} profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={post.likes.includes(auth.user_data?.username)} is_disliked={post.dislikes.includes(auth.user_data?.username)} username={post.author_name} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
                         </div>
                     </div>
                 )

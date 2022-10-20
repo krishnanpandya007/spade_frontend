@@ -85,7 +85,7 @@ function SlideTransition(props) {
   }
 
 var initial=0;
-function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments, autoOpenMarked}) {
+function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments, autoOpenMarked}) {
 
     const [likesCount, setLikesCount] = React.useState(likes_count ?? 0);
     const postModalContext = useContext(PostModalContext)
@@ -522,7 +522,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
                         <IconButton onClick={() => {HandleLike();clearTimOUT(initial);}}>
                             <ThumbUpAltOutlined color={isLiked ? 'primary' : 'default'} sx={{color: theme.palette.mode === 'dark' && !isLiked ? '#A4B1B8' : ''}} />
                         </IconButton>
-                        <p style={{margin: '0', color: grey[600]}}>{likesCount}</p>
+                        <p data-postid={post_id} data-action={'likes'} onMouseEnter={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{likesCount}</p>
                     </div>
                     <div style={{display: 'grid', placeItems: 'center'}}>
                         {/* Like */}
@@ -530,7 +530,7 @@ function FeedContent({profile_pic,len_tags,title, descr, likes_count, is_bookmar
 
                             <ThumbDownAltOutlined color={isDisliked ? "error": 'default'} sx={{color: theme.palette.mode === 'dark' && !isDisliked ? '#A4B1B8' : ''}}/>
                         </IconButton>
-                        <p style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
+                        <p data-postid={post_id} data-action={'dislikes'} onMouseEnter={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
                     </div>
                     <IconButton onClick={sharePost}>
 
