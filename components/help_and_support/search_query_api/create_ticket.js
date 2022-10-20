@@ -1,7 +1,7 @@
 import { FRONTEND_ROOT_URL } from "../../../config";
 
 export async function create_ticket({title, descr, catagory}) {
-
+    alert("Here")
     const response = await fetch(`${FRONTEND_ROOT_URL}api/create/ticket/`, {
 
         method: 'POST',

@@ -19,8 +19,8 @@ function slugify(string) {
   }
 
 function CatagoryView({data, catagory_name}) {
-
-
+  console.log("This Data:", data)
+  
   const [results, setResults] = React.useState([])
   const [searchQuery, setSearchQuery] = React.useState('');
   const [loading, setLoading] = React.useState(false)
@@ -42,9 +42,10 @@ function CatagoryView({data, catagory_name}) {
 
     // Create United Tickets Section
 
-    const data = await fetch_catagory_search_tickets(catagory_name, slugify(e.target.value));
+    const dataj = await fetch_catagory_search_tickets(catagory_name, slugify(e.target.value));
 
-    setResults(data)
+
+    setResults(dataj)
 
     setLoading(false)
 
@@ -96,7 +97,7 @@ function CatagoryView({data, catagory_name}) {
           </a>
       </Link>
       {/* Trending Tickets related to this Catagory */}
-    { data.map((ticket, index) =>
+    { (data ?? []).map((ticket, index) =>
       (<div onClick={() => window.location.href = `${FRONTEND_ROOT_URL}explore/ticket/${ticket?.id}`} key={index} className={styles.catagory_ticket} style={{marginTop: '5%', display: 'flex', justifyContent: 'space-between', height: 'clamp(150px, 17vh, 200px)', border: '2px solid #8479E1', borderRadius: '10px', width: '93vw', padding: '0% 2% 1% 2%', marginBottom: '1rem'}}>
 
         <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', width: '80%', fontFamily: 'Changa'}}>

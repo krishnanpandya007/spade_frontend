@@ -14,8 +14,8 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#fff" />
 
           <link rel="shortcut icon" href="/spade_icon.ico" />
-          <meta charset="UTF-8" />
-          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+          <meta charSet="UTF-8" />
+          <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet"/>
           <link
             rel="stylesheet"

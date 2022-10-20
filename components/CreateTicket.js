@@ -19,6 +19,12 @@ function CreateTicket() {
 
     
     const handleCreateTicket = async () => {
+
+      if(!auth.is_authenticated){
+
+        auth.set_open_drawer(true, "Login Requied!")
+
+      }
       
       const ticketCreateData = await create_ticket(ticketData);
       
@@ -76,8 +82,8 @@ function CreateTicket() {
               >
                 <option aria-label="None" value="" />
                 <option value={"Profile"}>Profile</option>
-                <option value={"Bugs-And-Glitch"}>Bugs And Glitches</option>
-                <option value={"My-App"}>My App</option>
+                <option value={"Bugs-and-glitch"}>Bugs And Glitches</option>
+                <option value={"My-app"}>My App</option>
                 <option value={"Posts"}>Posts</option>
                 <option value={"Other"}>Other</option>
 
@@ -115,7 +121,7 @@ function CreateTicket() {
             <br />
 
             {/* <button onClick={handleCreateTicket} className={styles.submit_ticket_btn}>Submit Ticket</button> */}
-            <button onClick={() => {onlyWithAuth(handleCreateTicket, auth)}} className={styles.submit_ticket_btn}>Submit Ticket</button>
+            <button onClick={() => {handleCreateTicket()}} className={styles.submit_ticket_btn}>Submit Ticket</button>
           
         </div>
 
