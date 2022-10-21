@@ -110,7 +110,7 @@ function HelpAndSupport() {
 
         {/* <div 
         style={{width: '80%', height: '4rem', display: 'flex', border: '1px solid black', justifyContent: 'space-between'}}> */}
-        <div className={styles.search_primary} style={{position: 'relative', width: 'max(350px, 50vw)'}}>
+        <div className={styles.search_primary} style={{position: 'relative', width: 'min(93vw, 800px)'}}>
             <div className={styles.search_secondary} style={{borderBottom: searchQuery && (theme.palette.mode === 'dark' ? '1px dashed #ffffff60' : '1px dashed #00000060'), paddingBottom:'1.5rem', marginBottom: searchQuery && '2.5rem'}}>
                 <div className={styles.input_actions_wrapper}>
 

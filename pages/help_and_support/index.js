@@ -22,7 +22,7 @@ function HelpAndSupportIndex() {
     
     <>
     {/* <Header /> */}
-    <Header />
+    <StaticHeader />
     {/* <Layout title="Help & Support - Spade" content="help and support contact spade with tickets" isAuthenticated={false} > */}
       <HelpAndSupport />
 

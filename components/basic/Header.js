@@ -5,23 +5,21 @@ import React from 'react'
 import styles from './Header.module.css'
 
 import { useContext } from 'react';
-import HeaderAppMenuLogged from './HeaderAppMenuLogged';
 
 import { blue, grey} from '@mui/material/colors';
 import get_search_results from './postModalComponents/get_search_results';
-import {LogoutOutlined} from '@mui/icons-material';
+
 
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
+
 import logout from './logout';
 import { useRouter } from 'next/router';
-import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from '../../config';
+import { FRONTEND_ROOT_URL } from '../../config';
 
 import TemporaryDrawer from './LoginDrawer';
 import authContext from './contexts/layout_auth_context';
-import SnackbarContext from './contexts/snackbar_context';
 import ProfileMenu from '../ProfileMenu'
 
 // Create a function to slugify a string
@@ -235,60 +233,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
 
       </Menu>
     </React.Fragment>
-      
-    <React.Fragment>
 
-    <Menu
-        anchorEl={anchorElSettings}
-        open={openSettings}
-        onClose={handleCloseSettings}
-        onClick={handleCloseSettings}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            borderRadius: '10px',
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <MenuItem onClick={() => {user?.user_data?.username != undefined ? window.location.href = `${FRONTEND_ROOT_URL}view_profile/`+user?.user_data?.username+"/":null}}>
-          {
-            user.user_data?.profile_pic ? <Avatar src={user.user_data.profile_pic} /> : user.user_data?.first_name && user.user_data?.last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700'}} >{user?.user_data?.first_name[0]+user?.user_data?.last_name[0]}</Avatar>: <Avatar />
-            // <h1>{user.user_data.profile_pic}</h1>
-          }
-          My Profile
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={logoutUser} >
-          <LogoutOutlined />
-          &nbsp;
-
-          Logout
-        </MenuItem>
-      </Menu>
-    </React.Fragment>
     {/* otherHeaderComponents END */}
 
         <div className={styles.header_main} style={{backgroundColor: (theme.palette.mode !== 'dark') ? '#FAFAFA' : '#4D77FF20'}}>  
@@ -314,7 +259,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
                             {searchMode !== 'post' ? <h5 style={{paddingLeft: '5%', color: grey[700], fontWeight: '900', fontSize: '0.85rem', textTransform: 'capitalize'}}>{searchMode + 's'}</h5> : null}
                         {
                           
-                            !(loading && searchQuery.length>0) ?
+                            !(loading) ?
                             (
 
                               searchQuery === ""?
