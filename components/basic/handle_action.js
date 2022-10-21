@@ -63,7 +63,7 @@ export async function handle_action_create_comment(comment, username, post_id){
 
 export async function handle_action_comment(username, action, comment_id) {
 
-        const response = await fetch('api/handle_action/comment/', {
+        const response = await fetch('/api/handle_action/comment/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

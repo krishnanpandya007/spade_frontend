@@ -12,7 +12,7 @@ export default async (req, res) => {
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
 
-
+        console.log("Current Access Token::", access)
         const {
 
             comment_id,
