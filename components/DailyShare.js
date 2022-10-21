@@ -17,6 +17,7 @@ import useLongPress from '../hooks/use-long-press'
 
 import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share'
 import styled from '@emotion/styled'
+import PaginatorModal from './basic/PaginatorModal';
 
 const StyledIconButton = styled(IconButton)`
 
@@ -106,7 +107,37 @@ function DailyShare() {
     const mainContentControls = useAnimation();
     const [contentLoaded, setContentLoaded] = useState(contentDetais[`${contentDetais.mode}_content_loaded`])
     const mainLogoRef = useRef(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
+    const likes_user_fetcher = async (needed_page_no) => {
+        const response = await fetch(`${FRONTEND_ROOT_URL}api/get_paginated_data/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'daily_share',
+                model_id: anchorEl.getAttribute('data-dsid'),
+                field: anchorEl.getAttribute('data-action'),
+                needed_page: needed_page_no
+            })
+        })
+
+        const dataj = await response.json();
+
+
+        if(response.status !== 200){
+            return {error: true, has_next:false, data: []}
+        }
+
+        return {error: false, has_next: dataj.has_next, data: dataj.data}
+
+    }
+
+    const paginator_item_click_handler = (username) => {
+        window.location.href = `${FRONTEND_ROOT_URL}view_profile/${username}`
+    }
     const toggleContentMode = () => {
 
       setContentDetails(curr => {return{...curr,mode: curr.mode === 'audio' ? 'text' : 'audio'}})
@@ -305,6 +336,11 @@ function DailyShare() {
 
   return (
     <Fragment>
+
+      {
+
+      Boolean(anchorEl) && <PaginatorModal title={"Likes"} open={Boolean(anchorEl)} action_cb={paginator_item_click_handler} fetcher={likes_user_fetcher} anchorEl={anchorEl} handleClose={() => {setAnchorEl(null)}} />
+      }
       <motion.div ref={mainLogoRef} animate={controls}  style={{position: 'fixed', left: '50%', top: '50%', transform: 'scale(4)'}}>
 
         <svg width="40" height="40" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -341,7 +377,7 @@ function DailyShare() {
       {/* MAIN_CONTENT */}
 
         {/* On Initial Load/Loading */}
-        <DailyShareContext.Provider value={{...contentDetais, finish_mode: finish_mode, set_page: set_page,set_current_audio: set_current_audio,set_content: set_content, display_error: display_error, like: like, unlike: unlike, loaded: loaded}}>
+        <DailyShareContext.Provider value={{...contentDetais, finish_mode: finish_mode, set_page: set_page,set_current_audio: set_current_audio,set_content: set_content, display_error: display_error, like: like, unlike: unlike, loaded: loaded, setAnchorEl: setAnchorEl}}>
     
               { (<motion.div style={{ opacity: '0', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', paddingBottom: !contentLoaded?'60vh':'0vh' }} animate={mainContentControls}>{contentDetais.mode === 'audio' ? <AudioDailyContent /> : <TextDailyContent />}</motion.div> )}
 
@@ -758,7 +794,7 @@ function formatTime(seconds){
 
 function AudioPost({ data }) {
   
-  const { like, unlike, current_audio_id, set_current_audio } = useContext(DailyShareContext);
+  const { like, unlike, current_audio_id, set_current_audio, setAnchorEl } = useContext(DailyShareContext);
   const snackbar = useContext(SnackbarContext)
   const [showMoreOptions, setShowMoreOptions] = React.useState(false)
   const audioRef = useRef(null);
@@ -1035,8 +1071,8 @@ function AudioPost({ data }) {
           <IconButton onClick={isPlaying ? pauseAudio : playAudio}>
           {
             !isPlaying?
-              <PlayArrow />:
-              <Pause />
+              <PlayArrow sx={{color: '#686F65'}} />:
+              <Pause sx={{color: '#686F65'}} />
           }
           </IconButton>
 
@@ -1073,7 +1109,7 @@ function AudioPost({ data }) {
         <div className={styles.audio_actions_and_author_info}>
             
           <div style={{display: 'flex', alignItems: 'center', position: 'absolute', right: '-1.5rem',  fontFamily: 'Roboto', fontSize: '0.9rem', gap: '0.5rem'}}>
-            {data.likes.length}
+            <div data-action="likes" data-dsid={data.id} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{color: '#00000090'}}>{data.likes.length}</div>
             <div style={{backgroundColor: 'white', lineHeight: '1rem', borderRadius: '8px', border: `1px solid ${get_pallete_variant(data.colorPallete, 'primary')}`}}>
             <IconButton onClick={data.isLiked ? () => {unlike(data.id)} : () => {like(data.id)}} size="small">
               {
@@ -1327,7 +1363,7 @@ function TextPost({ data }) {
       <div className={styles.audio_actions_and_author_info}>
           
         <div style={{display: 'flex', alignItems: 'center', position: 'absolute', right: '-1.5rem',  fontFamily: 'Roboto', fontSize: '0.9rem', gap: '0.5rem'}}>
-          {data.likes.length}
+          <div data-action="likes" data-dsid={data.id} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{color: '#00000090'}}>{data.likes.length}</div>
           <div style={{backgroundColor: 'white', lineHeight: '1rem', borderRadius: '8px', border: `1px solid ${get_pallete_variant(data.colorPallete, 'primary')}`}}>
 
           <IconButton onClick={data.isLiked ? () => {unlike(data.id)} : () => {like(data.id)}} size="small">

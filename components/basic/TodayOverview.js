@@ -21,6 +21,7 @@ const TodayOverviewToggleButton = styled.button`
     border-radius: 10px;
     font-weight: 600;
     color: white;
+    z-index: 100;
 
 `
 

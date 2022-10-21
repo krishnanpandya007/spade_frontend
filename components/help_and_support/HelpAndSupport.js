@@ -50,7 +50,7 @@ function HelpAndSupport() {
     
     return (
     <div style={{margin: '3vw', width :'auto'}}>
-        <h1 style={{fontWeight: 'bolder', fontSize: '2.5rem', fontFamily: 'Chivo'}}>
+        <h1 style={{fontWeight: '900', fontSize: '1.85rem', fontFamily: 'Chivo'}}>
             Catagory 
         </h1>
 
@@ -103,7 +103,7 @@ function HelpAndSupport() {
         <br />
 
 
-        <h1 style={{fontWeight: 700, fontSize: '2.1rem', fontFamily: 'Chivo'}}>
+        <h1 style={{fontWeight: '800', fontSize: '1.7rem', fontFamily: 'Chivo'}}>
             Search Issue 
         </h1>
         
@@ -123,13 +123,15 @@ function HelpAndSupport() {
                     <div style={{margin: '0 1rem 3rem 1rem'}}>
 
                     {
-                        results.map((soln, idx) => (
+                        results.map((soln, idx) => (<>
                             <Link href={`/explore/ticket/${soln.id}`} key={idx}>
                                 <a href={`/explore/ticket/${soln.id}`}>
                                     <div className={soln.verified_answer ? styles.accepted_answer_badge : styles.answer_badge} title={soln.verified_answer ? "Solved" : "UnSolved"}/>
                                     <span style={{fontFamily: 'Poppins'}}>{soln.title}</span>
                                 </a>
                             </Link>
+                            <br/>
+                            </>
                         ))
                     }
 

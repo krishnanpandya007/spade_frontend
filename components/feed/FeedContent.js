@@ -522,7 +522,7 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
                         <IconButton onClick={() => {HandleLike();clearTimOUT(initial);}}>
                             <ThumbUpAltOutlined color={isLiked ? 'primary' : 'default'} sx={{color: theme.palette.mode === 'dark' && !isLiked ? '#A4B1B8' : ''}} />
                         </IconButton>
-                        <p data-postid={post_id} data-action={'likes'} onMouseEnter={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{likesCount}</p>
+                        <p data-postid={post_id} data-action={'likes'} onMouseEnter={(e) => {e.target.style.cursor = "pointer"}} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{likesCount}</p>
                     </div>
                     <div style={{display: 'grid', placeItems: 'center'}}>
                         {/* Like */}
@@ -530,7 +530,7 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
 
                             <ThumbDownAltOutlined color={isDisliked ? "error": 'default'} sx={{color: theme.palette.mode === 'dark' && !isDisliked ? '#A4B1B8' : ''}}/>
                         </IconButton>
-                        <p data-postid={post_id} data-action={'dislikes'} onMouseEnter={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
+                        <p data-postid={post_id} data-action={'dislikes'} onMouseEnter={(e) => {e.target.style.cursor = "pointer"}} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
                     </div>
                     <IconButton onClick={sharePost}>
 

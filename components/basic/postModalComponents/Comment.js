@@ -6,24 +6,10 @@ import { pink } from '@mui/material/colors';
 import React, { useEffect } from 'react'
 import { handle_action_comment } from '../handle_action';
 
-export default function Comment({is_liked, val, username}) {
+export default function Comment({is_liked, val, username, setAnchorEl, c_id}) {
 
     const [isLiked, setIsLiked] = React.useState(is_liked);
     const [likeCount, setLikeCount] = React.useState(val.likes.length);
-
-    
-
-    // useEffect(() => {
-
-    //     setLikeCount(val.likes.length) // reset to get valid offset
-
-        // if(isLiked){
-        //     setLikeCount(likeCount - 1);
-        // }else if(!isLiked){
-        //     setLikeCount(likeCount + 1)
-        // }
-
-    // }, [isLiked])
 
     const handlePostLike = async () => {
 
@@ -77,7 +63,7 @@ export default function Comment({is_liked, val, username}) {
                         // If username in comments.likes show favourute
                         : <FavoriteBorderOutlined /> }
                     </IconButton>
-                    {likeCount}
+                    <span data-commentid={c_id} data-action={"likes"} onClick={(e) => {setAnchorEl(e.currentTarget)}}>{likeCount}</span>
                 </div>
             </div>
             <div style={{flex: 14, paddingLeft: '3%'}}>

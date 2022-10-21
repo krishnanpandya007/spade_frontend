@@ -72,8 +72,11 @@
 .search_primary{
 
     border: 1px solid #113CFC;
-    border-radius: 50px;
-    width: max(350px, 80vw);
+    border-left: none;
+    border-right: none;
+
+    /* border-radius: 50px; */
+    width: 100%;
     padding: 1.5rem 1.5rem 0 1.5rem;
 
 }
@@ -97,7 +100,7 @@
     gap: 2rem;
 }
 .input_actions_wrapper input{
-    flex: 1.5;
+    flex: 1;
 }
 .input_actions_wrapper button{
     flex: 0.2;
