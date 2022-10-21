@@ -267,7 +267,7 @@ function TicketDetailedView({ data, userIsAuthor, isAuthenticated, userProfilePi
         {
             dataCopy?.verified_answer ? null : <>
             <br />
-                <textarea placeholder="Describe Your Answer..." value={newAnswerValue} onChange={(e) => {setNewAnswerValue(e.target.value)}} cols="110" rows="15" style={{ fontSize: '1rem',padding: '1rem',border: '2px solid #c4c4c4', borderRadius: '10px', outline: 'none', background: '#c4c4c450'}}></textarea>
+                <textarea placeholder="Describe Your Answer..." value={newAnswerValue} onChange={(e) => {setNewAnswerValue(e.target.value)}} rows="15" style={{ fontSize: '1rem',padding: '1rem',border: '2px solid #c4c4c4', borderRadius: '10px', outline: 'none', background: '#c4c4c450', width: 'min(93vw, 800px)'}}></textarea>
                 <br />
                 <br />
                 {
