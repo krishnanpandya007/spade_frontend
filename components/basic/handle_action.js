@@ -53,11 +53,11 @@ export async function handle_action_create_comment(comment, username, post_id){
 
     if (response.status !== 201){
         // Comment isnt created
-        return false;
+        return [false, -1];
 
     }
 
-    return true;
+    return [true, data.new_id];
 
 }
 

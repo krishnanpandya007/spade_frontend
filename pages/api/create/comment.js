@@ -65,7 +65,7 @@ export default async (req, res) => {
                     
                 })
 
-                return res.status(201).json({success: 'Comment Created'})
+                return res.status(201).json({success: 'Comment Created', new_id: dataj.new_comment_serializer_data?.id})
             }else{
                 return res.status(apiResponse.status).json({error: 'Can\'t Create Comment'})
             }

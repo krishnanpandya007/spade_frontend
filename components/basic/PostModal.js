@@ -57,8 +57,6 @@ function MobileModal({ enableDeLink,openDelink,postContextInstance, is_authentic
 
     const [commentText, setCommentText] = React.useState('');
 
-    console.log("HERERERERERER",postContextInstance)
-
     const theme = useTheme()
     
 
@@ -69,14 +67,14 @@ function MobileModal({ enableDeLink,openDelink,postContextInstance, is_authentic
             return;
         }
 
-            const success = await handle_action_create_comment(commentText, username, postContextInstance.post_id);
+            const [success, new_id] = await handle_action_create_comment(commentText, username, postContextInstance.post_id);
 
         if (success){
             // console.log('Comment Added SuccessFully')
             postContextInstance.set_data({
 
                 ...postContextInstance,
-                comments: [...postContextInstance.comments, {likes: [], author_username: username, descr: commentText, time_since: 'Just Now'}]
+                comments: [...postContextInstance.comments, {id: new_id, likes: [], author_username: username, descr: commentText, time_since: 'Just Now'}]
 
             })
             // comments.push({likes: [], author_username: username, descr: commentText, time_since: 'Just Now'})
@@ -170,7 +168,6 @@ function PostModal() {
     const auth = useContext(authContext)
     const snackbarContext = useContext(SnackbarContext)
     const postModalContext = useContext(PostModalContext)
-    console.log(postModalContext)
     // Friend To PostModalContext Commit
     const [currentMode, setCurrentMode] = useState('main') // Any of ['main', 'images', 'comments']
     const [modal_title, setModalTitle] = useState({main: postModalContext.title, image: "Attached Images", comment: "Comments"})
