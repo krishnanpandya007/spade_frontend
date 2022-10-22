@@ -134,22 +134,22 @@ function NotificationRequestModal() {
           if ('serviceWorker' in navigator) { 
             const options = {
                   body: 'You successfully subscribed to our Notification service!',
-                  icon: 'icons/icon-192x192.png',
-                  image: 'icons/icon-192x192.png',
+                  icon: '/icons/icon-192x192.png',
+                  image: '/icons/icon-192x192.png',
                   dir: 'ltr',
                   lang: 'en-US',
-                  badge: 'icons/icon-192x192.png',
+                  badge: '/icons/icon-192x192.png',
                   tag: 'confirm-notification',
                   actions: [ 
                       {
                           action: 'confirm',
                           title: 'Okay',
-                          icon: 'icons/icon-192x192.png' 
+                          icon: '/icons/icon-192x192.png' 
                       }, 
                       {
                           action: 'cancel',
                           title: 'Cancel',
-                          icon: 'icons/icon-192x192.png' 
+                          icon: '/icons/icon-192x192.png' 
                         
                       } 
                   ] 
