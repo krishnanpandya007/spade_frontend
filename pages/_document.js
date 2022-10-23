@@ -18,8 +18,8 @@ export default class MyDocument extends Document {
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
           <meta property="og:title" content="Level up with Hacks & Tricks" />
           <meta property="twitter:title" content="Level up with Hacks & Tricks" />
-          <meta property="og:image" content="https://www.spadebeta.in/spade_og_logo_300x300.png" />
-          <meta property="twitter:image" content="https://www.spadebeta.in/spade_og_logo_300x300.png" />
+          <meta property="og:image" content="https://www.spadebeta.in/spade_og_logo.png" />
+          <meta property="twitter:image" content="https://www.spadebeta.in/spade_og_logo.png" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet"/>
           <link
             rel="stylesheet"
