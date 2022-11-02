@@ -104,6 +104,9 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                 snackbar.open('error', "Unable to load more posts");
                 return;
             }
+
+            setData([...(!Array.isArray(data) ? data.created_posts : data), ...more_posts_data])
+
             setLoadMoreCounter(currCounter => currCounter + 1);
     
             setIsLoadMoreLoading(false);
