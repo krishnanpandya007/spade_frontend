@@ -184,6 +184,8 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
 
         const dataj = await res.json();
 
+        console.log("Recieved Hydrations:", dataj)
+
         setData(currData => currData.map((postj) => {
             let post = postj;
             for(const live_data_chuck of dataj.data){
