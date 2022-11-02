@@ -84,13 +84,14 @@ export async function validate_user(context) {
                 let expires_in = backend_data.expires_in;
 
                 // Set cookie on header
-                context.res.setHeader('Set-Cookie', [cookie.serialize(
-                        'access', new_access, {
-                            httpOnly: true,
-                            secure: false, // If in-production => true; else false // *****HARDCODED******
-                            maxAge: expires_in, // In Seconds
-                            sameSite: 'strict',
-                            path: '/'
+                context.res.setHeader('Set-Cookie', [
+                        cookie.serialize(
+                            'access', new_access, {
+                                httpOnly: true,
+                                secure: false, // If in-production => true; else false // *****HARDCODED******
+                                maxAge: expires_in, // In Seconds
+                                sameSite: 'strict',
+                                path: '/'
                             }
                         ),
                         cookie.serialize(
@@ -100,8 +101,17 @@ export async function validate_user(context) {
                                 maxAge: expires_in, // In Seconds
                                 sameSite: 'strict',
                                 path: '/'
-                                }
-                            )
+                            }
+                        ),
+                        cookie.serialize(
+                            'has_at', (new_access ? "true" : "false"), {
+                                httpOnly: false, // We want it accessable through js/frontend indication boolean value (access token exists or not)
+                                secure: false, // If in-production => true; else false // *****HARDCODED******
+                                maxAge: expires_in, // In Seconds
+                                sameSite: 'strict',
+                                path: '/'
+                            }
+                        )
                     ]
                 );
 

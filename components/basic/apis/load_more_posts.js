@@ -3,7 +3,6 @@ import { FRONTEND_ROOT_URL } from "../../../config";
 export default async function load_more_posts(filter_by, loadMoreCounter){
 
 
-    console.log("Filter by: ", filter_by, "LOADMORECOUNTER:::", loadMoreCounter)
         
     const response = await fetch(`${FRONTEND_ROOT_URL}api/load_more_posts/`, {
         method: 'POST',

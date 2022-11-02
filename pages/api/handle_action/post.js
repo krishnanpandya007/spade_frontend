@@ -30,7 +30,6 @@ export default async (req, res) => {
         })
 
 
-            console.log("BEFORE SENDING NEXT =-> DJANGO")
             const apiResponse = await fetch(`${BACKEND_ROOT_URL}apio/handle_action/post/`, {
                 method: 'POST',
                 headers: {
@@ -40,13 +39,10 @@ export default async (req, res) => {
                 },
                 body: body
             }).catch((err) => {console.log(err)})
-            console.log("AFTER")
 
             const dataj = await apiResponse.json()
 
-            console.log("AFTER AFTER")
             if (apiResponse.status === 201){
-
 
                 // Revalidate cache
                 
@@ -56,12 +52,9 @@ export default async (req, res) => {
 
                     if(cacheResponse){
 
-                        cacheResponse.map((val, idx) => {
-
-                            if (val.id === post_id) {
-
-                                let remainingTime = JSON.parse(cache.exportJson())[key_url].expire - Date.now()
-                                console.warn("Remaining time: ", remainingTime)
+                        Object(cacheResponse).keys().map((val, idx) => {
+                            //val = id of live post data
+                            if (val === post_id) {
 
                                 choice.split(" ").map((choice, idx) => {
 
@@ -69,11 +62,11 @@ export default async (req, res) => {
 
                                         if(action.split(" ")[idx] === 'add'){
                                             // Adding Like
-                                            val.likes.push(dataj.revalidate_data) // Push Likr username
+                                            cacheResponse[val].likes.push(dataj.revalidate_data) // Push Likr username
 
                                         }else {
                                             // Removing Like
-                                            val.likes = val.likes.filter((in_key) => in_key !== dataj.revalidate_data) // Push Likr username
+                                            cacheResponse[val].likes = cacheResponse[val].likes.filter((in_key) => in_key !== dataj.revalidate_data) // Push Likr username
 
                                         }
 
@@ -81,11 +74,11 @@ export default async (req, res) => {
 
                                         if(action.split(" ")[idx] === 'add'){
                                             // Adding Like
-                                            val.dislikes.push(dataj.revalidate_data) // Push Likr username
+                                            cacheResponse[val].dislikes.push(dataj.revalidate_data) // Push DisLikr username
 
                                         }else {
                                             // Removing Like
-                                            val.dislikes = val.dislikes.filter((in_key) => in_key !== dataj.revalidate_data) // Push Likr username
+                                            cacheResponse[val].dislikes = cacheResponse[val].dislikes.filter((in_key) => in_key !== dataj.revalidate_data) // Push DisLikr username
 
                                         }
 

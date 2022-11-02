@@ -7,12 +7,15 @@ import createEmotionCache from '../lib/createEmotionCache';
 import NextNProgress from "nextjs-progressbar";
 import { motion } from 'framer-motion';
 import "../styles/globals.css";
+import Header from "../components/basic/Header"
+import Footer from "../components/basic/Footer"
 import theme from '../styles/theme';
 import SnackbarContext from '../components/basic/contexts/snackbar_context';
 import { Alert, Button, Snackbar } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 import ColorModeContext from '../components/basic/contexts/color_mode_context';
+import authContext from '../components/basic/contexts/layout_auth_context';
 
 // import NotificationRequestModal from '../components/NotificationRequestModal';
 // Integrating Authentication For Next.js APK
@@ -35,14 +38,21 @@ const darkTheme = {
   }
 
 }
+function getCookie(name) { var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));     return match ? match[1] : null; }
 
 export default function MyApp(props) {
 
   const [mode, setMode] = useState('light');
-  const notificationModalRef = useRef(null);
-  const [notificationModalLoaded, setNotificationModalLoaded] = useState(false);
-  const NotificationModal = notificationModalRef.current;
+  // const notificationModalRef = useRef(null);
+  // const [notificationModalLoaded, setNotificationModalLoaded] = useState(false);
+  // const NotificationModal = notificationModalRef.current;
   // console.log(NotificationModal)
+  // const [user, setUser] = React.useState({is_authenticated: isAuthenticated});// Check authentication
+  // const [isOnMobile, setIsOnMobile] = React.useState(false);
+
+  const [drawer, setDrawer] = useState({ open_drawer: false, drawer_title: "Let&apos;s Connect !" })
+  const [auth, setAuth] = useState({is_authenticated: false, is_on_mobile: true ,user_info: { username: null, profile_pic: null, first_name: null, last_name: null }});
+  const [has_at, setHasAt] = useState(false);
 
   const colorMode = useMemo(
     () => ({
@@ -86,54 +96,142 @@ export default function MyApp(props) {
       </>
     )
   }
-  
+
+  const authenticate = () => {
+
+    setDrawer({ open_drawer: false })
+    setAuth(curr => ({...curr,is_authenticated: true}));
+  }
+
+  const de_authenticate = () => {
+
+    setDrawer({ open_drawer: false })
+    setAuth(curr => ({...curr,is_authenticated: false}));
+
+  }
+
+  const set_open_drawer = (value, title=null) => {
+
+    if (value) {
+
+      setDrawer({ open_drawer: value, drawer_title: title ??  "Let's Connect !" })
+    } else {
+      
+      setDrawer({ open_drawer: value })
+
+    }
+
+
+
+  }
+
+  const set_user_data = (username_, profile_pic_, first_name_, last_name_) => {
+
+    // console.log("Called", username_, profile_pic_, first_name_, last_name_)
+    // setUser({ is_authenticated: user.is_authenticated, user_data: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }});
+    setAuth(curr => ({ ...curr, user_info: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }}));
+  }
+
+
+    
+//? @is_on_mobile handler useEffect
   useEffect(() => {
 
+    if(typeof window !== 'undefined'){
+
+      function handleResize() {
+        if(window.innerWidth < 1200){
+
+          setAuth({...auth, is_on_mobile: true});
+
+        }else{
+
+          setAuth({...auth, is_on_mobile: false});
+        }
+      }
+
+      handleResize();
+
+      window.addEventListener('resize', handleResize);
+      // if (isAuthenticated && userInfo?.authentication_error){
+      //   // alert("Opening")
+      //   snackbar.open('simple', "Complete Your profile, Get truely authorized!", true, () => {window.location.href = `${FRONTEND_ROOT_URL}social_account/edit`},"Let's Go")
+
+      // }
+      return () => window.removeEventListener('resize', handleResize);
+    }
+
+
+
+    }, [])
+
+//? @themeMode handler useEffect
+    useEffect(() => {
+      
     if(typeof localStorage !== undefined){
-
+      
       switch(localStorage.getItem('spade-core-color-theme')){
-
+        
         case null:
           // Not defined yet
           localStorage.setItem('spade-core-color-theme', 'light');
           break;
-
+          
         case 'light':
           setMode('light');
           break;
-
+          
         case 'dark':
           setMode('dark');
           break;
-
+            
         default:
           console.info("Invalid Value for color-theme in LocalStorage, setting default to light")
           localStorage.setItem('spade-core-color-theme', 'light');
           break;
-
-      }
-
-    }
-
-   
-
-    if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
-      let first_load = localStorage.getItem('first_load')
-      
-      if(first_load === null || true){
-        if(Notification.permission === 'denied' || Notification.permission === 'default'){
-
-          notificationModalRef.current = require('../components/NotificationRequestModal').default
-          setNotificationModalLoaded(true)
-
-
+          
         }
+        
+      }
 
-        localStorage.setItem('first_load', true)
+      
+      
+  //? User can manually subscribe to notification service in settings
+    // if(navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+    //   let first_load = localStorage.getItem('first_load')
+      
+    //   if(first_load === null || true){
+    //     if(Notification.permission === 'denied' || Notification.permission === 'default'){
+
+    //       notificationModalRef.current = require('../components/NotificationRequestModal').default
+    //       setNotificationModalLoaded(true)
+
+
+    //     }
+
+    //     localStorage.setItem('first_load', true)
+
+    //   }
+
+    // }
+
+  }, [])
+
+
+  useEffect(() => {
+
+    if(typeof window !== 'undefined'){
+
+      let has_at = getCookie('has_at')
+
+      if(has_at === "true"){
+
+        setHasAt(true);
 
       }
 
     }
+
 
   }, [])
 
@@ -158,11 +256,11 @@ export default function MyApp(props) {
             scale: 1
           },
         }}>
-          {
+          {/* {
             notificationModalLoaded &&
             // <h1>Here</h1>
             <NotificationModal/>
-          }
+          } */}
           
           <SnackbarContext.Provider value={{...snackbarData, open: open, close: close, undo_action: undo_action}}>
             <Snackbar autoHideDuration={5000} anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} message={snackbarData.severity === "simple" ? snackbarData.message : null} open={snackbarData.open} onClose={close} action={snackbarData.includes_callback ? undo_action(snackbarData.callback_fn, snackbarData.action_button_title) : null} >
@@ -172,7 +270,15 @@ export default function MyApp(props) {
                 </Alert>
               }
             </Snackbar>
+          <authContext.Provider value={{is_authenticated: auth.is_authenticated, is_on_mobile: auth.is_on_mobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: auth.user_info, set_user_data: set_user_data}}>
+
+
+            <Header hasAtoken={has_at} isMobile={auth.is_on_mobile} /> {/* __useEffect() => {if(hasAtoken) load_user_profile().tillThen(show_skeleton)} */}
             <Component {...pageProps} />
+            <Footer/>
+
+
+          </authContext.Provider>
           </SnackbarContext.Provider>
         </motion.div>
       </ThemeProvider>

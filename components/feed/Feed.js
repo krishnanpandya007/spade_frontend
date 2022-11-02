@@ -33,7 +33,7 @@ const StyledIconButton = styled(IconButton)`
 
 `
 
-function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false, marked=false, is_authenticated, userInfo, autoOpenMarked}) {
+function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false, marked=false, hydrate_key="trending", autoOpenMarked}) {
 
     const postModalContext = useContext(PostModalContext)
     const auth = useContext(authContext)
@@ -81,7 +81,9 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
     }
     
     // For non profileView
-    // ? For profileView we need load_more_posts filtered by author, bookmarked, liked
+    // ? LOAD_MORE_BACKEND_ENDPOINTS
+    // ? Endpoints For profileView we need load_more_posts filtered by posted@author_name, bookmarked@author_name, liked@author_name
+    // ? Other tags: tag@tag_name, post@post_id, search@query
     // if (!isProfileView){
         async function load_more_posts() {
             // console.log("Filter by: ", filter_by, "LOADMORECOUNTER:::", loadMoreCounter)
@@ -95,15 +97,13 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
             setIsLoadMoreLoading(true);
 
 
-            const { response, more_posts_data } = await _load_more_posts(filter_by ?? "trending", loadMoreCounter);
+            const { response, more_posts_data } = await _load_more_posts(filter_by ?? hydrate_key, loadMoreCounter);
     
             if (response.status !== 200){
                 setIsLoadMoreLoading(false);
                 snackbar.open('error', "Unable to load more posts");
                 return;
             }
-    
-            setData([...data, ...more_posts_data])
             setLoadMoreCounter(currCounter => currCounter + 1);
     
             setIsLoadMoreLoading(false);
@@ -127,10 +127,10 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
             descr:post.descr,
             images: [post.image_1, post.image_2, post.image_3, post.image_4],
             comments: post.comments,
-            likes_count: post.likes.length, 
-            dislikes_count: post.dislikes.length, 
-            is_liked: post.likes.includes(authContext.user_data?.username),
-            is_disliked: post.dislikes.includes(authContext.user_data?.username),
+            likes_count: post.likes?.length ?? -1, 
+            dislikes_count: post.dislikes?.length ?? -1, 
+            is_liked: post.likes?.includes(authContext.user_data?.username) ?? false,
+            is_disliked: post.dislikes?.includes(authContext.user_data?.username) ?? false,
             is_bookmarked: false,
             len_tags: post.tags.length, // CHANGED
             create_mode: false,
@@ -165,6 +165,43 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
         }
 
     }
+
+    useEffect(async () => {
+
+        // Fetch live data to hydrate the posts fully
+        // data: {catagory/key_of_cache: `trending`}, , , response: {id1: {comments: [], likes: 3, dislikes: 6}, ...}
+
+
+
+        const res = await fetch(`${FRONTEND_ROOT_URL}api/get_live_data`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({cache_key: `posts_live_data/${hydrate_key}`})
+        })
+
+        const dataj = await res.json();
+
+        setData(currData => currData.map((postj) => {
+            let post = postj;
+            for(const live_data_chuck of dataj.data){
+                if((live_data_chuck.id === post.id) || (live_data_chuck.id === post.f__id)){
+                    post.comments = live_data_chuck.comments;
+                    post.likes = live_data_chuck.likes;
+                    post.dislikes = live_data_chuck.dislikes;
+
+                    
+                }
+            }
+            return post;
+        }))
+
+        // ? CHECK COMPLETED
+        
+
+    }, [])
 
     return (
         <Container style={!isProfileView ? (!isExploreView ? {display: 'grid', placeItems: 'center', paddingTop: '5vh'} : {paddingLeft: '5%', paddingTop: '2%', width: '100vw',  marginLeft: '0%'}): {padding: '5%', width: '100vw', marginLeft: '0'}}>
@@ -223,7 +260,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                         </div>
                     </Box>
                 </Modal>
-
+ 
             {
 
             Boolean(anchorEl) && <PaginatorModal title={anchorEl.getAttribute('data-action')[0].toUpperCase() + anchorEl.getAttribute('data-action').slice(1)} open={Boolean(anchorEl)} action_cb={paginator_item_click_handler} fetcher={likes_user_fetcher} anchorEl={anchorEl} handleClose={() => {setAnchorEl(null)}} />
@@ -236,7 +273,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                         <div style={{height: '100%', width: '25%', borderRight: '1px solid '+ defaultBorderColor, position: 'relative'}}>
                         
                         {/* <Grid item xs={3} sx={{ height: '100%'}} > */}
-                            <FeedAbout first_name={post.first_name} last_name={post.last_name} profile_pic={data.profile_pic ?? false} username={post.author_name} tags={post.tags} created_on={post.time_since} />
+                            <FeedAbout first_name={post.first_name} last_name={post.last_name} profile_pic={post.profile_pic ?? false} username={post.author_name} tags={post.tags} created_on={post.time_since} />
                         </div>
                         {
                             marked ?
@@ -247,7 +284,7 @@ function Feed({data, setData, filter_by,isProfileView=false, isExploreView=false
                         
                         {/* <Grid item xs={8.9} sx={{ height: '100%'}}> */}
                             {/* Add isLiked and isDisliked */}
-                            <FeedContent setAnchorEl={setAnchorEl} autoOpenMarked={autoOpenMarked} profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={post.likes.includes(auth.user_data?.username)} is_disliked={post.dislikes.includes(auth.user_data?.username)} username={post.author_name} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
+                            <FeedContent setAnchorEl={setAnchorEl} autoOpenMarked={autoOpenMarked} profile_pic={post.profile_pic} len_tags={post.tags.length}  comments={post.comments} is_liked={post.likes?.includes(auth.user_data?.username)} is_disliked={post.dislikes?.includes(auth.user_data?.username)} username={post.author_name} post_id={post.id} images={Array(post.image_1, post.image_2, post.image_3, post.image_4)} dislikes_count={postModalContext.post_id === post.id?postModalContext.dislikes_count:post.dislikes?.length} likes_count={post.likes && postModalContext.post_id === post.id?postModalContext.likes_count:post.likes?.length} title={post.title} descr={post.descr} />
                         </div>
                     </div>
                 )

@@ -1,21 +1,15 @@
-// import { Divider, Grid } from "@material-ui/core";
-//tada
-import { Close } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { Button, Grid, IconButton, Snackbar } from "@mui/material";
+
+import { Grid, Snackbar } from "@mui/material";
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect } from "react"
 import { useContext } from "react";
-import { get_posts_by_catagory } from "../caching";
-import { validate_user } from "../components/authenticate_user";
+import { init_catagorized_posts_livedata } from "../caching";
 import authContext from "../components/basic/contexts/layout_auth_context";
 
 import Layout from "../components/basic/layout";
-import TemporaryDrawer from "../components/basic/LoginDrawer";
-import TodayOverview from "../components/basic/TodayOverview";
 import Feed from "../components/feed/Feed";
 import HomeInfo from "../components/HomeInfo";
-import { FRONTEND_ROOT_URL } from "../config";
+import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from "../config";
 import Link from 'next/link'
 
 function Home({data, is_authenticated, user_info}) {
@@ -70,9 +64,6 @@ function Home({data, is_authenticated, user_info}) {
 
         const dataj = await res.json();
 
-
-        console.log(dataj)
-
         animation_controller.start({y: [0, window.innerHeight/2,0, 0], opacity: [1, 0, 0, 1], scale: [1, 1, 1.1, 1] })
 
 
@@ -111,7 +102,6 @@ function Home({data, is_authenticated, user_info}) {
 
             <ThinWrapper animation_controller={animation_controller} currentData={currentData} filterBy={filterBy} setCurrentData={setCurrentData} is_authenticated={is_authenticated} user_info={user_info} />
              {/* <Grid item xs={4} justifyContent="center" alignItems="center">
-                    
                     <HomeInfo />
                     </Grid>
                 </Grid> */}
@@ -169,24 +159,60 @@ function ThinWrapper({animation_controller, currentData, filterBy, setCurrentDat
 
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 
+    /*
     
     
-    const response = await validate_user(context);
+    Tell backend not to send Comments and Likes,Dislikes just send content, tags, etc...
+
+    Now A cache with ${catagory} key holds some love data like comments, dislikes, likes etc...
+
+    it can be easily revalidated because its memcache so we dont force to build whole UI all the time for this chunks
     
-    console.log("HAIBABA: ", response.user_info, response.is_authenticated)
     
-    const backend_data = await get_posts_by_catagory('trending');
     
-    // context.res.setHeader('Cache-Control', 'private, maxage=130000, stale-while-revalidate, must-revalidate')
- 
-    // Cache to client side as well
+    
+    */
+    
+    
+    const response = await fetch(`${BACKEND_ROOT_URL}apio/load_posts/`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            quantity: 5,
+            catagory: "trending"
+        })
+    });
+    
+    const backend_data = await response.json();
+
+    if(response.status === 200) {
 
 
+        init_catagorized_posts_livedata("posts_live_data/trending", backend_data);
+
+        try{
+
+            backend_data.map((post) => {
+
+                delete post.comments
+                delete post.likes
+                delete post.dislikes
+
+            })
+
+        } catch {}
+
+    }
 
     return {
-        props: {data: backend_data, is_authenticated: response.is_authenticated ,user_info: response.is_authenticated ? response.user_info : null}
+
+        props: {data: backend_data},
+        revalidate: (2 * 60 * 60),        
     }
 
 

@@ -45,10 +45,11 @@ function CommentBody({comments, username}) {
 
             Boolean(anchorEl) && <PaginatorModal title={"Comment Likes"} open={Boolean(anchorEl)} action_cb={paginator_item_click_handler} fetcher={likes_user_fetcher} anchorEl={anchorEl} handleClose={() => {setAnchorEl(null)}} />
             }
-            {
+            {comments?
                 comments.map((val, index) => (
                     <Comment val={val} key={index} is_liked={val.likes.includes(username)} c_id={val.id} setAnchorEl={setAnchorEl} username={username} />
-                ))
+                )):
+                <h4 style={{fontFamily: 'Chivo', fontStyle: 'italic', color: '#b9b9b9'}}>Loading Comments...</h4>
             }
         </div>
     )

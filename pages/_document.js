@@ -10,12 +10,14 @@ export default class MyDocument extends Document {
         <Head>
 
           <link rel="manifest" href="/manifest.json" />
-          <link rel="apple-touch-icon" href="bugs_bg.png"></link>
           <meta name="theme-color" content="#fff" />
 
           <link rel="shortcut icon" href="/spade_icon.ico" />
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+          <meta property="twitter:card" content="summary" />
+          <meta property="twitter:site" content="spade_community" />
+          <meta property="twitter:description" content="Platform helps, to enhance and level up lives byb hacks & tricks" />
           <meta property="og:title" content="Level up with Hacks & Tricks" />
           <meta property="twitter:title" content="Level up with Hacks & Tricks" />
           <meta property="og:image" content="https://www.spadebeta.in/spade_og_logo.png" />

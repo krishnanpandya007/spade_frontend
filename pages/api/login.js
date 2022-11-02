@@ -38,8 +38,6 @@ export default async function login (req, res) {
     }).catch((err) => {console.log(err)});
     const apiData = await apiResponse.json();
 
-    console.log("JIRA::", apiData)
-
     if(apiResponse.status !== 200){
         // Failed
         return res.status(apiResponse.status).json({"error": "Can't authenticate your account | Invalid Credentials", "info": apiData});
@@ -62,6 +60,14 @@ export default async function login (req, res) {
                     httpOnly: true,
                     secure: process.env.NODE_ENV !== 'development',
                     maxAge: apiData.expires_in, // [VARY]
+                    sameSite: 'strict',
+                    path: '/'
+                }
+            ),cookie.serialize(
+                'has_at', apiData.access_token ? "true" : "false", {
+                    httpOnly: false,
+                    secure: false, 
+                    maxAge: apiData.expires_in, 
                     sameSite: 'strict',
                     path: '/'
                 }

@@ -136,7 +136,15 @@ export default async function auth(req, res){
               sameSite: 'strict',
               path: '/'
             }
-            )
+            ),cookie.serialize(
+              'has_at', access_token ? "true" : "false", {
+                  httpOnly: false,
+                  secure: false, 
+                  maxAge: expires_in, 
+                  sameSite: 'strict',
+                  path: '/'
+              }
+          )
           ]
           );
 

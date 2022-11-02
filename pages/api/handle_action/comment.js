@@ -12,12 +12,11 @@ export default async (req, res) => {
         const cookies = cookie.parse(req.headers.cookie ?? '');
         let access = cookies.access ?? false;
 
-        console.log("Current Access Token::", access)
         const {
 
             comment_id,
-
             action
+
         } = req.body;
 
         // console.log("Post Id: ", post_id)
@@ -25,8 +24,8 @@ export default async (req, res) => {
         const body = JSON.stringify({
 
             comment_id,
-
             action
+            
         })
 
 
@@ -52,11 +51,11 @@ export default async (req, res) => {
 
                     if(cacheResponse){
 
-                        cacheResponse.map((val, idx) => {
+                        Object(cacheResponse).keys().map((val, idx) => {
 
-                            if (val.id === dataj.parent_post_id) {
+                            if (val === dataj.parent_post_id) {
 
-                                val.comments.push(dataj.new_comment_serializer_data)
+                                cacheResponse[val].comments.push(dataj.new_comment_serializer_data)
 
                             }
 

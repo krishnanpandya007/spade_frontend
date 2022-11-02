@@ -23,7 +23,7 @@ function FeedAbout({username, tags, created_on, profile_pic, first_name, last_na
 
                     <Chip 
                         // avatar={<Avatar />} 
-                        avatar={profile_pic ? <Avatar src={'http://127.0.0.1:8000'+profile_pic} /> : first_name && last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700'}} >{first_name[0]+last_name[0]}</Avatar>: <Avatar />}
+                        avatar={profile_pic ? <Avatar src={profile_pic} /> : first_name && last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700'}} >{first_name[0]+last_name[0]}</Avatar>: <Avatar />}
 
                         label={username}
                         variant="outlined"

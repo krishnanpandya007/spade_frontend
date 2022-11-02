@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Head from 'next/head';
 import AuthenticateUser from './authenticate_user';
 import { useRouter } from 'next/router';
-import Header from './Header';
+// import Header from './Header';
 import Footer from './Footer';
 import getUserInfo, { getStaffUserInfo } from './get_user_info';
 import ErrorPage from 'next/error'
@@ -202,16 +202,7 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
     // setUser({ is_authenticated: user.is_authenticated, user_data: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }});
     setUserData({ username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ });
   }
-  // if(typeof window !== 'undefined'){
-    // const isOnMobile2 = React.useMemo(() => {
-    //   return window.innerWidth < 1200
-    // }, [window ? window.innerWidth : null])
 
-  // }
-
-  // if(window ? window.innerWidth < 1200 : false){
-  //   setIsOnMobile(true);
-  // }
 
     
 
@@ -254,7 +245,7 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
     </Head>
 
     <authContext.Provider value={{is_authenticated: user.is_authenticated, is_on_mobile: isOnMobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}>
-    <Header isMobile={isOnMobile} currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/>
+    {/* <Header isMobile={isOnMobile} currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
     {/* <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
     {/* <Divider /> */}
       {includesPostModal ? 
@@ -268,7 +259,7 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
 
       {/* { children } */}
       {includesTodayOverview && isAuthenticated ? <TodayOverview /> : null}
-      <Footer username={userData.username}/>
+      {/* <Footer username={userData.username}/> */}
     </authContext.Provider>
 
 

@@ -1,7 +1,7 @@
-import { Button, CircularProgress, IconButton, Tooltip, useTheme } from '@mui/material'
+import { Button, CircularProgress, IconButton, Skeleton, Tooltip, useTheme } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './Header.module.css'
 
 import { useContext } from 'react';
@@ -21,6 +21,7 @@ import { FRONTEND_ROOT_URL } from '../../config';
 import TemporaryDrawer from './LoginDrawer';
 import authContext from './contexts/layout_auth_context';
 import ProfileMenu from '../ProfileMenu'
+import useDebouncedValue from '../../hooks/use-debounced-value';
 
 // Create a function to slugify a string
 function slugify(string) {
@@ -68,54 +69,82 @@ function AppMenuLoggedIn({mode}){
     return (
         <React.Fragment>
             <ProfileMenu open={drawerOpen} handleClose={handleDrawerClose} handleOpen={handleDrawerOpen} />
-            <Link href="/">
-            {/* <svg style={{borderBottom: '2px solid #2329D6'}} className={styles.svg_icon} role="img" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="homeAltIconTitle" stroke="#2329D6" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="homeAltIconTitle">Home</title> <path d="M3 10.182V22h18V10.182L12 2z"/> <rect width="6" height="8" x="9" y="14"/> </svg> */}
-                <svg style={{borderBottom: mode === "home" ? '2px solid #2329D6' : ''}} strokeWidth="10" className={styles.svg_icon} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.07926 0.222253C7.31275 -0.007434 7.6873 -0.007434 7.92079 0.222253L14.6708 6.86227C14.907 7.09465 14.9101 7.47453 14.6778 7.71076C14.4454 7.947 14.0655 7.95012 13.8293 7.71773L13 6.90201V12.5C13 12.7761 12.7762 13 12.5 13H2.50002C2.22388 13 2.00002 12.7761 2.00002 12.5V6.90201L1.17079 7.71773C0.934558 7.95012 0.554672 7.947 0.32229 7.71076C0.0899079 7.47453 0.0930283 7.09465 0.32926 6.86227L7.07926 0.222253ZM7.50002 1.49163L12 5.91831V12H10V8.49999C10 8.22385 9.77617 7.99999 9.50002 7.99999H6.50002C6.22388 7.99999 6.00002 8.22385 6.00002 8.49999V12H3.00002V5.91831L7.50002 1.49163ZM7.00002 12H9.00002V8.99999H7.00002V12Z" fill={mode === "home" ? "#2329D6" : "currentColor"} fillRule="evenodd" clipRule="evenodd"></path></svg>
-            </Link>
+
             {/* <Link href="/profile/edit"> */}
             <IconButton onClick={handleDrawerOpen}>
               <Avatar src={auth?.user_data?.profile_pic} color="primary">{auth.user_data.first_name && auth.user_data.last_name ? auth.user_data.first_name[0].toUpperCase() + auth.user_data.last_name[0].toUpperCase() : auth.user_data.username?.slice(0, 2).toUpperCase()}</Avatar>
             </IconButton>
                 
-            {/* </Link>  <svg style={{borderBottom: mode === "settings" ? '2px solid #2329D6' : ''}} className={styles.svg_icon} width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.07095 0.650238C6.67391 0.650238 6.32977 0.925096 6.24198 1.31231L6.0039 2.36247C5.6249 2.47269 5.26335 2.62363 4.92436 2.81013L4.01335 2.23585C3.67748 2.02413 3.23978 2.07312 2.95903 2.35386L2.35294 2.95996C2.0722 3.2407 2.0232 3.6784 2.23493 4.01427L2.80942 4.92561C2.62307 5.2645 2.47227 5.62594 2.36216 6.00481L1.31209 6.24287C0.924883 6.33065 0.650024 6.6748 0.650024 7.07183V7.92897C0.650024 8.32601 0.924883 8.67015 1.31209 8.75794L2.36228 8.99603C2.47246 9.375 2.62335 9.73652 2.80979 10.0755L2.2354 10.9867C2.02367 11.3225 2.07267 11.7602 2.35341 12.041L2.95951 12.6471C3.24025 12.9278 3.67795 12.9768 4.01382 12.7651L4.92506 12.1907C5.26384 12.377 5.62516 12.5278 6.0039 12.6379L6.24198 13.6881C6.32977 14.0753 6.67391 14.3502 7.07095 14.3502H7.92809C8.32512 14.3502 8.66927 14.0753 8.75705 13.6881L8.99505 12.6383C9.37411 12.5282 9.73573 12.3773 10.0748 12.1909L10.986 12.7653C11.3218 12.977 11.7595 12.928 12.0403 12.6473L12.6464 12.0412C12.9271 11.7604 12.9761 11.3227 12.7644 10.9869L12.1902 10.076C12.3768 9.73688 12.5278 9.37515 12.638 8.99596L13.6879 8.75794C14.0751 8.67015 14.35 8.32601 14.35 7.92897V7.07183C14.35 6.6748 14.0751 6.33065 13.6879 6.24287L12.6381 6.00488C12.528 5.62578 12.3771 5.26414 12.1906 4.92507L12.7648 4.01407C12.9766 3.6782 12.9276 3.2405 12.6468 2.95975L12.0407 2.35366C11.76 2.07292 11.3223 2.02392 10.9864 2.23565L10.0755 2.80989C9.73622 2.62328 9.37437 2.47229 8.99505 2.36209L8.75705 1.31231C8.66927 0.925096 8.32512 0.650238 7.92809 0.650238H7.07095ZM4.92053 3.81251C5.44724 3.44339 6.05665 3.18424 6.71543 3.06839L7.07095 1.50024H7.92809L8.28355 3.06816C8.94267 3.18387 9.5524 3.44302 10.0794 3.81224L11.4397 2.9547L12.0458 3.56079L11.1882 4.92117C11.5573 5.44798 11.8164 6.0575 11.9321 6.71638L13.5 7.07183V7.92897L11.932 8.28444C11.8162 8.94342 11.557 9.55301 11.1878 10.0798L12.0453 11.4402L11.4392 12.0462L10.0787 11.1886C9.55192 11.5576 8.94241 11.8166 8.28355 11.9323L7.92809 13.5002H7.07095L6.71543 11.932C6.0569 11.8162 5.44772 11.5572 4.92116 11.1883L3.56055 12.046L2.95445 11.4399L3.81213 10.0794C3.4431 9.55266 3.18403 8.94326 3.06825 8.2845L1.50002 7.92897V7.07183L3.06818 6.71632C3.18388 6.05765 3.44283 5.44833 3.81171 4.92165L2.95398 3.561L3.56008 2.95491L4.92053 3.81251ZM9.02496 7.50008C9.02496 8.34226 8.34223 9.02499 7.50005 9.02499C6.65786 9.02499 5.97513 8.34226 5.97513 7.50008C5.97513 6.65789 6.65786 5.97516 7.50005 5.97516C8.34223 5.97516 9.02496 6.65789 9.02496 7.50008ZM9.92496 7.50008C9.92496 8.83932 8.83929 9.92499 7.50005 9.92499C6.1608 9.92499 5.07513 8.83932 5.07513 7.50008C5.07513 6.16084 6.1608 5.07516 7.50005 5.07516C8.83929 5.07516 9.92496 6.16084 9.92496 7.50008Z" fill={mode === "settings" ? "#2329D6" : "currentColor"} fillRule="evenodd" clipRule="evenodd"></path></svg> */}
-
         </React.Fragment>
     )
 
 }
 
 
-function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobile}) {
+function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobile, hasAtoken}) {
 
       
   const user = useContext(authContext)
+  const [authState, setAuthState] = React.useState(false); // false | true | 'loading'
 
   const theme = useTheme();
 
-  const [searchQuery, setSearchQuery] = React.useState('');
-
+  
   const [searchMode, setSearchMode] = React.useState('post'); // Any['post', 'profile', 'tag']
-
+  
   const [inputFocused, setInputFocused] = React.useState(false);
-
+  
   const [searchResults, setSearchResults] = React.useState([])
-
+  
   const [loading, setLoading] = React.useState(false)
-
+  
   const [openSearchResults, setOpenSearchResults] = React.useState(false);
-
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElSettings, setAnchorElSettings] = React.useState(null);
-
+  
   const open = Boolean(anchorEl);
-  const openSettings = Boolean(anchorElSettings)
-
   const router = useRouter();
+  const handleSearchQueryChange = async (e) => {
+      setSearchQuery(e.target.value);
+      
+  }
 
+  const fetchQueryPost = async () =>{
+
+    setLoading(true);
+    // try{
+      const searchData = await get_search_results(searchQuery, 6); // Want to fetch 6 posts
+    // } catch (err) {
+    //     console.log(err)
+    // }
+    // alert(searchData)
+    if (searchQuery.startsWith("profile:") && searchMode !== 'profile'){
+      
+      setSearchMode('profile')
+      
+    }else if(searchQuery.startsWith("tag:") && searchMode !== 'tag'){
+      
+      setSearchMode('tag')
+      
+    }else if(searchMode !== 'post'){
+      setSearchMode('post')
+    }
+    
+    // console.log(searchData)
+    if (searchData) {
+      setSearchResults(searchData);
+    }
+    setLoading(false);
+
+  }
+    
+  const [searchQuery, setSearchQuery] = useDebouncedValue('', fetchQueryPost);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
+    
   const handleClose = () => {
     setAnchorEl(null);
     user.set_open_drawer(false)
@@ -128,46 +157,32 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
   }
 
 
+  useEffect(async() => {
 
-  const logoutUser = async () => {
+    if(hasAtoken){
+      // Start fetching account information.
 
-    const response = await logout();
+      setAuthState('loading')
 
-    if(response.status === 200){
-      router.push('/login');
+
+      const response = await fetch(`${FRONTEND_ROOT_URL}api/auth/verify`);
+
+      const dataj = await response.json();
+
+      
+      if(!dataj.login_needed){
+        // No longer login needed, proceed to update UI accordingly
+        user.set_user_data(dataj.username, dataj.profile_pic, dataj.first_name, dataj.last_name);
+        user.authenticate();
+        setAuthState(true);
+
+      }else {
+        setAuthState(false);
+      }
+
     }
 
-  }
-
-  const handleSearchQueryChange = async (e) => {
-      setSearchQuery(e.target.value);
-      // Fetch data from backend
-      setLoading(true);
-      // try{
-          const searchData = await get_search_results(e.target.value, 6); // Want to fetch 6 posts
-      // } catch (err) {
-      //     console.log(err)
-      // }
-      // alert(searchData)
-      if (e.target.value.startsWith("profile:") && searchMode !== 'profile'){
-
-        setSearchMode('profile')
-
-      }else if(e.target.value.startsWith("tag:") && searchMode !== 'tag'){
-
-        setSearchMode('tag')
-
-      }else if(searchMode !== 'post'){
-        setSearchMode('post')
-      }
-
-      // console.log(searchData)
-      if (searchData) {
-        setSearchResults(searchData);
-      }
-      setLoading(false);
-      
-  }
+  }, [hasAtoken])
 
   return (
       <header className={styles.header_itself}>
@@ -243,7 +258,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
                         <Image src="/spade_icon.svg" width="25" height="25" />
                     </a>
                 </Link>
-                <input aria-autocomplete={false} style={(isMobile ? {width: 'max(10ch,40vw)', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover} : {width: 'auto', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover})} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onKeyDown={(e) => {if(e.key === 'Enter'){window.location.href = `${FRONTEND_ROOT_URL}explore/see-more/${slugify(searchQuery)}`}}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
+                <input style={(isMobile ? {width: 'max(10ch,40vw)', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover, color: theme.palette.mode === 'dark' ? 'white' : 'black'} : {width: 'auto', backgroundColor: theme.palette.mode !== 'dark' ? 'white' : theme.palette.action.hover, color: theme.palette.mode === 'dark' ? 'white' : 'black'})} value={searchQuery} onFocusCapture={() => {setInputFocused(true);}} onBlur={() => {setInputFocused(false)}} onKeyDown={(e) => {if(e.key === 'Enter'){window.location.href = `${FRONTEND_ROOT_URL}explore/see-more/${slugify(searchQuery)}`}}} onChange={handleSearchQueryChange} onFocus={() => {setOpenSearchResults(true)}} type="search" name="search_main" id="search_main" className={styles.search_input} placeholder="Search here..." />
                 {includesFilters && !isMobile ?
                     <Tooltip title="Filter">
                         <IconButton onClick={handleClick} style={{borderRadius: '2px'}}>
@@ -254,7 +269,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
 
                 }
 
-<div style={{position: 'absolute',overflow: 'hidden', zIndex: '1', backgroundColor: theme.palette.background.default, bottom: '0', left: '0', width: '100%',transform: 'translateY(100%)', borderRadius: '5px', boxShadow: '0px 0px 3px 2px  '+blue[400], display: searchQuery !== "" ? '' : 'none'}}>
+<div style={{position: 'absolute',overflow: 'hidden', zIndex: '1', backgroundColor: theme.palette.background.default, bottom: '0', left: '0', width: '100%',transform: 'translateY(100%)', borderRadius: '5px', boxShadow: '0px 4px 10px '+blue[400] + '50', display: searchQuery !== "" ? '' : 'none'}}>
                             {/* <> */}
                             {searchMode !== 'post' ? <h5 style={{paddingLeft: '5%', color: grey[700], fontWeight: '900', fontSize: '0.85rem', textTransform: 'capitalize'}}>{searchMode + 's'}</h5> : null}
                         {
@@ -289,6 +304,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
                             ):
                             <div style={{display: 'grid', placeItems: 'center', height: '30vh'}}>
                                 <CircularProgress size={20} />
+                                <b style={{fontFamily: 'Poppins', fontWeight: 'bold', color: '#c4c4c4'}}>Sorting Best...</b>
                             </div>
                         }
 
@@ -304,7 +320,9 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
             {/* <button onClick={() => {user.set_open_drawer(true, null)}}>hi</button> */}
             <div className={styles.header_right}>
                 
-              {user.is_authenticated ? <AppMenuLoggedIn mode={mode}/> : <AppMenuAnonymous isMobile={isMobile} userInstance={user} />}
+              { authState === true ? <AppMenuLoggedIn mode={mode}/> :  (authState === 'loading' ? <Skeleton variant="circular" width={40} height={40} /> : <AppMenuAnonymous isMobile={isMobile} userInstance={user} />) }
+
+              {/* {user.is_authenticated ? <AppMenuLoggedIn mode={mode}/> : <AppMenuAnonymous isMobile={isMobile} userInstance={user} />} */}
 
             </div>
         </div>

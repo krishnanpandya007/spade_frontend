@@ -29,8 +29,8 @@ const StyledTypography = styled(Typography)`
 
 // Also includes 404Page
 export default function ProfileView({data, userData, postData, profileViewUsername}) {
-
-  const [currentMode, setCurrentMode] = React.useState('recent')// Any of ['recent', 'bookmarked', 'liked']
+  console.log("sadsdads:", data)
+  const [currentMode, setCurrentMode] = React.useState('posts')// Any of ['posts', 'bookmarked', 'liked']
 
   const [loading, setLoading] = React.useState(false);
 
@@ -165,7 +165,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
 
   // console.log("Vadhelaa::", dataj)
 
-    setCurrentData(currData => dataj);
+    setCurrentData(dataj);
 
     setCurrentMode(new_mode);
 
@@ -182,11 +182,12 @@ export default function ProfileView({data, userData, postData, profileViewUserna
           <div className={styles.user_profile}>
             {/* User Profile (PIC, STATUS)*/}
             {/* <Avatar src={`${BACKEND_ROOT_URL}${data.profile_pic}`} style={{height: '120px', width: '120px'}} /> */}
-            {data.profile_pic ? <Avatar style={{height: '120px', width: '120px'}} src={`${BACKEND_ROOT_URL.slice(0,BACKEND_ROOT_URL.length-1)}${data.profile_pic}`} /> : data?.first_name && data?.last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '120px', height: '120px'}} >{data?.first_name[0]+data?.last_name[0]}</Avatar>: <Avatar style={{height: '120px', width: '120px'}} />}
+            {/* <Avatar src={data.profile_pic} /> */}
+            {data.profile_picURL ? <Avatar style={{height: '120px', width: '120px'}} src={data.profile_picURL} /> : data?.first_name && data?.last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '120px', height: '120px'}} >{data?.first_name[0]+data?.last_name[0]}</Avatar>: <Avatar style={{height: '120px', width: '120px'}} />}
             {/* <img src="https://www.meme-arsenal.com/memes/1b8ef67dd089b62ceef53afe6373a3e4.jpg" style={{width: '120px', height: '120px', borderRadius: '1000px'}} /> */}
             <div className={styles.status_info}>
               <div className={styles.status_indicator} style={{backgroundColor: status_indicator_colors[data?.status_indicator]}} />
-              <div className={styles.status} style={{fontFamily: 'Poppins'}}>
+              <div className={styles.status} style={{fontFamily: 'Poppins', color: 'black'}}>
                 {data?.status}
               </div>
             </div>
@@ -243,7 +244,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
       <Box sx={{ borderBottom: 1, borderColor: 'divider' , marginLeft: '5%'}}>
        
         <Tabs  value={currentMode} aria-label="basic tabs example">
-          <Tab disabled={loading} label="Recent" value="recent" onClick={() => {fetchNewModePosts('recent')}} />
+          <Tab disabled={loading} label="Recent" value="posts" onClick={() => {fetchNewModePosts('posts')}} />
           <Tab disabled={loading} label="Liked"  value="liked" onClick={() => {fetchNewModePosts('liked')}}/>
           <Tab disabled={loading} label="Bookmarked" value="bookmarked" onClick={() => {fetchNewModePosts('bookmarked')}}/>
         </Tabs>
@@ -259,7 +260,7 @@ export default function ProfileView({data, userData, postData, profileViewUserna
         <LinearProgress style={{marginLeft: '5%', height: '.1rem'}} />:
 ( 
       currentData && currentData.length > 0 ? 
-        <Feed data={{created_posts: currentData}} isProfileView={true} /> :
+        <Feed data={{created_posts: currentData}} hydrate_key={`${currentMode}@${data.username}`} isProfileView={true} setData={setCurrentData} /> :
          <h3 style={{color: '#c4c4c4', margin: '5%'}}>No Posts to see.</h3>)
       }
     </React.Fragment>
@@ -277,7 +278,7 @@ function MobileProfileView({data, status_indicator_colors, joinLoading, handleJo
       <center style={{backgroundColor: '#548CFF', color: 'white', fontFamily: 'Poppins', fontSize: '1.1rem'}}><p style={{padding: '0.2rem 0'}}>{data.username}</p></center>
 
       <div style={{display: 'flex', alignItems: 'center', padding: '5% 0 5% 5%', width: '100%'}}>
-        {data.profile_pic ? <Avatar style={{height: '100px', width: '100px'}} src={`${BACKEND_ROOT_URL.slice(0,BACKEND_ROOT_URL.length-1)}${data.profile_pic}`} /> : data?.first_name && data?.last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '100px', height: '100px'}} >{data?.first_name[0]+data?.last_name[0]}</Avatar>: <Avatar style={{height: '100px', width: '100px'}} />}
+        {data.profile_picURL ? <Avatar style={{height: '100px', width: '100px'}} src={data.profile_picURL} /> : data?.first_name && data?.last_name ? <Avatar style={{backgroundColor: '#e4704a', color: 'whitesmoke', fontWeight: '700', width: '100px', height: '100px'}} >{data?.first_name[0]+data?.last_name[0]}</Avatar>: <Avatar style={{height: '100px', width: '100px'}} />}
         <div style={{width: '100%', padding: '0 1.5rem 0 2rem'}}>
           <h2 style={{fontWeight:'400', fontFamily: 'Poppins', color: '#c4c4c4'}}>{data?.first_name} {data?.last_name}</h2>
           {/* <Chip label={data?.status} variant="outlined" icon={<div style={{width: '15px', height: '15px',backgroundColor: status_indicator_colors[data?.status_indicator], borderRadius: '10px', margin: '0 0 0 10px'}} />} style={{borderRadius: '5px'}} /> */}

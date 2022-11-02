@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 // import ModalUnstyled from '@mui/base/ModalUnstyled';
 // import { Box, styled } from '@material-ui/system';
 import { styled, Box, useTheme } from '@mui/system';
-import {Chip, Fade, IconButton, Modal, Slide, Snackbar, Tooltip} from '@mui/material';
+import {Chip, Fade, IconButton, Modal, Slide, Snackbar, Tooltip, Typography} from '@mui/material';
 // import { ModalUnstyled } from '@material-ui/unstyled';
 // import avatar_pic from './avatar_1.jpg'
 // import { Fade, Snackbar, Tooltip } from '@material-ui/core';
@@ -87,9 +87,9 @@ function SlideTransition(props) {
 var initial=0;
 function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_count, is_bookmarked, is_liked, dislikes_count, is_disliked, images, post_id, username, comments, autoOpenMarked}) {
 
-    const [likesCount, setLikesCount] = React.useState(likes_count ?? 0);
+    const [likesCount, setLikesCount] = React.useState(likes_count);
     const postModalContext = useContext(PostModalContext)
-    const [dislikesCount, setDislikeCount] = React.useState(dislikes_count ?? 0)
+    const [dislikesCount, setDislikeCount] = React.useState(dislikes_count)
 
     const [isLiked, setIsLiked] = React.useState(is_liked)
     const [isDisliked, setIsDisliked] = React.useState(is_disliked)
@@ -102,6 +102,18 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
     const [shareOpen, setShareOpen] = React.useState(false);
 
     const snackbarContext = useContext(SnackbarContext)
+
+    useEffect(() => {
+
+        setLikesCount(likes_count)
+
+    }, [likes_count])
+
+    useEffect(() => {
+
+        setDislikeCount(dislikes_count)
+
+    }, [dislikes_count])
 
     useEffect(() => {
 
@@ -449,7 +461,6 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
                     open={shareOpen}
                     onClose={() => {setShareOpen(false)}}
                 >
-                    
                     <Box style={{
                         position: 'absolute',
                         top: '50%',
@@ -522,7 +533,10 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
                         <IconButton onClick={() => {HandleLike();clearTimOUT(initial);}}>
                             <ThumbUpAltOutlined color={isLiked ? 'primary' : 'default'} sx={{color: theme.palette.mode === 'dark' && !isLiked ? '#A4B1B8' : ''}} />
                         </IconButton>
+                        {
+                        likesCount >= 0 &&
                         <p data-postid={post_id} data-action={'likes'} onMouseEnter={(e) => {e.target.style.cursor = "pointer"}} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{likesCount}</p>
+                        }
                     </div>
                     <div style={{display: 'grid', placeItems: 'center'}}>
                         {/* Like */}
@@ -530,7 +544,10 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
 
                             <ThumbDownAltOutlined color={isDisliked ? "error": 'default'} sx={{color: theme.palette.mode === 'dark' && !isDisliked ? '#A4B1B8' : ''}}/>
                         </IconButton>
-                        <p data-postid={post_id} data-action={'dislikes'} onMouseEnter={(e) => {e.target.style.cursor = "pointer"}} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
+                        {
+                            dislikesCount >= 0 && 
+                            <p data-postid={post_id} data-action={'dislikes'} onMouseEnter={(e) => {e.target.style.cursor = "pointer"}} onClick={(e) => {setAnchorEl(e.currentTarget)}} style={{margin: '0', color: grey[600]}}>{dislikesCount}</p>
+                        }
                     </div>
                     <IconButton onClick={sharePost}>
 

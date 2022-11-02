@@ -155,7 +155,7 @@ function NotificationRequestModal() {
                   ] 
             }; 
             navigator.serviceWorker.ready 
-              .then(sw => Notification.permission === 'granted' && sw.showNotification('Successfully subscribed!', options));
+              .then(sw => Notification.permission === 'granted' && sw.showNotification("Wohoo, you're linked on the fly!", options) && setOpen(false));
               setNotificationBlocked(false);
           }
     }; 

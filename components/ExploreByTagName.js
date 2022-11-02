@@ -14,7 +14,7 @@ function ExploreByTagName({data, tagname}) {
 
         {/* <Typography fontWeight="600" variant="h4" style={{marginLeft: '0', display: 'block'}}>Posts Related:  </Typography> */}
 
-        <Feed data={_data} setData={setData} />
+        <Feed hydrate_key={`tag@${tagname}`} data={_data} setData={setData} />
       </div>
   )
 }

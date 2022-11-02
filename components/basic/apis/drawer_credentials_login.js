@@ -16,8 +16,6 @@ export default async function login(username, password) {
 
     const mes = await login_response.json();
 
-    console.log("LOGGER:::::::::", mes)
-
     // console.log("Login Response: ", login_response)
 
     return login_response.status === 200;
