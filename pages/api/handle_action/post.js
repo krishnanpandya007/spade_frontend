@@ -48,6 +48,8 @@ export default async (req, res) => {
                 
                 cache.keys().forEach((key_url) => {
                     // For Each Catagory
+
+                    console.log("KEY__url", key_url)
                     let cacheResponse = cache.get(key_url) || [];
 
                     if(cacheResponse){

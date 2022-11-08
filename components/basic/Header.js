@@ -168,12 +168,11 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
       const response = await fetch(`${FRONTEND_ROOT_URL}api/auth/verify`);
 
       const dataj = await response.json();
-
       
       if(!dataj.login_needed){
         // No longer login needed, proceed to update UI accordingly
         user.set_user_data(dataj.username, dataj.profile_pic, dataj.first_name, dataj.last_name);
-        user.authenticate();
+        user.authenticate();// ! NOT WORKING
         setAuthState(true);
 
       }else {

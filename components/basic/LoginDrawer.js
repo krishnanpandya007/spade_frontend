@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
 // import LoginDrawerContent from './LoginDrawerContent';
 import dynamic from 'next/dynamic';
 import { CircularProgress, SwipeableDrawer } from '@mui/material';
@@ -18,6 +17,7 @@ const CenteredDiv = styled.div`
   
 
 `
+
 const LoginDrawerContent = dynamic(() => import("./LoginDrawerContent"), {loading: () => <CenteredDiv><CircularProgress /></CenteredDiv>, ssr:false })
 
 export default function TemporaryDrawer() {

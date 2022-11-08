@@ -85,7 +85,7 @@ function HelpAndSupport() {
                     <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>Posts</h3>
                     <p>Some problem occurs only on your or specific accounts</p>
                 </div>
-                
+                d
             </Link>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/other/`}>
             

@@ -244,10 +244,11 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
         
     </Head>
 
-    <authContext.Provider value={{is_authenticated: user.is_authenticated, is_on_mobile: isOnMobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}>
+    {/* <authContext.Provider value={{is_authenticated: user.is_authenticated, is_on_mobile: isOnMobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}> */}
     {/* <Header isMobile={isOnMobile} currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
     {/* <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
     {/* <Divider /> */}
+    <TemporaryDrawer />
       {includesPostModal ? 
           <PostModalContext.Provider value={{...postModalData,set_open: set_open, like: like, dislike: dislike, set_likes: set_likes, set_dislikes: set_dislikes, set_comments: set_comments, set_data: set_data}}>
             <PostModal />
@@ -260,7 +261,7 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
       {/* { children } */}
       {includesTodayOverview && isAuthenticated ? <TodayOverview /> : null}
       {/* <Footer username={userData.username}/> */}
-    </authContext.Provider>
+    {/* </authContext.Provider> */}
 
 
 

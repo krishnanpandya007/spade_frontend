@@ -131,19 +131,16 @@ function Account() {
 
 
     return (<>
-
-        <Head>
-          <title>Create Profile | Spade</title>
-        </Head>
         
-          <StaticHeader />
-          <hr/>
+        <Layout title="Create Profile | Spade">
+
             <Snackbar open={formError} autoHideDuration={6000} onClose={() => {setFormError(false)}}>
                 <Alert onClose={() => {setFormError(false)}}  severity="error" sx={{ width: '100%'}}>
                     {errorData}
                 </Alert>
             </Snackbar>
         <CreateAccount handleFormError={setFormError} handleErrorData={setErrorData} data={formData} t_and_c_ref={terms_and_condi_agree_ref} handleOnChange={handleOnChange} handleSubmit={handleSubmit} loading={isSubmitting} setLoading={setIsSubmitting} profileCreated={profileCreated} />
+        </Layout>
  
     
     </>

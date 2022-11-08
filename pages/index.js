@@ -11,6 +11,7 @@ import Feed from "../components/feed/Feed";
 import HomeInfo from "../components/HomeInfo";
 import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from "../config";
 import Link from 'next/link'
+import TodayOverview from "../components/basic/TodayOverview";
 
 function Home({data, is_authenticated, user_info}) {
 

@@ -86,7 +86,7 @@ export default function MyApp(props) {
 
     setSnackbarData({open: true, severity: severity, message: message, includes_callback: includes_callback, callback_fn: callback_fn, action_button_title: action_button_title})
 
-  }
+  } 
 
   const undo_action = (callback_fn, action_button_title = 'UNDO') => {
     // setSnackbarData({...snackbarData, includes_callback: true})    
@@ -98,9 +98,15 @@ export default function MyApp(props) {
   }
 
   const authenticate = () => {
+    console.log("Authenticated")
 
     setDrawer({ open_drawer: false })
+    console.log("Authenticated")
+
     setAuth(curr => ({...curr,is_authenticated: true}));
+
+    console.log("Authenticated")
+    console.log("Authenticated_ZYZYZYYZ")
   }
 
   const de_authenticate = () => {
@@ -133,7 +139,10 @@ export default function MyApp(props) {
   }
 
 
-    
+  useEffect(() => {
+    console.info(".is_authenticated Changed!!, ", auth.is_authenticated);
+  }, [auth.is_authenticated])  
+
 //? @is_on_mobile handler useEffect
   useEffect(() => {
 

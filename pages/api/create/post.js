@@ -51,7 +51,6 @@ export default async (req, res) => {
             });
             const data = await response.json();
             
-            console.log("BUMBUM:::", data)
             if(data.error){
                 return res.status(response.status).json(data)
             }
@@ -59,6 +58,7 @@ export default async (req, res) => {
         }
 
         try{
+            
             const data = await new Promise((resolve, reject) => {
                 const form = new formidable.IncomingForm()
             
@@ -66,10 +66,12 @@ export default async (req, res) => {
 
                     const data = await sendFormBackend(fields, files)
                     if (err) reject({ err })
+
+
+                    return res.status(201).json(data)
                     resolve({ err, fields, files })
                 }) 
             })
-            return res.status(200).json({error: false, message: "Published Successfully!"})
 
         } catch(e) {
 

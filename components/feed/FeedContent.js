@@ -45,6 +45,7 @@ import {
   } from 'next-share';
 import PostModalContext from '../basic/contexts/post_modal_context';
 import { blue, grey } from '@mui/material/colors';
+import authContext from '../basic/contexts/layout_auth_context';
 
 
 
@@ -89,6 +90,7 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
 
     const [likesCount, setLikesCount] = React.useState(likes_count);
     const postModalContext = useContext(PostModalContext)
+    const auth = useContext(authContext);
     const [dislikesCount, setDislikeCount] = React.useState(dislikes_count)
 
     const [isLiked, setIsLiked] = React.useState(is_liked)
@@ -368,7 +370,10 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
 
     const HandleLike = ()=> {
 
-
+        if(!auth.is_authenticated){
+            auth.set_open_drawer(true, "Login Required!")
+            return;
+        }
         
         // Already disliked the post
         if(isDisliked){
@@ -404,6 +409,12 @@ function FeedContent({profile_pic, setAnchorEl,len_tags,title, descr, likes_coun
 
 
     const HandleDislike = ()=> {
+
+        if(!auth.is_authenticated){
+            alert("Opening")
+            auth.set_open_drawer(true, "Login Required!")
+            return;
+        }
 
         // setDislikeCount(dislikesCount + 1)
         
