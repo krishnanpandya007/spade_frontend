@@ -17,6 +17,7 @@ import Head from "next/head";
 import StaticHeader from '../../components/basic/StaticHeader'
 
 import {useRouter} from 'next/router'
+import Layout from '../../components/basic/layout';
 // import TodayOverview from '../../components/basic/TodayOverview';
 // import Script from 'next/script';
 

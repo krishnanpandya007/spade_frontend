@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { BACKEND_ROOT_URL, FRONTEND_ROOT_URL } from '../../config'
-import SearchResults from '../basic/SearchResults'
+import { FRONTEND_ROOT_URL } from '../../config'
 import { fetch_gloabal_tickets } from './search_query_api/fetch_gloabal_tickets';
 import styles from './HelpAndSupport.module.css';
 import { CircularProgress, useTheme } from '@mui/material';
@@ -85,7 +84,6 @@ function HelpAndSupport() {
                     <h3 style={{borderBottomColor: theme.palette.mode === 'dark' ? '#ffffff40' : '#00000040'}}>Posts</h3>
                     <p>Some problem occurs only on your or specific accounts</p>
                 </div>
-                d
             </Link>
             <Link href={`${FRONTEND_ROOT_URL}help_and_support/catagory/other/`}>
             
