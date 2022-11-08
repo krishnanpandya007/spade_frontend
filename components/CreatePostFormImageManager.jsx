@@ -39,6 +39,8 @@ transition: 0.2s ease-in;
 
 function CreatePostFormImageManager({images, handleImages}) {
 
+
+    console.log("Images::", images)
     const fileInputRef = React.useRef(null);
     const addImage = (file) => {
 

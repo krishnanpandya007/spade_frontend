@@ -218,15 +218,16 @@ function CreatePostForm() {
 
     }
 
-    setFormData(currFormData => ({tags: [...currFormData.tags, tag_name]}));
+    setFormData(currFormData => ({...currFormData, tags: [...currFormData.tags, tag_name]}));
 
   }
 
   const removeTag = (remove_tag) => {
 
-    setFormData(currFormData => ({tags: currFormData.tags.filter((tag) => tag!== remove_tag)}));
+    setFormData(currFormData => ({...currFormData, tags: currFormData.tags.filter((tag) => tag!== remove_tag)}));
 
   }
+  console.log("img_parent:", formData.images)
 
   return (
     <div style={{ margin: `${auth.is_on_mobile ? '5%' : '0%'} 5% 5% 5%`, width: '100%', maxWidth: '500px'}}>
