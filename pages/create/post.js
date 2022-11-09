@@ -158,7 +158,6 @@ function CreatePostForm() {
     if(!auth.is_authenticated){
 
       // Can;t open signinDrawer
-      console.log("trying to opening")
       auth.set_open_drawer(true, "Login Required!");
       setLoading(false);
       return;
@@ -227,7 +226,6 @@ function CreatePostForm() {
     setFormData(currFormData => ({...currFormData, tags: currFormData.tags.filter((tag) => tag!== remove_tag)}));
 
   }
-  console.log("img_parent:", formData.images)
 
   return (
     <div style={{ margin: `${auth.is_on_mobile ? '5%' : '0%'} 5% 5% 5%`, width: '100%', maxWidth: '500px'}}>

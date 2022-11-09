@@ -21,13 +21,9 @@ import { FRONTEND_ROOT_URL } from '../../config';
 
 function Layout({ title, children,includesFilters, includesTodayOverview,changeFilterBy, currentFilterBy,isAuthenticated, userInfo, mode, includesPostModal, PostModalData}) {
 
-  const [user, setUser] = React.useState({is_authenticated: isAuthenticated});
-
-  const [isOnMobile, setIsOnMobile] = React.useState(false);
-
-  const [drawer, setDrawer] = React.useState({ open_drawer: false, drawer_title: "Let&apos;s Connect !" })
-
   const [userData, setUserData] = React.useState(userInfo ?? { username: null, profile_pic: null, first_name: null, last_name: null });
+
+  const auth = useContext(authContext);
 
   const snackbar = useContext(SnackbarContext)
 
@@ -56,6 +52,12 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
       // },
       
   });
+
+  useEffect(() => {
+
+    auth.set_open_drawer(false);
+
+  }, [])
 
   // }
 
@@ -167,75 +169,6 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
 
   }
 
-
-  const authenticate = () => {
-
-    setDrawer({ open_drawer: false })
-    setUser({is_authenticated: true});
-  }
-
-  const de_authenticate = () => {
-    setDrawer({ open_drawer: false })
-
-    setUser({ is_authenticated: false});
-
-  }
-
-  const set_open_drawer = (value, title=null) => {
-
-    if (value) {
-
-      setDrawer({ open_drawer: value, drawer_title: title ??  "Let's Connect !" })
-    } else {
-      
-      setDrawer({ open_drawer: value })
-
-    }
-
-
-
-  }
-
-  const set_user_data = (username_, profile_pic_, first_name_, last_name_) => {
-
-    // console.log("Called", username_, profile_pic_, first_name_, last_name_)
-    // setUser({ is_authenticated: user.is_authenticated, user_data: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }});
-    setUserData({ username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ });
-  }
-
-
-    
-
-    useEffect(() => {
-
-      if(typeof window !== 'undefined'){
-
-        function handleResize() {
-          if(window.innerWidth < 1200){
-
-            setIsOnMobile(true);
-
-          }else{
-            setIsOnMobile(false)
-          }
-        }
-
-        handleResize();
-
-        window.addEventListener('resize', handleResize);
-        if (isAuthenticated && userInfo?.authentication_error){
-          // alert("Opening")
-          snackbar.open('simple', "Complete Your profile, Get truely authorized!", true, () => {window.location.href = `${FRONTEND_ROOT_URL}social_account/edit`},"Let's Go")
-  
-        }
-        return () => window.removeEventListener('resize', handleResize);
-      }
-
-
-
-    }, [])
-
-
   return (
     
     <>
@@ -244,10 +177,6 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
         
     </Head>
 
-    {/* <authContext.Provider value={{is_authenticated: user.is_authenticated, is_on_mobile: isOnMobile,drawer_title: drawer.drawer_title,open_drawer: drawer.open_drawer, set_open_drawer: set_open_drawer,authenticate: authenticate, de_authenticate: de_authenticate, user_data: userData, set_user_data: set_user_data}}> */}
-    {/* <Header isMobile={isOnMobile} currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
-    {/* <Header currentFilterBy={currentFilterBy} user_data={userData} includesFilters={includesFilters} changeFilterBy={changeFilterBy} mode={mode}/> */}
-    {/* <Divider /> */}
     <TemporaryDrawer />
       {includesPostModal ? 
           <PostModalContext.Provider value={{...postModalData,set_open: set_open, like: like, dislike: dislike, set_likes: set_likes, set_dislikes: set_dislikes, set_comments: set_comments, set_data: set_data}}>
@@ -255,16 +184,8 @@ function Layout({ title, children,includesFilters, includesTodayOverview,changeF
             {children}
           </PostModalContext.Provider>:  
         children} 
-            {/* {children} */}
 
-
-      {/* { children } */}
       {includesTodayOverview && isAuthenticated ? <TodayOverview /> : null}
-      {/* <Footer username={userData.username}/> */}
-    {/* </authContext.Provider> */}
-
-
-
     </>
 
   )

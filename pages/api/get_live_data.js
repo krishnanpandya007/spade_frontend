@@ -12,7 +12,7 @@ export default (req, res) => {
 
     const results = cache.get(catagory) || [];
 
-    console.log("Results::", results)
+    console.log("Results::", results, "Catagory::", catagory)
 
     return res.status(200).json({success: true, data: results});
     

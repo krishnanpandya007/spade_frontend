@@ -104,7 +104,6 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
   const [anchorElSettings, setAnchorElSettings] = React.useState(null);
   
   const open = Boolean(anchorEl);
-  const router = useRouter();
   const handleSearchQueryChange = async (e) => {
       setSearchQuery(e.target.value);
       
