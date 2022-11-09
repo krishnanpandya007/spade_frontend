@@ -151,11 +151,11 @@ export default function MyApp(props) {
       function handleResize() {
         if(window.innerWidth < 1200){
 
-          setAuth({...auth, is_on_mobile: true});
+          setAuth(curr => ({...curr, is_on_mobile: true}));
 
         }else{
 
-          setAuth({...auth, is_on_mobile: false});
+          setAuth(curr => ({...curr, is_on_mobile: false}));
         }
       }
 

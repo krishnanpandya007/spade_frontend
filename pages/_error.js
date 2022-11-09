@@ -8,11 +8,11 @@ function Error({ statusCode }) {
                 <h3><span style={{fontWeight: 'lighter', fontSize: '1rem'}}>{statusCode === 404 ? "Page Not Found" : "Something wrong, our side"}</span> | Resume Your Journey <a href="/" style={{color: '#4D77FF', textDecoration: 'underline'}}>Here.</a></h3>
         </center>
     )
-  }
-  
-  Error.getInitialProps = ({ res, err }) => {
+}
+
+Error.getInitialProps = ({ res, err }) => {
     const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
     return { statusCode }
-  }
-  
-  export default Error
+}
+
+export default Error
