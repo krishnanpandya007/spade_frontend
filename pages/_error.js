@@ -12,12 +12,6 @@ function Error({ statusCode }) {
   
   Error.getInitialProps = ({ res, err }) => {
     const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-    try{
-
-        alert(err.message)
-    }catch (e) {
-        console.log("EXCEPIONNNNNNN:", err.message)
-    }
     return { statusCode }
   }
   

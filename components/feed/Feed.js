@@ -352,7 +352,7 @@ function MFeed({ idx, post, username, openPostModal, openShare, snackbar_instanc
                 <div dangerouslySetInnerHTML={{__html: post.descr.length > 300 ? post.descr.substring(0,300) +'<b style="color: #00000040"> ...</b>' : post.descr}} style={{padding: '0.5rem', margin: '0', fontSize:'12px'}}></div>
             </div>
 
-            <PostActionBar setAnchorEl={setAnchorEl} spadeDef={spadeDef} bgColor={bgColor} openSignInDrawer={openSignInDrawer} is_authenticated={is_authenticated} openShare={openShare} snackbar_instance={snackbar_instance} post_id={post.id} is_liked={ username ? post.likes.includes(username) : false} is_disliked={username ? post.dislikes.includes(username) : false} n_likes={post.likes?.length} n_dislikes={post.dislikes?.length}  />
+            <PostActionBar setAnchorEl={setAnchorEl} spadeDef={spadeDef} bgColor={bgColor} openSignInDrawer={openSignInDrawer} is_authenticated={is_authenticated} openShare={openShare} snackbar_instance={snackbar_instance} post_id={post.id} is_liked={ username ? post.likes?.includes(username) : false} is_disliked={username ? post.dislikes?.includes(username) : false} n_likes={post.likes?.length} n_dislikes={post.dislikes?.length}  />
 
         </div>
     )
