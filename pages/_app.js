@@ -98,15 +98,11 @@ export default function MyApp(props) {
   }
 
   const authenticate = () => {
-    console.log("Authenticated")
 
     setDrawer({ open_drawer: false })
-    console.log("Authenticated")
 
     setAuth(curr => ({...curr,is_authenticated: true}));
 
-    console.log("Authenticated")
-    console.log("Authenticated_ZYZYZYYZ")
   }
 
   const de_authenticate = () => {
@@ -137,11 +133,6 @@ export default function MyApp(props) {
     // setUser({ is_authenticated: user.is_authenticated, user_data: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }});
     setAuth(curr => ({ ...curr, user_info: { username: username_, profile_pic: profile_pic_, first_name: first_name_, last_name: last_name_ }}));
   }
-
-
-  useEffect(() => {
-    console.info(".is_authenticated Changed!!, ", auth.is_authenticated);
-  }, [auth.is_authenticated])  
 
 //? @is_on_mobile handler useEffect
   useEffect(() => {

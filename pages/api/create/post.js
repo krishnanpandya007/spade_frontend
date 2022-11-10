@@ -35,7 +35,10 @@ export default async (req, res) => {
             Object.keys(files).map((file, index) => {
                 form_data.append(file,fs.readFileSync(files[file].filepath), files[file].originalFilename);
             })
-
+            console.log("recieved form submittin to backend");
+            Object.keys(files).map((file, index) => {
+                console.log("Files:", file)
+            })
 
 
             const response = await fetch(`${BACKEND_ROOT_URL}apio/create/post/`, {
