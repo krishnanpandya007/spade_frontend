@@ -7,7 +7,7 @@ import { IMAGE_COMPRESSION_THRESHOLD } from '../../config'
 
 const compressionOptions = {
 
-    maxSizeMB: 1,
+    maxSizeMB: 1.35,
     maxWidthOrHeight: 500,
     useWebWorker: true
 
@@ -46,8 +46,11 @@ function ImageCompressor({imgs, setImgs, success_cb}) {
     <Alert severity='info' icon={compressionState === 'compressing' ? <CircularProgress size={15} /> : <CheckOutlined /> }>
 
         <AlertTitle>Seamless Compression</AlertTitle>
-
-        Original Size: <b>{Object.keys(imgs).reduce((acc, curr) => acc + Math.ceil((imgs[curr].content?.size)/1024/1024), 0)}MB</b> will be compressed to save your data. 🙂
+        {
+        compressionState === 'compressing' ? 
+        <>Original Size: <b>{Object.keys(imgs).reduce((acc, curr) => acc + Math.ceil((imgs[curr].content?.size)/1024/1024), 0)}MB</b> will be compressed to save your data. 🙂</>
+        : <>Compressed Size: <b>{Object.keys(imgs).reduce((acc, curr) => acc + Math.ceil((imgs[curr].content?.size)/1024/1024), 0)}MB</b>. Submitting Spack...</>
+        }
         
         <br/>
         <br/>

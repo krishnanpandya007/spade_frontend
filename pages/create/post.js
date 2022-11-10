@@ -144,15 +144,10 @@ function CreatePostForm() {
 
   const handleSpackSubmit = async (force=false) => {
 
-    console.log(!force, (Object.keys(formData.images).length > 0))
-    if(!force && (Object.keys(formData.images).length > 0)){
-      console.log("Compressing")
-      setCompressing(true);
-    }
-
+    
     
     if(!titleRef.current.value || titleRef.current.value.length < 6){
-
+      
       snackbar.open("info", "Title with 6 or more chars. suits perfetly")
       titleRef.current.focus();
       return;
@@ -165,11 +160,16 @@ function CreatePostForm() {
       return;
     }
     // titleRef  
-
+    
     if(!auth.is_authenticated){
-
+      
       // Can;t open signinDrawer
       auth.set_open_drawer(true, "Login Required!");
+      return;
+    }
+
+    if(!force && (Object.keys(formData.images).length > 0)){
+      setCompressing(true);
       return;
     }
     setLoading(true);

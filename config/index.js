@@ -14,4 +14,4 @@ export const CLIENT_SECRET = process.env.NODE_ENV === "development" ? 'pbkdf2_sh
 export const SOCIAL_ACCOUNT_ACCESS_KEY = "ThisRandomKey69IsSomethingBig";
 
 
-export const IMAGE_COMPRESSION_THRESHOLD = 0.7 // If image is bigger then 700 kb, compress it!
+export const IMAGE_COMPRESSION_THRESHOLD = 0.8 // If image is bigger then 700 kb, compress it!
