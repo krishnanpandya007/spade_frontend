@@ -24,6 +24,10 @@ import CreatePostTagManager from '../../components/CreatePostTagManager';
 import CreatePostFormImageManager from '../../components/CreatePostFormImageManager';
 import { Box } from '@mui/system';
 import { FRONTEND_ROOT_URL } from '../../config';
+// import ImageCompressor from '../../components/basic/ImageCompressor';
+import dynamic from 'next/dynamic';
+
+const ImageCompressor = dynamic(() => import("../../components/basic/ImageCompressor"), {ssr: false})
 
 const StyledButton = styled('button')`
 border: 1px dashed #516BEB99;
@@ -113,6 +117,7 @@ function CreatePostForm() {
   const auth = useContext(authContext);
 
   const [loading, setLoading] = React.useState(false);
+  const [compressing, setCompressing] = React.useState(false);
   const [focusModal, setFocusModal] = React.useState(null); // 'tags' | 'images' | null
   const audioRef = React.useRef(null);
   
@@ -131,26 +136,32 @@ function CreatePostForm() {
   IMP: On successfull submit, ring a tone! (ex. https://flatuicolors.com/)
   
   */
-  React.useEffect(() => {
+  React.useEffect(async () => {
     // Load Success Audio
     audioRef.current = new Audio('/spack_success.m4a');
 
   }, [])
 
-  const handleSpackSubmit = async () => {
+  const handleSpackSubmit = async (force=false) => {
 
-    setLoading(true);
+    console.log(!force, (Object.keys(formData.images).length > 0))
+    if(!force && (Object.keys(formData.images).length > 0)){
+      console.log("Compressing")
+      setCompressing(true);
+    }
 
+    
     if(!titleRef.current.value || titleRef.current.value.length < 6){
 
-      titleRef.current.reportValidity("Provide Valid title");
-      setLoading(false);
+      snackbar.open("info", "Title with 6 or more chars. suits perfetly")
+      titleRef.current.focus();
       return;
     }
 
     if(!descrRef.current.value){
-      descrRef.current.reportValidity("Please provide Descr.")
-      setLoading(false);
+      snackbar.open("info", "Hack without content? 🤨")
+
+      descrRef.current.focus();
       return;
     }
     // titleRef  
@@ -159,10 +170,10 @@ function CreatePostForm() {
 
       // Can;t open signinDrawer
       auth.set_open_drawer(true, "Login Required!");
-      setLoading(false);
       return;
     }
-
+    setLoading(true);
+    
     let form_data = new FormData();
 
     form_data.append('title', titleRef.current.value);
@@ -192,6 +203,8 @@ function CreatePostForm() {
       audioRef.current.play();
 
       window.location.href = `${FRONTEND_ROOT_URL}explore/post/${data.created_post_id}`
+
+      setLoading("success")
     }
 
     setLoading(false)
@@ -258,7 +271,7 @@ function CreatePostForm() {
 
 
         {/* IMAGE_MANAGER_DRAWER */}
-        {auth.is_on_mobile ? <SwipeableDrawer onOpen={() => {setFocusModal('images')}} open={focusModal === 'images'} onClose={() => {setFocusModal(null)}} anchor="bottom" PaperProps={{ square: false , style: {padding: '0.8rem 1.2rem'}}} >
+        {!compressing && (auth.is_on_mobile ? <SwipeableDrawer onOpen={() => {setFocusModal('images')}} open={focusModal === 'images'} onClose={() => {setFocusModal(null)}} anchor="bottom" PaperProps={{ square: false , style: {padding: '0.8rem 1.2rem'}}} >
           <center><div style={{backgroundColor: '#516BEB', borderRadius: '100px', width: 'min(20%, 100px)', height: '4px', margin: '5px 0 20px 0'}} /></center>
           <CreatePostFormImageManager images={formData.images} handleImages={(new_imgs) => {setFormData(curr => ({...curr, images: new_imgs}))}} />
         </SwipeableDrawer> : 
@@ -269,7 +282,7 @@ function CreatePostForm() {
 
           </Box>
 
-        </Modal>
+        </Modal>)
         }
 
         <StyledButton onClick={() => {setFocusModal('tags')}} style={{ outline: 'none', position: 'relative', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', padding: '0.9rem 0.5rem', flex: '1', background: 'none' }}>
@@ -283,7 +296,7 @@ function CreatePostForm() {
 
         </StyledButton>
 
-        <StyledButton onClick={() => {setFocusModal('images')}} style={{ outline: 'none', border: '1px dashed #516BEB99', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', padding: '0.9rem 0.5rem', flex: '1', background: 'none' }}>
+        <StyledButton disabled={compressing} onClick={() => {setFocusModal('images')}} style={{ outline: 'none', border: '1px dashed #516BEB99', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', padding: '0.9rem 0.5rem', flex: '1', background: 'none' }}>
 
           <Image src="/attach_images.png" width="20" height="20" />    
 
@@ -294,9 +307,14 @@ function CreatePostForm() {
       </div>
 
       <br/>
+      {
+        compressing &&
+          <ImageCompressor imgs={formData.images} setImgs={(new_imgs) => {setFormData(curr => ({...curr, images: new_imgs}))}} success_cb={handleSpackSubmit} />
+      }
+
       <br/>
 
-      <LoadingButton loading={loading} onClick={handleSpackSubmit}  fullWidth variant='contained' sx={{backgroundColor: '#516BEB', fontFamily: 'Poppins', borderRadius: '8px', padding: '0.8rem 0', fontWeight: '600', letterSpacing: '2px'}}> Done </LoadingButton>
+      <LoadingButton loading={loading === true} disabled={compressing || loading==='success'} onClick={(e) => {handleSpackSubmit()}}  fullWidth variant='contained' sx={{backgroundColor: '#516BEB', fontFamily: 'Poppins', borderRadius: '8px', padding: '0.8rem 0', fontWeight: '600', letterSpacing: '2px'}}> Done </LoadingButton>
 
     </div>
 

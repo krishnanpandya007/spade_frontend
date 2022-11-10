@@ -40,15 +40,27 @@ transition: 0.2s ease-in;
 function CreatePostFormImageManager({images, handleImages}) {
 
 
-    console.log("Images::", images)
     const fileInputRef = React.useRef(null);
-    const addImage = (file) => {
 
-        if(!file) return; // File selection failed
+
+    const addImage = (e) => {
+
+        if(!e.target.files[0]) return; // File selection failed
+
+
+        let appending_images = {};
+
+        for (let i = 0; i < e.target.files.length; i++){
+
+            appending_images[`image_${i+1 + Object.keys(images).length}`] = { content: e.target.files[i], name: e.target.files[i].name, blob_url:  URL.createObjectURL(e.target.files[i])}
+
+        }
+
+
 
         // Generate preview blob URL;
 
-        handleImages({...images, [`image_${Object.keys(images).length + 1}`]: { content: file, name: file.name, blob_url:  URL.createObjectURL(file)}})
+        handleImages({...images, ...appending_images})
 
     }
 
@@ -90,7 +102,7 @@ function CreatePostFormImageManager({images, handleImages}) {
             {
                 Object.keys(images).map((img, idx) => (
 
-                    <div className={styles.jiggly_jelly} key={img.name} style={{position: 'relative', width: '100px', marginRight: '0.4rem', flexShrink: '0'}}>
+                    <div key={img.name} style={{position: 'relative', width: '100px', marginRight: '0.4rem', flexShrink: '0'}}>
 
                         <img height="100" width="100" style={{borderRadius: '15px', objectFit: 'cover'}} src={images[img].blob_url}>
                         
@@ -113,7 +125,7 @@ function CreatePostFormImageManager({images, handleImages}) {
             }
 
 
-            <input style={{display: 'none'}} ref={fileInputRef} accept="image/*" onChange={(e) => {addImage(e.target.files[0])}} multiple type="file" />
+            <input style={{display: 'none'}} ref={fileInputRef} accept="image/*" onChange={addImage} multiple type="file" />
 
             {
                 Object.keys(images).length < 4 && 
