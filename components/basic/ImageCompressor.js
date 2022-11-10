@@ -3,6 +3,7 @@ import { Alert, AlertTitle, CircularProgress, LinearProgress } from '@mui/materi
 import React from 'react'
 import imageCompression from 'browser-image-compression'
 import { useEffect } from 'react'
+import { IMAGE_COMPRESSION_THRESHOLD } from '../../config'
 
 const compressionOptions = {
 
@@ -23,6 +24,10 @@ function ImageCompressor({imgs, setImgs, success_cb}) {
         let copy_imgs = imgs;
 
         for(const image of Object.keys(imgs)){
+
+            if((imgs[image].content.size / 1024 / 1024) < IMAGE_COMPRESSION_THRESHOLD){
+                continue;
+            }
 
             let compressedFile = await imageCompression(imgs[image].content, compressionOptions);
             copy_imgs[image].content = compressedFile;

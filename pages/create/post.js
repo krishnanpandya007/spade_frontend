@@ -159,7 +159,7 @@ function CreatePostForm() {
     }
 
     if(!descrRef.current.value){
-      snackbar.open("info", "Hack without content? 🤨")
+      snackbar.open("info", "Spack without content? 🤨")
 
       descrRef.current.focus();
       return;
