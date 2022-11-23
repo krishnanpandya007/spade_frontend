@@ -14,9 +14,9 @@ import Image from 'next/image'
 // import CreatePostForm from '../../components/CreatePostForm';
 import CreatePostWidgetMenu from '../../components/CreatePostWidgetMenu';
 import Layout from '../../components/basic/layout';
-import { Modal, SwipeableDrawer, useTheme } from '@mui/material';
+import { Modal, Slider, SwipeableDrawer, useTheme } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import styled from '@emotion/styled'
+import emotion_styled from '@emotion/styled'
 import { useContext } from 'react';
 import SnackbarContext from '../../components/basic/contexts/snackbar_context';
 import authContext from '../../components/basic/contexts/layout_auth_context';
@@ -26,10 +26,11 @@ import { Box } from '@mui/system';
 import { FRONTEND_ROOT_URL } from '../../config';
 // import ImageCompressor from '../../components/basic/ImageCompressor';
 import dynamic from 'next/dynamic';
+import { styled }  from '@mui/styles';
 
 const ImageCompressor = dynamic(() => import("../../components/basic/ImageCompressor"), {ssr: false})
 
-const StyledButton = styled('button')`
+const StyledButton = emotion_styled('button')`
 border: 1px dashed #516BEB99;
 transition: 0.15s ease-in;
 
@@ -48,7 +49,7 @@ transition: 0.15s ease-in;
 
 `
 
-const CustomInput = styled(`input`)`
+const CustomInput = emotion_styled(`input`)`
 
 &:invalid{
 
@@ -57,6 +58,24 @@ const CustomInput = styled(`input`)`
 }
 
 `
+
+const CustomSlider = styled(Slider)(({ theme }) => ({
+  
+  width: '150px',
+  "& .MuiSlider-thumb": {
+    padding: '30px',
+    
+    border: '2px solid #516BEB',
+    backgroundColor: '#DDE1F2'
+    // paddingLeft: '40px'
+  },
+  "& .MuiSlider-mark": {
+  },
+  "& .MuiSlider-rail": {
+    height: '40px',
+    background: 'none'
+  }
+}));
 
 function getExtention(fileName){
 
@@ -311,7 +330,50 @@ function CreatePostForm() {
         compressing &&
           <ImageCompressor imgs={formData.images} setImgs={(new_imgs) => {setFormData(curr => ({...curr, images: new_imgs}))}} success_cb={handleSpackSubmit} />
       }
+  <div style={{border: '1px solid #516BEB', width: '210px', padding: '8px -5px 5px 25px', borderRadius: '100px', transform: 'scale(0.8)', position: 'relative'}}>
+      {/* Do actions only when user left up thumb from slider */}
+      {/* onChangeCommited = reset_position */}
+      <CustomSlider track={false} step={10} min={20} max={50} defaultValue={20} onChangeCommitted={(e) => {alert("Doing Actions")}} />
+      
+      
+      <svg style={{position: 'absolute', left: '1.6rem', transform: 'translateY(30%)'}} width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0_301_251)">
+      <path d="M10.6668 10.1734C10.6668 10.4917 10.5529 10.7995 10.3458 11.0412L7.15185 14.7674C6.86677 15.1 6.39191 15.1959 6.00011 15C5.61758 14.8087 5.4339 14.3653 5.56914 13.9596L6.66677 10.6667H3.59772C3.51774 10.6667 3.43791 10.6595 3.35921 10.6452C2.63471 10.5134 2.15417 9.81932 2.2859 9.09482L3.13438 4.42815C3.24965 3.79417 3.80183 3.33333 4.44621 3.33333H9.33344C10.0698 3.33333 10.6668 3.93029 10.6668 4.66667V10.1734Z" stroke="#9AA9F1" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M13.3335 10V4" stroke="#9AA9F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_301_251">
+      <rect width="16" height="16" fill="white"/>
+      </clipPath>
+      </defs>
+      </svg>
 
+      <p style={{position: 'absolute', left: '1.6rem', bottom: '0', transform: 'translateY(190%)'}}>3</p>
+
+      <svg style={{position: 'absolute', left: '60%', transform: 'translateY(30%)'}} width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_301_211)">
+        <path d="M5.3335 5.82657C5.3335 5.50828 5.44735 5.2005 5.65449 4.95884L8.84843 1.23258C9.13351 0.89999 9.60836 0.804098 10.0002 1C10.3827 1.19127 10.5664 1.63471 10.4311 2.04044L9.3335 5.33333H12.4025C12.4825 5.33333 12.5624 5.34053 12.6411 5.35484C13.3656 5.48657 13.8461 6.18068 13.7144 6.90518L12.8659 11.5718C12.7506 12.2058 12.1984 12.6667 11.5541 12.6667H6.66683C5.93045 12.6667 5.3335 12.0697 5.3335 11.3333V5.82657Z" stroke="#9AA9F1" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2.6665 12V6" stroke="#9AA9F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_301_211">
+        <rect width="16" height="16" fill="white"/>
+        </clipPath>
+        </defs>
+      </svg>
+      <p style={{position: 'absolute', left: '60%', bottom: '0', transform: 'translateY(190%)'}}>12</p>
+
+      <svg style={{position: 'absolute', right: '9%', transform: 'translateY(30%)'}} width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fillRule="evenodd" clipRule="evenodd" d="M5 7.50003C5 8.32845 4.32843 9.00003 3.5 9.00003C2.67157 9.00003 2 8.32845 2 7.50003C2 6.6716 2.67157 6.00003 3.5 6.00003C4.32843 6.00003 5 6.6716 5 7.50003ZM5.71313 8.66388C5.29445 9.45838 4.46048 10 3.5 10C2.11929 10 1 8.88074 1 7.50003C1 6.11931 2.11929 5.00003 3.5 5.00003C4.46048 5.00003 5.29445 5.54167 5.71313 6.33616L9.10424 4.21671C9.03643 3.98968 9 3.74911 9 3.50003C9 2.11932 10.1193 1.00003 11.5 1.00003C12.8807 1.00003 14 2.11932 14 3.50003C14 4.88074 12.8807 6.00003 11.5 6.00003C10.6915 6.00003 9.97264 5.61624 9.51566 5.0209L5.9853 7.22738C5.99502 7.31692 6 7.40789 6 7.50003C6 7.59216 5.99502 7.68312 5.9853 7.77267L9.51567 9.97915C9.97265 9.38382 10.6915 9.00003 11.5 9.00003C12.8807 9.00003 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5C9 11.2509 9.03643 11.0104 9.10425 10.7833L5.71313 8.66388ZM11.5 5.00003C12.3284 5.00003 13 4.32846 13 3.50003C13 2.6716 12.3284 2.00003 11.5 2.00003C10.6716 2.00003 10 2.6716 10 3.50003C10 4.32846 10.6716 5.00003 11.5 5.00003ZM13 11.5C13 12.3285 12.3284 13 11.5 13C10.6716 13 10 12.3285 10 11.5C10 10.6716 10.6716 10 11.5 10C12.3284 10 13 10.6716 13 11.5Z" fill="#9AA9F1"/>
+      </svg>
+
+
+
+  </div>
+
+      <br/>
+      <br/>
+      <br/>
       <br/>
 
       <LoadingButton loading={loading === true} disabled={compressing || loading==='success'} onClick={(e) => {handleSpackSubmit()}}  fullWidth variant='contained' sx={{backgroundColor: '#516BEB', fontFamily: 'Poppins', borderRadius: '8px', padding: '0.8rem 0', fontWeight: '600', letterSpacing: '2px'}}> Done </LoadingButton>

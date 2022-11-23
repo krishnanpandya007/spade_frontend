@@ -171,7 +171,7 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
       if(!dataj.login_needed){
         // No longer login needed, proceed to update UI accordingly
         user.set_user_data(dataj.username, dataj.profile_pic, dataj.first_name, dataj.last_name);
-        user.authenticate();// ! NOT WORKING
+        user.authenticate();
         setAuthState(true);
 
       }else {

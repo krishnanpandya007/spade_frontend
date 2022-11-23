@@ -6,14 +6,18 @@ nextConfig = {
   reactStrictMode: true,
   // swcMinify: true, // ! Trial
   images: {
-    domains: ['127.0.0.1'],
+    domains: ['127.0.0.1', 'core.backend-61489.spadebeta.in'],
   },
-  async rewrites() {
+  async redirects() {
+
+    // ! IN_MAINTANANCE
+
     return [
       {
-        source: '/api/create/post',
-        destination: `https://www.spadebeta.in/create/post/` // Proxy to Backend
-      }
+        source: "/((?!maintenance).*)",
+        destination: "/maintenance.html",
+        permanent: false, 
+      },
     ]
   },
 }
