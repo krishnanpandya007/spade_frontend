@@ -1,5 +1,5 @@
-import { SITE_IN_MAINTENANCE } from './config'
-
+// const { SITE_IN_MAINTENANCE } = require('./config')
+const SITE_IN_MAINTENANCE = true;
 const withPWA = require('next-pwa')({
   dest: 'public'
 })
@@ -21,7 +21,7 @@ nextConfig = {
         source: SITE_IN_MAINTENANCE ? "/((?!maintenance).*)" : "/maintanance.html",
         destination: SITE_IN_MAINTENANCE ? "/maintenance.html" : "/",
         permanent: false, 
-      },
+      },//
     ]
   },
 }

@@ -18,4 +18,4 @@ export const IMAGE_COMPRESSION_THRESHOLD = 0.8 // If image is bigger then 700 kb
 
 export const DEFAULT_CATAGORY = 'trending';
 
-export const SITE_IN_MAINTENANCE = true;
+// export const SITE_IN_MAINTENANCE = true;
