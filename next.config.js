@@ -1,4 +1,4 @@
-const { SITE_IN_MAINTENANCE } = require('./config')
+import { SITE_IN_MAINTENANCE } from './config'
 
 const withPWA = require('next-pwa')({
   dest: 'public'
