@@ -17,3 +17,5 @@ export const SOCIAL_ACCOUNT_ACCESS_KEY = "ThisRandomKey69IsSomethingBig";
 export const IMAGE_COMPRESSION_THRESHOLD = 0.8 // If image is bigger then 700 kb, compress it!
 
 export const DEFAULT_CATAGORY = 'trending';
+
+export const SITE_IN_MAINTENANCE = true;
