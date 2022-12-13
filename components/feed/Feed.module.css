@@ -1,14 +1,139 @@
-.marked_post::before {
-    content: '';
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: #9B191D;
+.spack_group{
+
+    width: clamp(350px, 90vw, 800px);
+    /* border: 1px solid red; */
+
 }
 
-.feed_mid_section_2 > p{
+.spack_group  h1{
 
-    padding-left: 0;
-    margin-left: 0;
+    font-weight: lighter;
+    font-family: 'Rubik';
+    letter-spacing: 1px;
+    position: relative;
+}
 
+.spack_group .active::after{
+    content: '';
+    left: 49%;
+    border-radius: 100px;
+    bottom: -10px;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    background-color: #0008C1;
+
+}
+
+.group_header{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+
+}
+
+
+
+.spack_main{
+    width: 100%;
+    padding: 1.5rem;
+
+}
+
+.spack_about_actions{
+
+    /* border: 1px solid; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+}
+
+.spack_about_actions img{
+    border-radius: 100px;
+    object-fit: cover;
+}
+
+.spack{
+
+    background-color: #6178ED;
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 5rem;
+    margin: 1rem 0;
+    height: 250px;
+    position: relative;
+}
+
+.spack > .toggle_images{
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: white;
+    /* padding: 1rem; */
+    display: grid;
+    place-items: center;
+    border-radius: 100px;
+    transition: 0.2s linear;
+    cursor: pointer;
+    padding: none;
+    border: none;
+}
+
+
+.spack p{
+
+    font-family: 'Chivo', monospace;
+    font-size: large;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    color: white;
+
+}
+
+.spack_comment_main{
+    width: 30%;
+    transition: 0.2s ease;
+}
+
+.spack_comment_main:focus{
+    width: 50%;
+}
+
+.actions{
+    display: flex;
+    margin-top: 1.8rem;
+    margin-bottom: 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    border-radius: 10px;
+    background: none;
+    padding: 0.5rem 1.2rem;
+    opacity: 0.8;
+    transition: 0.2s ease-in-out;
+}
+
+.action_btn {
+    border: none;
+    outline: none;
+}
+
+.action_btn:hover{
+    cursor: pointer;
+    transform: translateY(-1px);
 }

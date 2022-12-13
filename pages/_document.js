@@ -36,6 +36,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Changa:300,400,500,700&display=swap"
           />
           <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@200;300;400;500;600;700;900&family=Inter:wght@200;300&family=Poppins:ital,wght@0,200;1,100&family=Roboto:ital,wght@0,100;0,300;1,100&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
         </Head>
         <body>
           <Main />

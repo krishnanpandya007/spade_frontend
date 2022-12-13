@@ -1,5 +1,4 @@
-// const { SITE_IN_MAINTENANCE } = require('./config')
-const SITE_IN_MAINTENANCE = true;
+const SITE_IN_MAINTENANCE = false;
 const withPWA = require('next-pwa')({
   dest: 'public'
 })
@@ -10,11 +9,9 @@ nextConfig = {
   // reactStrictMode: true,
   // swcMinify: true, // ! Trial
   images: {
-    domains: ['127.0.0.1', 'core.backend-61489.spadebeta.in'],
+    domains: ['127.0.0.1', 'core.backend-61489.spadebeta.in', 'images.unsplash.com'],
   },
   async redirects() {
-
-    // ! IN_MAINTANANCE
 
     return [
       {

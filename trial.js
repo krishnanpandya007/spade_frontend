@@ -1,2 +1,1 @@
-let a = {a: 'A', b: 'B'}
-a.remove
+console.log(JSON.stringify([1, 2, 3]))

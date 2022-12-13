@@ -15,18 +15,17 @@ export default async (req, res) => {
 
         const {
             post_id,
-            choice,
-            action
+            ...final_action_state
         } = req.body;
+        console.log("#################################::", post_id, final_action_state)
 
 
 
         // console.log("Post Id: ", post_id)
 
         const body = JSON.stringify({
-            post_id,
-            choice,
-            action
+            post_id: post_id,
+            action_state: final_action_state
         })
 
 
@@ -49,49 +48,33 @@ export default async (req, res) => {
                 cache.keys().forEach((key_url) => {
                     // For Each Catagory
 
-                    console.log("KEY__url", key_url)
                     let cacheResponse = cache.get(key_url) || [];
 
                     if(cacheResponse){
 
-                        Object(cacheResponse).keys().map((val, idx) => {
-                            //val = id of live post data
-                            if (val === post_id) {
+                                cacheResponse.map((spack, idx) => {
 
-                                choice.split(" ").map((choice, idx) => {
+                                    if(spack.id === post_id){
+                                        Object.keys(final_action_state).map((field) => {
 
-                                    if (choice === 'like') {
+                                            if(final_action_state[field]){
 
-                                        if(action.split(" ")[idx] === 'add'){
-                                            // Adding Like
-                                            cacheResponse[val].likes.push(dataj.revalidate_data) // Push Likr username
+                                                if(!(spack[field].includes(dataj.revalidate_data))){
+                                                    spack[field].push(dataj.revalidate_data)
+                                                }
+                                            }else{
 
-                                        }else {
-                                            // Removing Like
-                                            cacheResponse[val].likes = cacheResponse[val].likes.filter((in_key) => in_key !== dataj.revalidate_data) // Push Likr username
+                                                spack[field] = spack[field].filter((val) => val !== dataj.revalidate_data)
+                                            }
 
-                                        }
-
-                                    } else if (choice === 'dislike') {
-
-                                        if(action.split(" ")[idx] === 'add'){
-                                            // Adding Like
-                                            cacheResponse[val].dislikes.push(dataj.revalidate_data) // Push DisLikr username
-
-                                        }else {
-                                            // Removing Like
-                                            cacheResponse[val].dislikes = cacheResponse[val].dislikes.filter((in_key) => in_key !== dataj.revalidate_data) // Push DisLikr username
-
-                                        }
+                                        })
 
                                     }
 
+                                    return spack
+
                                 })
 
-                            }
-
-                        })
-                        
                     }
                     
                 })

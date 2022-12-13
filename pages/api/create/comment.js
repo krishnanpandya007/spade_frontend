@@ -28,47 +28,17 @@ export default async (req, res) => {
 
 
 
-            const apiResponse = await fetch(`${BACKEND_ROOT_URL}apio/create/comment/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${access}`
-                },
-                body: body
-            }).catch((err) => {console.log(err)})
+        const apiResponse = await fetch(`${BACKEND_ROOT_URL}apio/create/comment/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: body
+        }).catch((err) => {console.log(err)})
 
-            const dataj = await apiResponse.json()
-
-            console.log(dataj);
-
-            if (apiResponse.status === 201){
-                // Account Created Successfully
-
-                cache.keys().forEach((key_url) => {
-                    // For Each Catagory
-                    let cacheResponse = cache.get(key_url) || [];
-
-                    if(cacheResponse){
-
-                        cacheResponse.map((val, idx) => {
-
-                            if (val.id === post_id) {
-
-                                val.comments.push(dataj.new_comment_serializer_data)
-
-                            }
-
-                        })
-                        
-                    }
-                    
-                })
-
-                return res.status(201).json({success: 'Comment Created', new_id: dataj.new_comment_serializer_data?.id})
-            }else{
-                return res.status(apiResponse.status).json({error: 'Can\'t Create Comment'})
-            }
+        return res.status(apiResponse.status).json({})
 
 
 

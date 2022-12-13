@@ -18,7 +18,6 @@ export async function bookmark_post(post_id){
     })
 
     const status = await response.status;
-    console.log(status)
     return status === 201 // Created Bookmark for user
 
 }

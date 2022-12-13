@@ -1,5 +1,5 @@
 
-import { Grid, Snackbar } from "@mui/material";
+import { Grid } from "@mui/material";
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect } from "react"
 import { useContext } from "react";
@@ -9,9 +9,10 @@ import authContext from "../components/basic/contexts/layout_auth_context";
 import Layout from "../components/basic/layout";
 import Feed from "../components/feed/Feed";
 import HomeInfo from "../components/HomeInfo";
-import { BACKEND_ROOT_URL, DEFAULT_CATAGORY, FRONTEND_ROOT_URL } from "../config";
+import { BACKEND_ROOT_URL, CATAGORIES, DEFAULT_CATAGORY, FRONTEND_ROOT_URL } from "../config";
 import Link from 'next/link'
 import TodayOverview from "../components/basic/TodayOverview";
+import Sidebar from "../components/Sidebar";
 
 /*
 
@@ -19,24 +20,33 @@ POST - ${FRONTEND_ROOT_URL}api/get_posts_by_catagory {filter: } ==
 
 */
 
-const catagories = ['gaming', 'coding', 'tips', 'bunch-hacks', 'cheats'];
 
 function Home({data}) {
-    console.log(typeof catagories.map((catagory_i, idx) => ({catagory: catagory_i, spacks: data[idx]})))
+
+    const auth = useContext(authContext)
+
+    console.log("Home data", data)
 
     return (
+        <div style={{display: 'flex', justifyContent: 'center'}}>
 
-        <Grid container style={{width: '1500px', marginLeft: 'auto', marginRight: 'auto', padding: '2rem 1rem'}}>
+            <div style={{ width: '1500px', display: 'flex', flexDirection: 'row-reverse', padding: '2rem 1rem'}} justifyContent="space-between" >
 
-            <Grid item style={{marginLeft: 'auto', marginRight: 'auto'}}>
 
-                <Feed spack_groups={catagories.map((catagory_i, idx) => ({group_name: catagory_i, spacks: data[idx]}))} />
+                <motion.div animate={!(auth.is_on_mobile) && {width: ['75%', '55%']}} transition={{ease: 'easeInOut', duration: 0.7}}  style={{width: auth.is_on_mobile ? '100%' : '55%', paddingLeft: 'auto' , paddingRight :'auto'}} >
 
-            </Grid>
+                    <Feed spack_groups={CATAGORIES.map((catagory_i, idx) => ({group_name: catagory_i, spacks: data[idx] ? data[idx][catagory_i] : null}))} />
 
-            {/* Future Sidebar */}
+                </motion.div>
 
-        </Grid>
+                {  !(auth.is_on_mobile) && 
+                <motion.div animate={{width: ['0%', '30%'], marginRight: ['0%', '15%']}} style={{padding: '1rem'}} >
+                    <Sidebar />
+                </motion.div>}
+                {/* Future Sidebar */}
+
+            </div>
+        </div>
 
     )
 
@@ -66,33 +76,34 @@ export async function getStaticProps(context) {
             'Accept': 'application/json'
         },
         body: JSON.stringify(
-            catagories.map((catagory_i) => (
-                {load_more_counter: 0, catagory: DEFAULT_CATAGORY, groupex: `tag:${catagory_i}`}
+            CATAGORIES.map((catagory_i) => (
+                {load_more_counter: 0, catagory: DEFAULT_CATAGORY, groupex: `tag:${catagory_i}`, is_indepeth_view: true}
             ))
         )
     });
     
     const backend_data = await response.json();
-    console.log("BACKEND_DATA:", backend_data)
 
     if(response.status === 200) {
-        let i = 0;
-        for(const posts of backend_data){
-            i++;
-            try{
-    
-                posts.map((post) => {
-    
-                    delete post.comments
-                    delete post.likes
-                    delete post.dislikes
-                    
-                })
+        backend_data.map((posts) => {
+            if(posts){
 
-                init_catagorized_posts_livedata(`posts_live_data/${DEFAULT_CATAGORY}/${catagories[i]}`, posts);
-    
-            } catch {/* ANY DATA_LOSS ERROR CAUSES TO PASS/CONTINUE */}
-        }
+                try{
+        
+                    
+                    init_catagorized_posts_livedata(`posts_live_data/${DEFAULT_CATAGORY}/${Object.keys(posts)[0]}`, Object.values(posts)[0]);
+                    Object.values(posts)[0].map((post) => {
+        
+                        delete post.likes
+                        delete post.dislikes
+                        delete post.bookmarks
+                        
+                    })
+        
+                } catch {/* ANY DATA_LOSS ERROR CAUSES TO PASS/CONTINUE */}
+            }else{
+            }
+        })
 
     }
 

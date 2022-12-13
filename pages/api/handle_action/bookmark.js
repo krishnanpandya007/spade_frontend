@@ -1,4 +1,5 @@
 import { BACKEND_ROOT_URL } from "../../../config";
+import cache from "memory-cache";
 
 
 import cookie from 'cookie'
@@ -28,10 +29,39 @@ export default async (req, res) => {
                 }
             }).catch((err) => {console.log(err)})
 
+            const { username } = await apiResponse.json();
+
             // const dataj = await apiResponse.json()
 
             if (await apiResponse.status === 201){
                 // Account Created Successfully
+
+                cache.keys().forEach((key_url) => {
+                    // For Each Catagory
+
+                    let cacheResponse = cache.get(key_url) || [];
+
+                    if(cacheResponse){
+
+                                cacheResponse.map((spack, idx) => {
+
+                                    if(spack.id === post_id){
+
+                                            spack.bookmarks.push(username)
+
+                                    }
+
+                                    return spack
+
+                                })
+
+                    }
+                    
+                })
+
+
+
+
                 return res.status(201).json({success: 'Action Updated'})
             }else{
                 return res.status(apiResponse.status).json({error: 'Can\'t Update action'})

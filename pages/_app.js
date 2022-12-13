@@ -51,7 +51,7 @@ export default function MyApp(props) {
   // const [isOnMobile, setIsOnMobile] = React.useState(false);
 
   const [drawer, setDrawer] = useState({ open_drawer: false, drawer_title: "Let&apos;s Connect !" })
-  const [auth, setAuth] = useState({is_authenticated: false, is_on_mobile: true ,user_info: { username: null, profile_pic: null, first_name: null, last_name: null }});
+  const [auth, setAuth] = useState({is_authenticated: 'loading', is_on_mobile: true ,user_info: { username: null, profile_pic: null, first_name: null, last_name: null }});
   const [has_at, setHasAt] = useState(false);
 
   const colorMode = useMemo(

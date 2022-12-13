@@ -211,7 +211,7 @@ export async function init_catagorized_posts_livedata(catagory, posts, hours=2) 
 
         const total_miliseconds = hours * 1000 * 60 * 60;
 
-        const data = posts.map(val => ({ id: (val.f__id ?? val.id), comments: val.comments, likes: val.likes, dislikes: val.dislikes }))       
+        const data = posts.map(val => ({ id: (val.id ?? val.f__id), likes: val.likes, dislikes: val.dislikes, bookmarks: val.bookmarks }))       
 
         cache.put(catagory, data, total_miliseconds);
     

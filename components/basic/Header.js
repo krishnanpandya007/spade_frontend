@@ -30,6 +30,7 @@ function slugify(string) {
       .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
      
 }
+function getCookie(name) { var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));     return match ? match[1] : null; }
 
 function AppMenuAnonymous({userInstance, isMobile}) {
 
@@ -160,7 +161,6 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
 
     if(hasAtoken){
       // Start fetching account information.
-
       setAuthState('loading')
 
 
@@ -177,6 +177,10 @@ function Header({changeFilterBy, currentFilterBy, includesFilters, mode, isMobil
       }else {
         setAuthState(false);
       }
+
+    }else{
+
+      user.de_authenticate();
 
     }
 

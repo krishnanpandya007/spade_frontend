@@ -1,8 +1,5 @@
-import { BACKEND_ROOT_URL } from "../../../config";
-
-
 import cookie from 'cookie'
-
+import { BACKEND_ROOT_URL } from '../../config';
 export default async (req, res) => {
 
     if(req.method.toLowerCase() === "post"){
@@ -13,28 +10,30 @@ export default async (req, res) => {
 
 
         const {
-
-            post_id
+            spack_id,
+            type: report_type,
+            message
         } = req.body;
 
         // console.log("Post Id: ", post_id)
 
 
-
-            const apiResponse = await fetch(`${BACKEND_ROOT_URL}apio/handle_action/delink/${post_id}/`, {
-                method: 'GET',
+// {type: 'INAPPROPRIATE_SPACK' | 'NON_SAPCK', message: 'This thins cadfs....' | null}
+            const apiResponse = await fetch(`${BACKEND_ROOT_URL}apio/handle_action/report/post/${spack_id}/`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${access}`
-                }
+                },
+                body: JSON.stringify({report_type, message})
             }).catch((err) => {console.log(err)})
 
             if (apiResponse.status === 201){
                 // Account Created Successfully
-                return res.status(201).json({success: 'Post De-Linked'})
+                return res.status(201).json({success: true, message:'Report Successfull'})
             }else{
-                return res.status(apiResponse.status).json({error: 'Can\'t Update action'})
+                return res.status(apiResponse.status).json({error: 'Can\'t add Report'})
             }
 
 
